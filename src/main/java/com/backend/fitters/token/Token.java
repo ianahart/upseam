@@ -108,4 +108,15 @@ public class Token {
     public void setTokenType(TokenType tokenType) {
         this.tokenType = tokenType;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Token token1)) return false;
+        return Objects.equals(id, token1.id) && Objects.equals(token, token1.token) && tokenType == token1.tokenType && Objects.equals(expired, token1.expired) && Objects.equals(revoked, token1.revoked) && Objects.equals(user, token1.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, token, tokenType, expired, revoked, user);
+    }
 }
