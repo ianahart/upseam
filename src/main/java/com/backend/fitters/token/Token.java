@@ -1,5 +1,6 @@
 package com.backend.fitters.token;
 
+import java.util.Objects;
 import com.backend.fitters.user.User;
 
 import jakarta.persistence.Column;
@@ -7,9 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity()
@@ -17,7 +20,8 @@ import jakarta.persistence.Table;
 public class Token {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "token_sequence", sequenceName = "token_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_sequence")
     private Long id;
     @Column(name = "token")
     private String token;
@@ -108,11 +112,16 @@ public class Token {
     public void setTokenType(TokenType tokenType) {
         this.tokenType = tokenType;
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Token token1)) return false;
-        return Objects.equals(id, token1.id) && Objects.equals(token, token1.token) && tokenType == token1.tokenType && Objects.equals(expired, token1.expired) && Objects.equals(revoked, token1.revoked) && Objects.equals(user, token1.user);
+        if (this == o)
+            return true;
+        if (!(o instanceof Token token1))
+            return false;
+        return Objects.equals(id, token1.id) && Objects.equals(token, token1.token) && tokenType == token1.tokenType
+                && Objects.equals(expired, token1.expired) && Objects.equals(revoked, token1.revoked)
+                && Objects.equals(user, token1.user);
     }
 
     @Override
