@@ -1,6 +1,9 @@
 package com.backend.fitters.user;
 
 import java.util.Objects;
+
+import com.backend.fitters.token.Token;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -13,6 +16,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.EnumType;
@@ -34,6 +38,9 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", length = 150, nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -2,6 +2,8 @@ package com.backend.fitters.config;
 
 import java.io.IOException;
 
+import com.backend.fitters.token.TokenRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.lang.NonNull;
@@ -25,10 +27,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    private final TokenRepository tokenRepository;
+
     @Autowired
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService,
+
+            TokenRepository tokenRepository) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -51,7 +58,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if (this.jwtService.isTokenValid(jwt, userDetails)) {
+            var isTokenValid = this.tokenRepository.findByToken(jwt)
+                    .map(t -> !t.getExpired() && !t.getRevoked()).orElse(false);
+
+            if (this.jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
 
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
                         null,
