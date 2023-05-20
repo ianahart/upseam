@@ -3,6 +3,7 @@ package com.backend.fitters.user;
 import java.util.Objects;
 
 import com.backend.fitters.token.Token;
+import com.backend.fitters.refreshtoken.RefreshToken;
 
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +39,9 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", length = 150, nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<RefreshToken> refreshTokens;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;

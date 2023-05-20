@@ -3,7 +3,9 @@ package com.backend.fitters.auth;
 import java.util.List;
 import java.util.Optional;
 
+import com.backend.fitters.util.MyUtils;
 import com.backend.fitters.advice.BadRequestException;
+import com.backend.fitters.advice.ForbiddenException;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.auth.dto.UserDto;
 import com.backend.fitters.auth.request.LoginRequest;
@@ -11,6 +13,8 @@ import com.backend.fitters.auth.request.RegisterRequest;
 import com.backend.fitters.auth.response.LoginResponse;
 import com.backend.fitters.auth.response.RegisterResponse;
 import com.backend.fitters.config.JwtService;
+import com.backend.fitters.config.RefreshTokenService;
+import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.token.Token;
 import com.backend.fitters.token.TokenRepository;
 import com.backend.fitters.token.TokenType;
@@ -19,6 +23,7 @@ import com.backend.fitters.user.User;
 import com.backend.fitters.user.UserRepository;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,27 +36,30 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     public AuthenticationService(
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
             TokenRepository tokenRepository,
             JwtService jwtService,
+            RefreshTokenService refreshTokenService,
             AuthenticationManager authenticationManager) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
         this.authenticationManager = authenticationManager;
     }
 
     public RegisterResponse register(RegisterRequest request) {
         User user = new User(
-                request.getFirstName(),
-                request.getLastName(),
+                MyUtils.capitalize(request.getFirstName()),
+                MyUtils.capitalize(request.getLastName()),
                 request.getEmail(),
                 this.passwordEncoder.encode(request.getPassword()),
-                Role.USER);
+                request.getRole().equals("USER") ? Role.USER : Role.SEAMSTER);
 
         Optional<User> exists = this.userRepository.findByEmail(request.getEmail());
 
@@ -59,6 +67,7 @@ public class AuthenticationService {
             throw new BadRequestException("A user with that email already exists.");
         }
         this.userRepository.save(user);
+
         return new RegisterResponse("User created.");
     }
 
@@ -85,16 +94,22 @@ public class AuthenticationService {
 
     public LoginResponse login(LoginRequest request) {
 
-        this.authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()));
+        try {
+            this.authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()));
+
+        } catch (BadCredentialsException e) {
+            throw new ForbiddenException("Credentials are invalid");
+        }
         User user = this.userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new NotFoundException("User not found by email."));
         String jwtToken = this.jwtService.generateToken(user);
 
         this.revokeAllUserTokens(user);
         this.saveTokenWithUser(jwtToken, user);
+        RefreshToken refreshToken = this.refreshTokenService.generateRefreshToken(user.getId());
 
         UserDto userDto = new UserDto(
                 user.getId(),
@@ -102,6 +117,6 @@ public class AuthenticationService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getRole());
-        return new LoginResponse(jwtToken, userDto);
+        return new LoginResponse(jwtToken, refreshToken.getRefreshToken(), userDto);
     }
 }

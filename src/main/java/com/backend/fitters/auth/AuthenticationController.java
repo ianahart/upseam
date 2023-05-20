@@ -1,9 +1,14 @@
 package com.backend.fitters.auth;
 
 import com.backend.fitters.auth.request.LoginRequest;
+import com.backend.fitters.auth.request.RefreshTokenRequest;
 import com.backend.fitters.auth.request.RegisterRequest;
 import com.backend.fitters.auth.response.LoginResponse;
+import com.backend.fitters.auth.response.RefreshTokenResponse;
 import com.backend.fitters.auth.response.RegisterResponse;
+import com.backend.fitters.config.JwtService;
+import com.backend.fitters.config.RefreshTokenService;
+import com.backend.fitters.refreshtoken.RefreshToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
-    public AuthenticationController(AuthenticationService authenticationService) {
+    @Autowired
+    public AuthenticationController(AuthenticationService authenticationService,
+            JwtService jwtService, RefreshTokenService refreshTokenService) {
         this.authenticationService = authenticationService;
+        this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
     }
 
     @PostMapping("/register")
@@ -37,5 +48,17 @@ public class AuthenticationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(this.authenticationService.login(request));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<RefreshTokenResponse> refresh(@RequestBody RefreshTokenRequest request) {
+        RefreshToken refreshToken = this.refreshTokenService.verifyRefreshToken(request.getRefreshToken());
+
+        this.authenticationService.revokeAllUserTokens(refreshToken.getUser());
+        String token = this.jwtService.generateToken(refreshToken.getUser());
+        this.authenticationService.saveTokenWithUser(token, refreshToken.getUser());
+
+        return ResponseEntity.status(200).body(
+                new RefreshTokenResponse(token, refreshToken.getRefreshToken()));
     }
 }

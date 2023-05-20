@@ -18,17 +18,19 @@ public class LogoutService implements LogoutHandler {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final RefreshTokenService refreshTokenService;
     private final TokenRepository tokenRepository;
 
-    public LogoutService(JwtService jwtService, UserRepository userRepository, TokenRepository tokenRepository) {
+    public LogoutService(JwtService jwtService, UserRepository userRepository,
+                TokenRepository tokenRepository, RefreshTokenService refreshTokenService) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
+        this.refreshTokenService =  refreshTokenService;
     }
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-
         String authHeader = request.getHeader("Authorization");
         String jwt;
 
@@ -39,9 +41,13 @@ public class LogoutService implements LogoutHandler {
         jwt = authHeader.substring(7);
 
         var storedToken = this.tokenRepository.findByToken(jwt).orElse(null);
+        User user = this.userRepository.findByEmail(this.jwtService.extractUsername(jwt))
+                .orElseThrow(() -> new NotFoundException("User not found logging out."));
+
         storedToken.setRevoked(true);
         storedToken.setExpired(true);
         this.tokenRepository.save(storedToken);
+        this.refreshTokenService.revokeAllUserRefreshTokens(user);
         SecurityContextHolder.clearContext();
 
     }

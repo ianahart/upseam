@@ -1,17 +1,25 @@
 package com.backend.fitters.auth.request;
 
+import com.backend.fitters.user.Role;
+
 public class RegisterRequest {
 
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String role;
 
-    public RegisterRequest(String firstName, String lastName, String email, String password) {
+    public RegisterRequest(String role, String firstName, String lastName, String email, String password) {
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getEmail() {
@@ -44,6 +52,10 @@ public class RegisterRequest {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
 }
