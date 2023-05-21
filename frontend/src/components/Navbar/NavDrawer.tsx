@@ -23,7 +23,13 @@ const NavDrawer = () => {
       <Box cursor="pointer" ref={btnRef} onClick={onOpen}>
         <RxHamburgerMenu fontSize="1.6rem" />
       </Box>
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+                onCloseComplete={() => true}
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
