@@ -1,8 +1,11 @@
 import { extendTheme } from '@chakra-ui/react';
+import '@fontsource/bangers';
+import '@fontsource-variable/open-sans';
+
 export const theme = extendTheme({
   fonts: {
-    heading: 'Roboto Condensed, sans-serif',
-    body: 'Open Sans, sans-serif',
+    heading: `'Bangers', sans-serif`,
+    body: `'Open Sans', sans-serif`,
   },
   colors: {
     black: {
@@ -10,7 +13,7 @@ export const theme = extendTheme({
       secondary: '#200F21',
     },
     text: {
-      primary: '#8a8f9d',
+      primary: '#718096',
       secondary: '#444447',
       tertiary: '#403d40',
     },
