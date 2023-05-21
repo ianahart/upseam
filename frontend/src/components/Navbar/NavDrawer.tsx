@@ -26,7 +26,7 @@ const NavDrawer = () => {
       <Drawer
         isOpen={isOpen}
         placement="right"
-                onCloseComplete={() => true}
+        onCloseComplete={() => true}
         onClose={onClose}
         finalFocusRef={btnRef}
       >

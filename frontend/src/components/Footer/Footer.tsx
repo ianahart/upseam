@@ -7,6 +7,7 @@ import {
   Input,
   Stack,
   Text,
+  Link,
 } from '@chakra-ui/react';
 const Footer = () => {
   return (
@@ -37,9 +38,14 @@ const Footer = () => {
                 Legal
               </Text>
               <Stack spacing="3" shouldWrapChildren>
-                <Button variant="link">Privacy</Button>
-                <Button variant="link">Terms</Button>
-                <Button variant="link">License</Button>
+                <Button variant="link">
+                  <Link
+                    fontWeight="bold"
+                    href="https://www.termsfeed.com/live/6d5c9d4f-ec88-4c01-b28c-862392fb762c"
+                  >
+                    Privacy
+                  </Link>
+                </Button>
               </Stack>
             </Stack>
           </Stack>
