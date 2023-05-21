@@ -63,14 +63,8 @@ const Footer = () => {
         </Stack>
       </Stack>
       <Divider />
-      <Stack
-        pt="8"
-        pb="12"
-        justify="space-between"
-        direction={{ base: 'column-reverse', md: 'row' }}
-        align="center"
-      >
-        <Text fontSize="sm" color="subtle">
+      <Stack pt="8" pb="12" justify="center" align="center">
+        <Text textAlign="center" fontSize="sm" color="subtle">
           &copy; {new Date().getFullYear()} Upsteam All rights reserved.
         </Text>
       </Stack>
