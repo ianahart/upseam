@@ -120,7 +120,8 @@ public class AuthenticationService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getRole(),
-                user.getAbbreviation());
+                user.getAbbreviation(),
+                true);
         return new LoginResponse(jwtToken, refreshToken.getRefreshToken(), userDto);
     }
 }

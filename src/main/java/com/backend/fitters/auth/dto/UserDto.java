@@ -9,14 +9,17 @@ public class UserDto {
     private String lastName;
     private Role role;
     private String abbreviation;
+    private boolean isLoggedIn;
 
-    public UserDto(Long id, String email, String firstName, String lastName, Role role, String abbreviation) {
+    public UserDto(Long id, String email, String firstName, String lastName, Role role, String abbreviation,
+            boolean isLoggedIn) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
         this.abbreviation = abbreviation;
+        this.isLoggedIn = isLoggedIn;
     }
 
     public Long getId() {
@@ -25,6 +28,10 @@ public class UserDto {
 
     public String getAbbreviation() {
         return abbreviation;
+    }
+
+    public boolean getIsLoggedIn() {
+        return isLoggedIn;
     }
 
     public Role getRole() {
@@ -49,6 +56,10 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
     }
 
     public void setAbbreviation(String abbreviation) {

@@ -57,7 +57,8 @@ public class UserService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getRole(),
-                user.getAbbreviation());
+                user.getAbbreviation(),
+                true);
         return userDto;
 
     }
