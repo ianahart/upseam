@@ -3,6 +3,7 @@ package com.backend.fitters.user;
 import java.util.Objects;
 
 import com.backend.fitters.token.Token;
+import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
 
 import java.util.Collection;
@@ -12,12 +13,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -43,6 +47,10 @@ public class User implements UserDetails {
     @Transient
     private String abbreviation;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private Profile profile;
+
     @OneToMany(mappedBy = "user")
     private List<RefreshToken> refreshTokens;
 
@@ -56,21 +64,23 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, Role role) {
+    public User(Long id, String firstName, String lastName, String email, String password, Role role, Profile profile) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.profile = profile;
     }
 
-    public User(String firstName, String lastName, String email, String password, Role role) {
+    public User(String firstName, String lastName, String email, String password, Role role, Profile profile) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.profile = profile;
     }
 
     public String getAbbreviation() {
@@ -79,6 +89,10 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public Profile getProfile() {
+        return profile;
     }
 
     public Role getRole() {
@@ -113,6 +127,10 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public void setEmail(String email) {

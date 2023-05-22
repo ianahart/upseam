@@ -14,6 +14,8 @@ import com.backend.fitters.auth.response.LoginResponse;
 import com.backend.fitters.auth.response.RegisterResponse;
 import com.backend.fitters.config.JwtService;
 import com.backend.fitters.config.RefreshTokenService;
+import com.backend.fitters.profile.Profile;
+import com.backend.fitters.profile.ProfileService;
 import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.token.Token;
 import com.backend.fitters.token.TokenRepository;
@@ -37,6 +39,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
+    private final ProfileService profileService;
 
     public AuthenticationService(
             PasswordEncoder passwordEncoder,
@@ -44,22 +47,26 @@ public class AuthenticationService {
             TokenRepository tokenRepository,
             JwtService jwtService,
             RefreshTokenService refreshTokenService,
-            AuthenticationManager authenticationManager) {
+            AuthenticationManager authenticationManager,
+            ProfileService profileService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
         this.authenticationManager = authenticationManager;
+        this.profileService = profileService;
     }
 
     public RegisterResponse register(RegisterRequest request) {
+        Profile profile = this.profileService.createProfile();
         User user = new User(
                 MyUtils.capitalize(request.getFirstName()),
                 MyUtils.capitalize(request.getLastName()),
                 request.getEmail(),
                 this.passwordEncoder.encode(request.getPassword()),
-                request.getRole().equals("USER") ? Role.USER : Role.SEAMSTER);
+                request.getRole().equals("USER") ? Role.USER : Role.SEAMSTER,
+                profile);
 
         Optional<User> exists = this.userRepository.findByEmail(request.getEmail());
 
@@ -121,6 +128,7 @@ public class AuthenticationService {
                 user.getLastName(),
                 user.getRole(),
                 user.getAbbreviation(),
+                user.getProfile().getId(),
                 true);
         return new LoginResponse(jwtToken, refreshToken.getRefreshToken(), userDto);
     }

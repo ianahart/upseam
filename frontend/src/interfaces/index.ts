@@ -24,6 +24,7 @@ export interface IUser {
   role: string;
   abbreviation: string;
   isLoggedIn: boolean;
+  profileId: number;
 }
 
 export interface IUserContext {

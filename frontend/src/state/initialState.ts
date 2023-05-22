@@ -24,4 +24,5 @@ export const userState = {
   role: '',
   abbreviation: '',
   isLoggedIn: false,
+  profileId: 0,
 };
