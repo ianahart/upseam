@@ -23,7 +23,7 @@ export const Client = {
     });
   },
   syncUser: (token: string) => {
-    return http.get('/user/sync', {
+    return http.get('/users/sync', {
       headers: { Authorization: `Bearer ${token}` },
     });
   },

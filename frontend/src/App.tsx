@@ -16,25 +16,43 @@ import { useContext } from 'react';
 import { UserContext } from './context/user';
 import { IUserContext } from './interfaces';
 import { useEffectOnce } from './hooks/useEffectOnce';
+import RequireGuest from './components/Guard/RequireGuest';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<HomeRoute />} />
-      <Route path="register" element={<RegisterRoute />} />
-      <Route path="login" element={<LoginRoute />} />
+      <Route
+        path="register"
+        element={
+          <RequireGuest>
+            <RegisterRoute />
+          </RequireGuest>
+        }
+      />
+      <Route
+        path="login"
+        element={
+          <RequireGuest>
+            <LoginRoute />
+          </RequireGuest>
+        }
+      />
     </Route>
   )
 );
 
 function App() {
-  const { updateUser } = useContext(UserContext) as IUserContext;
+  const { updateUser, stowTokens } = useContext(UserContext) as IUserContext;
   const storeUser = useCallback(async () => {
-        Client.syncUser(retreiveTokens().token).then((res) => {
-            console.log(res)
-        }).catch((err) => {
-                console.log(err)
-            });
+    Client.syncUser(retreiveTokens().token)
+      .then((res) => {
+        updateUser(res.data);
+        stowTokens(retreiveTokens());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffectOnce(() => {
