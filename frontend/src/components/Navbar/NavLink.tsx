@@ -4,7 +4,7 @@ import { Flex, Box } from '@chakra-ui/react';
 interface INavLinkProps {
   to: string;
   routeName: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
 }
 
 const NavLink = ({ to, routeName, icon }: INavLinkProps) => {

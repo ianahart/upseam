@@ -52,8 +52,8 @@ const FormInput = ({
 
   const togglePasswordVisibility = (e: React.MouseEvent<HTMLDivElement>) => {
     const value = type === 'password' ? 'text' : 'password';
-      updateField('password', value, 'type');
-      updateField('confirmPassword', value, 'type');
+    updateField('password', value, 'type');
+    updateField('confirmPassword', value, 'type');
   };
 
   return (
