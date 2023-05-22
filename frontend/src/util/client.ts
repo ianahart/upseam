@@ -22,9 +22,17 @@ export const Client = {
       password: form.password.value,
     });
   },
+  logout: (refreshToken: string) => {
+    return http.post('/auth/logout', {
+      refreshToken,
+    });
+  },
   syncUser: (token: string) => {
     return http.get('/users/sync', {
       headers: { Authorization: `Bearer ${token}` },
     });
+  },
+  heartBeat: () => {
+    return http.get('/heartbeat');
   },
 };

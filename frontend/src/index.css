@@ -32,6 +32,20 @@ h1 {
   align-items: center;
 }
 
+button.logout-button {
+  color: #718096;
+  font-weight: bold;
+  border: none;
+  transition: all 0.25s ease-in;
+  background: transparent;
+  padding: 0;
+}
+
+button.logout-button:hover {
+  background: transparent;
+  opacity: 0.8;
+}
+
 .routerLink:hover {
   opacity: 0.8;
 }

@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Routes,
   RouterProvider,
 } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
@@ -17,6 +18,9 @@ import { UserContext } from './context/user';
 import { IUserContext } from './interfaces';
 import { useEffectOnce } from './hooks/useEffectOnce';
 import RequireGuest from './components/Guard/RequireGuest';
+import WithAxios from './hooks/withAxios';
+import RequireAuth from './components/Guard/RequireAuth';
+import HeartBeatRoute from './routes/HeartBeatRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +40,14 @@ const router = createBrowserRouter(
           <RequireGuest>
             <LoginRoute />
           </RequireGuest>
+        }
+      />
+      <Route
+        path="heartbeat"
+        element={
+          <RequireAuth>
+            <HeartBeatRoute />
+          </RequireAuth>
         }
       />
     </Route>

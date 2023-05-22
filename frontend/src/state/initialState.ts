@@ -23,4 +23,5 @@ export const userState = {
   email: '',
   role: '',
   abbreviation: '',
+  isLoggedIn: false,
 };

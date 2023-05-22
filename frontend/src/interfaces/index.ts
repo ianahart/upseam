@@ -23,9 +23,12 @@ export interface IUser {
   email: string;
   role: string;
   abbreviation: string;
+  isLoggedIn: boolean;
 }
 
 export interface IUserContext {
+  user: IUser;
   stowTokens: (tokens: ITokens) => void;
   updateUser: (user: IUser) => void;
+  logout: () => void;
 }

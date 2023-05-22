@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/v1/test")
+@RequestMapping(path = "/api/v1/heartbeat")
 
 public class TestController {
 
-    @GetMapping("/")
+    @GetMapping
     public String testConnection() {
         return "Secured endpoint";
     }
