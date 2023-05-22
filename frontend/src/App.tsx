@@ -1,4 +1,7 @@
 import './App.css';
+import { useCallback } from 'react';
+import { retreiveTokens } from './util';
+import { Client } from './util/client';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -9,6 +12,10 @@ import RootLayout from './layouts/RootLayout';
 import HomeRoute from './routes/HomeRoute';
 import RegisterRoute from './routes/RegisterRoute';
 import LoginRoute from './routes/LoginRoute';
+import { useContext } from 'react';
+import { UserContext } from './context/user';
+import { IUserContext } from './interfaces';
+import { useEffectOnce } from './hooks/useEffectOnce';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +28,19 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  const { updateUser } = useContext(UserContext) as IUserContext;
+  const storeUser = useCallback(async () => {
+        Client.syncUser(retreiveTokens().token).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+                console.log(err)
+            });
+  }, []);
+
+  useEffectOnce(() => {
+    storeUser();
+  });
+
   return <RouterProvider router={router} />;
 }
 

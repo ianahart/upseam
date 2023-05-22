@@ -7,9 +7,9 @@ import NavLink from './NavLink';
 const NavLinks = () => {
   return (
     <>
-      <NavLink to="/" routeName="Home" icon={<AiOutlineHome />} />
-      <NavLink to="/register" routeName="Create Account" icon={<BsPencil />} />
-      <NavLink to="/login" routeName="Login" icon={<CiLogin />} />
+      <NavLink to="/" routeName="Home" icon={<AiOutlineHome role="img" />} />
+      <NavLink to="/register" routeName="Create Account" icon={<BsPencil role="img" />} />
+      <NavLink to="/login" routeName="Login" icon={<CiLogin role="img" />} />
     </>
   );
 };

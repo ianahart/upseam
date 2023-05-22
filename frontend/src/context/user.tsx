@@ -1,0 +1,36 @@
+import { createContext, useState } from 'react';
+import { IUserContext, IUser, ITokens } from '../interfaces';
+import { userState, tokenState } from '../state/initialState';
+interface IChildren {
+  children: React.ReactNode;
+}
+
+export const UserContext = createContext<IUserContext | null>(null);
+
+const UserContextProvider = ({ children }: IChildren) => {
+  const [user, setUser] = useState<IUser>(userState);
+  const [tokens, setTokens] = useState<ITokens>(tokenState);
+
+  const stowTokens = (tokens: ITokens) => {
+    localStorage.setItem('tokens', JSON.stringify(tokens));
+    setTokens((prevState) => ({
+      ...prevState,
+      ...tokens,
+    }));
+  };
+
+  const updateUser = (user: IUser) => {
+    setUser((prevState) => ({
+      ...prevState,
+      ...user,
+    }));
+  };
+
+  return (
+    <UserContext.Provider value={{ stowTokens, updateUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export default UserContextProvider;

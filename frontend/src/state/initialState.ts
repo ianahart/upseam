@@ -5,3 +5,22 @@ export const registerFormState = {
   password: { name: 'password', value: '', error: '', type: 'password' },
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
 };
+
+export const loginFormState = {
+  email: { name: 'email', value: '', error: '', type: 'email' },
+  password: { name: 'password', value: '', error: '', type: 'password' },
+};
+
+export const tokenState = {
+  refreshToken: '',
+  token: '',
+};
+
+export const userState = {
+  id: 0,
+  firstName: '',
+  lastName: '',
+  email: '',
+  role: '',
+  abbreviation: '',
+};

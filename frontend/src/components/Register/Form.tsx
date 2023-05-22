@@ -52,7 +52,7 @@ const Form = ({ title, helperText }: IFormProps) => {
       .then((res) => {
         setIsLoading(false);
         if (res.status === 201) {
-          navigate('/');
+          navigate('/login');
         }
       })
       .catch((err) => {
@@ -63,7 +63,12 @@ const Form = ({ title, helperText }: IFormProps) => {
       });
   };
   return (
-    <FormLayout width={['95%', '450px', '450px']} height="600px">
+    <FormLayout
+      width={['95%', '450px', '450px']}
+      height="600px"
+      boxShadow={true}
+      borderRadius={true}
+    >
       <form onSubmit={handleOnSubmit}>
         <Box my="2rem" as="header">
           <Heading color="black.primary" textAlign="center" as="h1">

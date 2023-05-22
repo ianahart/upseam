@@ -20,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
@@ -39,6 +40,8 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", length = 150, nullable = false)
     private String password;
+    @Transient
+    private String abbreviation;
 
     @OneToMany(mappedBy = "user")
     private List<RefreshToken> refreshTokens;
@@ -68,6 +71,10 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public String getAbbreviation() {
+        return firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
     }
 
     public Long getId() {
@@ -114,6 +121,10 @@ public class User implements UserDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
     public void setPassword(String password) {
