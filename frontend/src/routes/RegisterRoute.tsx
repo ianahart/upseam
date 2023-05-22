@@ -1,5 +1,6 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import registerBG from '../assets/register.jpg';
+import Form from '../components/Register/Form';
 
 const RegisterRoute = () => {
   return (
@@ -8,7 +9,14 @@ const RegisterRoute = () => {
       backgroundPosition="center"
       backgroundImage={`url(${registerBG})`}
       minH="100vh"
-    ></Box>
+    >
+      <Flex direction="column" align="center" justify="center" minH="100vh">
+        <Form
+          title="Create your account"
+          helperText="Create an account to view and manage your clothes."
+        />
+      </Flex>
+    </Box>
   );
 };
 

@@ -9,7 +9,7 @@ export const theme = extendTheme({
   },
   colors: {
     black: {
-      primary: '#181717',
+      primary: '#484648',
       secondary: '#200F21',
     },
     text: {

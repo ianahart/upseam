@@ -63,6 +63,9 @@ public class AuthenticationService {
 
         Optional<User> exists = this.userRepository.findByEmail(request.getEmail());
 
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            throw new BadRequestException("Passwords do not match");
+        }
         if (exists.isPresent()) {
             throw new BadRequestException("A user with that email already exists.");
         }
