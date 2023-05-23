@@ -1,9 +1,12 @@
 package com.backend.fitters.profile;
 
+import java.util.List;
+
 import com.backend.fitters.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +28,21 @@ public class Profile {
     private String avatarUrl;
     @Column(name = "avatar_file_name")
     private String avatarFileName;
+    @Column(name = "zip_code", length = 5)
+    private String zipCode;
+    @Column(name = "country", length = 255)
+    private String country;
+    @Column(name = "address", length = 255)
+    private String address;
+    @ElementCollection
+    @Column(name = "specialities")
+    private List<String> specialities;
+    @Column(name = "pricing")
+    private Integer pricing;
+    @Column(name = "site")
+    private String site;
+    @Column(name = "bio")
+    private String bio;
 
     @JsonIgnore
     @OneToOne(mappedBy = "profile")
@@ -34,10 +52,26 @@ public class Profile {
 
     }
 
-    public Profile(Long id, String avatarUrl, String avatarFileName) {
+    public Profile(Long id,
+            String avatarUrl,
+            String avatarFileName,
+            String zipCode,
+            String country,
+            String address,
+            List<String> specialities,
+            Integer pricing,
+            String site,
+            String bio) {
         this.id = id;
         this.avatarUrl = avatarUrl;
         this.avatarFileName = avatarFileName;
+        this.zipCode = zipCode;
+        this.country = country;
+        this.address = address;
+        this.specialities = specialities;
+        this.pricing = pricing;
+        this.site = site;
+        this.bio = bio;
     }
 
     public Long getId() {
@@ -48,12 +82,57 @@ public class Profile {
         return avatarUrl;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public Integer getPricing() {
+        return pricing;
+    }
+
     public String getAvatarFileName() {
         return avatarFileName;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public List<String> getSpecialities() {
+        return specialities;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
     public void setAvatarUrl(String avatarUrl) {
+
         this.avatarUrl = avatarUrl;
+    }
+
+    public void setSpecialities(List<String> specialities) {
+        this.specialities = specialities;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public void setPricing(Integer pricing) {
+        this.pricing = pricing;
     }
 
     public void setAvatarFileName(String avatarFileName) {
@@ -62,6 +141,18 @@ public class Profile {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     @Override
