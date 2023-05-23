@@ -40,7 +40,7 @@ const NavLinks = () => {
       )}
       {user.isLoggedIn && (
         <NavLink
-          to={`settings/${slugify(user.firstName, user.lastName)}`}
+          to={`settings/${slugify(user.firstName, user.lastName)}/profile`}
           routeName="Settings"
           icon={<CiSettings />}
         />

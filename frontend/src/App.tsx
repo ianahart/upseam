@@ -24,6 +24,7 @@ import HeartBeatRoute from './routes/HeartBeatRoute';
 import SettingsRoute from './routes/SettingsRoute';
 import EditProfile from './components/Settings/EditProfile';
 import Contacts from './components/Settings/Contacts';
+import MyProfile from './components/Profile/MyProfile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,6 +75,14 @@ const router = createBrowserRouter(
           element={
             <RequireAuth>
               <Contacts />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <MyProfile />
             </RequireAuth>
           }
         />

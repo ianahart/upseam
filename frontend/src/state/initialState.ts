@@ -26,3 +26,16 @@ export const userState = {
   isLoggedIn: false,
   profileId: 0,
 };
+
+export const profileState = {
+  id: 0,
+  avatarUrl: '',
+  avatarFileName: '',
+  zipCode: '',
+  country: '',
+  address: '',
+  specialities: [],
+  pricing: '',
+  site: '',
+  bio: '',
+};
