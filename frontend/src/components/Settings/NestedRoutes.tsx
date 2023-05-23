@@ -3,7 +3,7 @@ import NavLink from '../Navbar/NavLink';
 
 const NestedRoutes = () => {
   return (
-    <Flex direction="column" m="1rem" width="350px" minH="100vh">
+    <Flex direction="column" m="1rem" minW={['100%', '250px', '250px']} minH="100vh">
       <Box my="0.5rem">
         <NavLink fontWeight={false} to="edit-profile" routeName="Edit Profile" />
       </Box>

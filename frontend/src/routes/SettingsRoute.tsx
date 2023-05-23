@@ -6,7 +6,7 @@ import NestedRoutes from '../components/Settings/NestedRoutes';
 const SettingsRoute = () => {
   return (
     <Box minH="100vh">
-      <Flex>
+      <Flex className="settingsContainer">
         <NestedRoutes />
         <Box bg="light.primary" width="100%" minH="100vh">
           <Box width={['95%', '95%', '750px']} m="2rem auto 1rem auto" as="header">
@@ -19,7 +19,12 @@ const SettingsRoute = () => {
             minH="100vh"
             width={['95%', '95%', '95%']}
           >
-            <Box border="1px solid red" margin=" 0 auto" width={['95%', '95%', '700px']}>
+            <Box
+              maxW="1280px"
+              border="1px solid red"
+              margin=" 0 auto"
+              width={['95%', '95%', '90%']}
+            >
               <Outlet />
             </Box>
           </Box>
