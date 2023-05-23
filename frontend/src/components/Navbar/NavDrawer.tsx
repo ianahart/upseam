@@ -25,7 +25,7 @@ const NavDrawer = () => {
 
   return (
     <Box display={['block', 'block', 'none']}>
-      <Box cursor="pointer" ref={btnRef} onClick={onOpen}>
+      <Box color="text.primary" cursor="pointer" m="0.5rem" ref={btnRef} onClick={onOpen}>
         <RxHamburgerMenu fontSize="1.6rem" />
       </Box>
       <Drawer
@@ -41,7 +41,7 @@ const NavDrawer = () => {
           {user.isLoggedIn && (
             <DrawerHeader color="black.primary" fontSize="1rem">
               <Text>{user.email}</Text>
-              <InitialIcon abbrev={user.abbreviation} />
+              <InitialIcon />
             </DrawerHeader>
           )}
           <DrawerBody>

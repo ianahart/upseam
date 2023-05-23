@@ -21,6 +21,9 @@ import RequireGuest from './components/Guard/RequireGuest';
 import WithAxios from './hooks/withAxios';
 import RequireAuth from './components/Guard/RequireAuth';
 import HeartBeatRoute from './routes/HeartBeatRoute';
+import SettingsRoute from './routes/SettingsRoute';
+import EditProfile from './components/Settings/EditProfile';
+import Contacts from './components/Settings/Contacts';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,6 +53,31 @@ const router = createBrowserRouter(
           </RequireAuth>
         }
       />
+      <Route
+        path="settings/:username"
+        element={
+          <RequireAuth>
+            <SettingsRoute />
+          </RequireAuth>
+        }
+      >
+        <Route
+          path="edit-profile"
+          element={
+            <RequireAuth>
+              <EditProfile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="contacts"
+          element={
+            <RequireAuth>
+              <Contacts />
+            </RequireAuth>
+          }
+        />
+      </Route>
     </Route>
   )
 );

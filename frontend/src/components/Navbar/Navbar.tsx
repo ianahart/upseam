@@ -4,6 +4,7 @@ import logo from '../../assets/logo.png';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import NavLinks from './NavLinks';
 import NavDrawer from './NavDrawer';
+import InitialIcon from '../Shared/InitialIcon';
 
 const Navbar = () => {
   return (
@@ -17,6 +18,7 @@ const Navbar = () => {
       <Spacer />
       <HStack display={['none', 'none', 'flex']} spacing="20px" m="0.5rem">
         <NavLinks />
+        <InitialIcon />
       </HStack>
       <NavDrawer />
     </Flex>

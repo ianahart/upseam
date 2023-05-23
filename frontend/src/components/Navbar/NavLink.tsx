@@ -5,9 +5,10 @@ interface INavLinkProps {
   to: string;
   routeName: string;
   icon?: JSX.Element;
+  fontWeight?: boolean;
 }
 
-const NavLink = ({ to, routeName, icon }: INavLinkProps) => {
+const NavLink = ({ to, routeName, icon, fontWeight }: INavLinkProps) => {
   return (
     <Flex alignItems="center">
       <RouterLink className="routerLink" to={to}>

@@ -66,6 +66,7 @@ const Form = ({ title, helperText }: IFormProps) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         setIsLoading(false);
         setError(err.response.data.message);
       });

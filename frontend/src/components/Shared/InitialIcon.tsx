@@ -1,22 +1,22 @@
 import { Box, Flex } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { UserContext } from '../../context/user';
+import { IUserContext } from '../../interfaces';
 
-interface IInitialIconProps {
-  abbrev: string;
-}
-
-const InitialIcon = ({ abbrev }: IInitialIconProps) => {
+const InitialIcon = () => {
+  const { user } = useContext(UserContext) as IUserContext;
   return (
     <Flex
       justify="center"
       align="center"
       color="#fff"
       direction="column"
-      width="60px"
-      height="60px"
+      width="50px"
+      height="50px"
       borderRadius="50%"
       bg="blue.500"
     >
-      {abbrev}
+      {user.abbreviation}
     </Flex>
   );
 };

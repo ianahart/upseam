@@ -6,3 +6,7 @@ export const retreiveTokens = () => {
   }
   return tokens;
 };
+
+export const slugify = (firstName: string, lastName: string) => {
+  return (firstName + lastName).toLowerCase();
+};

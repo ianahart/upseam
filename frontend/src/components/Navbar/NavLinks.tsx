@@ -1,7 +1,7 @@
 import { AiOutlineHome } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { BsPencil } from 'react-icons/bs';
-import { CiLogin } from 'react-icons/ci';
+import { CiLogin, CiSettings } from 'react-icons/ci';
 import NavLink from './NavLink';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
@@ -9,7 +9,7 @@ import { IUserContext } from '../../interfaces';
 import { Box, Button, Flex } from '@chakra-ui/react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { Client } from '../../util/client';
-import { retreiveTokens } from '../../util';
+import { retreiveTokens, slugify } from '../../util';
 
 const NavLinks = () => {
   const navigate = useNavigate();
@@ -18,11 +18,11 @@ const NavLinks = () => {
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     Client.logout(retreiveTokens().refreshToken)
-      .then((res) => {
+      .then(() => {
         logout();
         navigate('/');
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   return (
@@ -37,6 +37,13 @@ const NavLinks = () => {
       )}
       {!user.isLoggedIn && (
         <NavLink to="/login" routeName="Login" icon={<CiLogin role="img" />} />
+      )}
+      {user.isLoggedIn && (
+        <NavLink
+          to={`settings/${slugify(user.firstName, user.lastName)}`}
+          routeName="Settings"
+          icon={<CiSettings />}
+        />
       )}
       {user.isLoggedIn && (
         <Flex align="center">
