@@ -6,9 +6,11 @@ import com.backend.fitters.token.Token;
 import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,6 +46,9 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", length = 150, nullable = false)
     private String password;
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
     @Transient
     private String abbreviation;
 
@@ -112,6 +117,10 @@ public class User implements UserDetails {
         return email;
     }
 
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -135,6 +144,10 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
     public void setLastName(String lastName) {
