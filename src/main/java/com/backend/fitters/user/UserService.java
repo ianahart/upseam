@@ -59,7 +59,8 @@ public class UserService {
                 user.getRole(),
                 user.getAbbreviation(),
                 user.getProfile().getId(),
-                true);
+                true,
+                user.getProfile().getAvatarUrl());
         return userDto;
 
     }

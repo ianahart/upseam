@@ -35,4 +35,14 @@ export const Client = {
   heartBeat: () => {
     return http.get('/heartbeat');
   },
+  uploadPhoto: (file: File, profileId: number) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('profileId', profileId.toString());
+
+    return http.post('/profiles/upload', formData);
+  },
+  getProfile: (profileId: number) => {
+    return http.get(`/profiles/${profileId}`);
+  },
 };

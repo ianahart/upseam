@@ -129,7 +129,8 @@ public class AuthenticationService {
                 user.getRole(),
                 user.getAbbreviation(),
                 user.getProfile().getId(),
-                true);
+                true,
+                user.getProfile().getAvatarUrl());
         return new LoginResponse(jwtToken, refreshToken.getRefreshToken(), userDto);
     }
 }

@@ -1,11 +1,9 @@
 import { Box, Image, Flex, Heading, Spacer, HStack } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import Avatar from '../Shared/Avatar';
 import logo from '../../assets/logo.png';
 import { useContext } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import NavLinks from './NavLinks';
 import NavDrawer from './NavDrawer';
-import InitialIcon from '../Shared/InitialIcon';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 
@@ -22,7 +20,7 @@ const Navbar = () => {
       <Spacer />
       <HStack display={['none', 'none', 'flex']} spacing="20px" m="0.5rem">
         <NavLinks />
-        {user.isLoggedIn && <InitialIcon />}
+        {user.isLoggedIn && <Avatar />}
       </HStack>
       <NavDrawer />
     </Flex>

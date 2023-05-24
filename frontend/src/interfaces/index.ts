@@ -6,6 +6,20 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IEditUserForm {
+  firstName: { name: string; value: string; error: string; type: string };
+  lastName: { name: string; value: string; error: string; type: string };
+}
+
+export interface IEditProfileForm {
+  zipCode: { name: string; value: string; error: string; type: string };
+  country: { name: string; value: string; error: string; type: string };
+  address: { name: string; value: string; error: string; type: string };
+  pricing: { name: string; value: string; error: string; type: string };
+  site: { name: string; value: string; error: string; type: string };
+  bio: { name: string; value: string; error: string; type: string };
+}
+
 export interface ILoginForm {
   email: { name: string; value: string; error: string; type: string };
   password: { name: string; value: string; error: string; type: string };
@@ -25,6 +39,20 @@ export interface IUser {
   abbreviation: string;
   isLoggedIn: boolean;
   profileId: number;
+  avatarUrl: string;
+}
+
+export interface IProfile {
+  id: number;
+  avatarUrl: string;
+  avatarFileName: string;
+  zipCode: string;
+  country: string;
+  address: string;
+  specialities: string[];
+  pricing: string;
+  site: string;
+  bio: string;
 }
 
 export interface IUserContext {

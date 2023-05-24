@@ -78,6 +78,10 @@ public class Profile {
         return id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getAvatarUrl() {
         return avatarUrl;
     }

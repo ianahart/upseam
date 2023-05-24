@@ -22,6 +22,7 @@ const SettingsRoute = () => {
             <Box
               maxW="1280px"
               border="1px solid red"
+              p="0.5rem"
               margin=" 0 auto"
               width={['95%', '95%', '90%']}
             >

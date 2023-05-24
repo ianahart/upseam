@@ -17,6 +17,7 @@ import NavLinks from './NavLinks';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 import InitialIcon from '../Shared/InitialIcon';
+import Avatar from '../Shared/Avatar';
 
 const NavDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,7 +42,7 @@ const NavDrawer = () => {
           {user.isLoggedIn && (
             <DrawerHeader color="black.primary" fontSize="1rem">
               <Text>{user.email}</Text>
-              <InitialIcon />
+              {user.avatarUrl ? <Avatar /> : <InitialIcon />}
             </DrawerHeader>
           )}
           <DrawerBody>
