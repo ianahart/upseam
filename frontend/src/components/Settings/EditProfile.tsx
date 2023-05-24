@@ -11,6 +11,7 @@ import PhotoUpload from './PhotoUpload';
 const EditProfile = () => {
   const { user, updateUser } = useContext(UserContext) as IUserContext;
   const [file, setFile] = useState<File | null>(null);
+  const [isPhotoUploading, setIsPhotoUploading] = useState(false);
   const [specialities, setSpecialities] = useState<string[]>([]);
   const [profileForm, setProfileForm] = useState(editProfileState);
   const [userForm, setUserForm] = useState(userFormState);
@@ -32,12 +33,14 @@ const EditProfile = () => {
   };
 
   const handlePhotoUpload = (file: File) => {
+    setIsPhotoUploading(true);
     Client.uploadPhoto(file, user.profileId)
       .then((res) => {
         updateUser(Object.assign({}, { ...user, avatarUrl: res.data.url }));
+        setIsPhotoUploading(false);
       })
       .catch((err) => {
-        console.log(err);
+        setIsPhotoUploading(false);
       });
   };
 
@@ -46,6 +49,7 @@ const EditProfile = () => {
       <Header heading="Edit Profile" />
       <Box mt="3rem">
         <PhotoUpload
+          isPhotoUploading={isPhotoUploading}
           avatarUrl={user.avatarUrl}
           handlePhotoUpload={handlePhotoUpload}
           file={file}

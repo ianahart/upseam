@@ -4,11 +4,14 @@ import java.security.Key;
 
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.auth.dto.UserDto;
+import com.backend.fitters.auth.request.PasswordResetRequest;
+import com.backend.fitters.config.JwtService;
+import com.backend.fitters.advice.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -21,10 +24,16 @@ public class UserService {
     private String secretKey;
 
     private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+            JwtService jwtService,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private Key getSignInKey() {
@@ -63,5 +72,21 @@ public class UserService {
                 user.getProfile().getAvatarUrl());
         return userDto;
 
+    }
+
+    public void resetUserPassword(PasswordResetRequest request) {
+
+        User user = this.userRepository.findById(request.getId())
+                .orElseThrow(() -> new NotFoundException("User not found."));
+
+        if (!this.jwtService.isTokenValid(request.getToken(), user)) {
+            throw new ForbiddenException("Link has expired.");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new BadRequestException("Passwords do not match.");
+        }
+        user.setPassword(this.passwordEncoder.encode(request.getNewPassword()));
+        this.userRepository.save(user);
     }
 }
