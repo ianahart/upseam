@@ -1,43 +1,35 @@
 package com.backend.fitters.profile.dto;
 
+import com.backend.fitters.user.dto.MinimalUserDto;
 import com.backend.fitters.profile.Profile;
 
 public class ProfileDto {
-    private Profile profile;
-    private String firstName;
-    private String lastName;
+    private ProfileFieldsDto profile;
+    private MinimalUserDto user;
 
     public ProfileDto() {
 
     }
 
-    public ProfileDto(Profile profile, String firstName, String lastName) {
+    public ProfileDto(ProfileFieldsDto profile, MinimalUserDto user) {
         this.profile = profile;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.user = user;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public MinimalUserDto getUser() {
+        return user;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Profile getProfile() {
+    public ProfileFieldsDto getProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
+    public void setProfile(ProfileFieldsDto profile) {
         this.profile = profile;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUser(MinimalUserDto user) {
+        this.user = user;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 }
