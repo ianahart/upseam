@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.backend.fitters.token.Token;
 import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
+import com.backend.fitters.passwordreset.PasswordReset;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -61,6 +62,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "user")
+    private List<PasswordReset> passwordResets;
 
     @Enumerated(EnumType.STRING)
     private Role role;

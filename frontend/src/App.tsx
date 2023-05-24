@@ -6,7 +6,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Routes,
   RouterProvider,
 } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
@@ -18,13 +17,14 @@ import { UserContext } from './context/user';
 import { IUserContext } from './interfaces';
 import { useEffectOnce } from './hooks/useEffectOnce';
 import RequireGuest from './components/Guard/RequireGuest';
-import WithAxios from './hooks/withAxios';
 import RequireAuth from './components/Guard/RequireAuth';
 import HeartBeatRoute from './routes/HeartBeatRoute';
 import SettingsRoute from './routes/SettingsRoute';
 import EditProfile from './components/Settings/EditProfile';
 import Contacts from './components/Settings/Contacts';
 import MyProfile from './components/Profile/MyProfile';
+import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
+import ResetPasswordRoute from './routes/ResetPasswordRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,6 +38,23 @@ const router = createBrowserRouter(
           </RequireGuest>
         }
       />
+      <Route
+        path="forgot-password"
+        element={
+          <RequireGuest>
+            <ForgotPasswordRoute />
+          </RequireGuest>
+        }
+      />
+      <Route
+        path="reset-password"
+        element={
+          <RequireGuest>
+            <ResetPasswordRoute />
+          </RequireGuest>
+        }
+      />
+
       <Route
         path="login"
         element={
@@ -94,7 +111,7 @@ const router = createBrowserRouter(
 function App() {
   const { updateUser, stowTokens } = useContext(UserContext) as IUserContext;
   const storeUser = useCallback(async () => {
-    Client.syncUser(retreiveTokens().token)
+    Client.syncUser(retreiveTokens()?.token)
       .then((res) => {
         updateUser(res.data);
         stowTokens(retreiveTokens());

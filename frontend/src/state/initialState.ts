@@ -6,6 +6,15 @@ export const registerFormState = {
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
 };
 
+export const resetPasswordState = {
+  password: { name: 'password', value: '', error: '', type: 'password' },
+  confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
+};
+
+export const forgotPasswordFormState = {
+  email: { name: 'email', value: '', error: '', type: 'email' },
+};
+
 export const userFormState = {
   firstName: { name: 'firstName', value: '', error: '', type: 'text' },
   lastName: { name: 'lastName', value: '', error: '', type: 'text' },
