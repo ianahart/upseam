@@ -3,13 +3,20 @@ import Header from '../Header';
 import { useContext, useEffect, useState } from 'react';
 import { editProfileState, userFormState } from '../../../state/initialState';
 import { UserContext } from '../../../context/user';
-import { IEditUserForm, IUserContext } from '../../../interfaces';
+import {
+  IEditProfileForm,
+  IEditUserForm,
+  ISpeciality,
+  IUserContext,
+} from '../../../interfaces';
 import { Client } from '../../../util/client';
 import PhotoUpload from '../PhotoUpload';
 import FormLayout from './FormLayout';
 import UserForm from './UserForm';
 import { abbreviate, capitalize } from '../../../util';
 import FormHeader from './FormHeader';
+import ProfileForm from './ProfileForm';
+import { nanoid } from 'nanoid';
 
 const EditProfile = () => {
   const toast = useToast();
@@ -18,6 +25,32 @@ const EditProfile = () => {
   const [isPhotoUploading, setIsPhotoUploading] = useState(false);
   const [profileForm, setProfileForm] = useState(editProfileState);
   const [userForm, setUserForm] = useState(userFormState);
+  const [specialities, setSpecialities] = useState<ISpeciality[]>([]);
+
+  const handleAddSpeciality = (speciality: string) => {
+    setSpecialities((prevState) => [...prevState, { id: nanoid(), text: speciality }]);
+  };
+
+  const handleDeleteSpeciality = (id: string) => {
+    setSpecialities(specialities.filter((speciality) => speciality.id !== id));
+  };
+
+  const handleUpdateProfileForm = () => {
+    Client.updateProfile(profileForm, specialities, user.profileId)
+      .then((res) => {
+        console.log(Res);
+        toast({
+          title: 'Success',
+          description: 'Successfully updated personal information',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
 
   const handleUpdateUserForm = (form: IEditUserForm) => {
     Client.updateUser(form, user.id)
@@ -37,7 +70,7 @@ const EditProfile = () => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        throw new Error(err.response.data.message);
       });
   };
 
@@ -54,6 +87,10 @@ const EditProfile = () => {
       }));
       return;
     }
+    setProfileForm((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name as keyof IEditProfileForm], [attribute]: value },
+    }));
   };
 
   useEffect(() => {
@@ -109,13 +146,26 @@ const EditProfile = () => {
         <Box mt="3rem">
           <FormLayout>
             <>
-            <FormHeader heading="Personal Information" />
-            <UserForm
-              userForm={userForm}
-              handleUpdateUserForm={handleUpdateUserForm}
-              handleUpdateField={handleUpdateField}
-            />
-                        </>
+              <FormHeader heading="Personal Information" />
+              <UserForm
+                userForm={userForm}
+                handleUpdateUserForm={handleUpdateUserForm}
+                handleUpdateField={handleUpdateField}
+              />
+            </>
+          </FormLayout>
+          <FormLayout>
+            <>
+              <FormHeader heading="Address" />
+              <ProfileForm
+                handleUpdateField={handleUpdateField}
+                profileForm={profileForm}
+                specialities={specialities}
+                handleAddSpeciality={handleAddSpeciality}
+                handleDeleteSpeciality={handleDeleteSpeciality}
+                handleUpdateProfileForm={handleUpdateProfileForm}
+              />
+            </>
           </FormLayout>
         </Box>
       </Box>

@@ -11,7 +11,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     @Query(value = """
              SELECT p.zip_code, p.country,
              p.address, p.pricing, p.site, p.bio,
-             p.specialities
+            p.state, p.specialities
              FROM profile p
              WHERE p.id = :profileId
             """, nativeQuery = true)

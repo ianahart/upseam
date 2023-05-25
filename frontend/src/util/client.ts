@@ -1,9 +1,11 @@
 import axios from 'axios';
 import {
+  IEditProfileForm,
   IEditUserForm,
   ILoginForm,
   IRegisterForm,
   IResetPasswordForm,
+  ISpeciality,
 } from '../interfaces';
 
 export const http = axios.create({
@@ -11,6 +13,23 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateProfile: (
+    form: IEditProfileForm,
+    specialities: ISpeciality[],
+    profileId: number
+  ) => {
+    return http.patch(`/profiles/${profileId}`, {
+      specialities: JSON.stringify(specialities),
+      country: form.country,
+      state: form.state,
+      address: form.address,
+      zipCode: form.zipCode,
+      site: form.site,
+      bio: form.bio,
+      pricing: form.pricing,
+    });
+  },
+
   updateUser: (form: IEditUserForm, userId: number) => {
     return http.patch(`/users/${userId}`, {
       firstName: form.firstName.value,

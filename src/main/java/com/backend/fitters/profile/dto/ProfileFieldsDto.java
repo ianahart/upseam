@@ -16,6 +16,8 @@ public interface ProfileFieldsDto {
 
     String getBio();
 
+    String getState();
+
     List<String> getSpecialities();
 
 }

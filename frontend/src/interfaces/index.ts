@@ -27,6 +27,12 @@ export interface IEditProfileForm {
   pricing: { name: string; value: string; error: string; type: string };
   site: { name: string; value: string; error: string; type: string };
   bio: { name: string; value: string; error: string; type: string };
+  state: { name: string; value: string; error: string; type: string };
+}
+
+export interface ISpeciality {
+  id: string;
+  text: string;
 }
 
 export interface ILoginForm {

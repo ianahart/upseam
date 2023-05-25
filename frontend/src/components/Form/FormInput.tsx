@@ -11,6 +11,7 @@ export interface IFormInputProps {
   htmlFor: string;
   label: string;
   errorField: string;
+  noValidation?: boolean;
 }
 
 const FormInput = ({
@@ -23,6 +24,7 @@ const FormInput = ({
   htmlFor,
   label,
   errorField,
+  noValidation,
 }: IFormInputProps) => {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,6 +40,7 @@ const FormInput = ({
   };
 
   const handleOnBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (noValidation) return;
     const { name, value } = e.target;
     if (!validateField(value)) {
       const error = `${errorField} must be between 1 and 100 characters.`;
@@ -57,7 +60,13 @@ const FormInput = ({
   };
 
   return (
-    <FormControl my="1.5rem" isInvalid={error.length > 0} textAlign="center">
+    <FormControl
+      my="1.5rem"
+      display="flex"
+      flexDir="column"
+      isInvalid={error.length > 0}
+      textAlign="center"
+    >
       <FormLabel color="text.primary" htmlFor={htmlFor}>
         {label}
       </FormLabel>
@@ -65,7 +74,7 @@ const FormInput = ({
         onBlur={handleOnBlur}
         onChange={handleOnChange}
         onFocus={handleOnFocus}
-        width={width}
+        width={['100%', width, width]}
         value={value}
         name={name}
         type={type}
