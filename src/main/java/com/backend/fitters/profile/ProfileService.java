@@ -4,8 +4,10 @@ import java.util.Map;
 
 import com.backend.fitters.amazon.AmazonService;
 import com.backend.fitters.profile.request.ProfilePhotoRequest;
+import com.backend.fitters.profile.dto.ProfileFieldsDto;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.profile.dto.ProfileDto;
+import com.backend.fitters.user.dto.MinimalUserDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,15 @@ public class ProfileService {
     }
 
     public ProfileDto getProfile(Long profileId) {
+
         Profile profile = this.profileRepository.findById(profileId).orElseThrow(
                 () -> new NotFoundException("Profile not found."));
-        return new ProfileDto(profile,
+
+        ProfileFieldsDto profileFields = this.profileRepository.getProfileFields(profileId);
+        return new ProfileDto(profileFields, new MinimalUserDto(
                 profile.getUser().getFirstName(),
-                profile.getUser().getLastName());
+                profile.getUser().getLastName()));
+
     }
 
     public Profile createProfile() {

@@ -64,6 +64,19 @@ export interface IProfile {
   bio: string;
 }
 
+export interface IMinimalUser {
+  firstName: string;
+  lastName: string;
+}
+
+export interface IMinimalSpecialities {
+  address: string;
+  country: string;
+  bio: string;
+  site: string;
+  pricing: string;
+}
+
 export interface IUserContext {
   user: IUser;
   stowTokens: (tokens: ITokens) => void;

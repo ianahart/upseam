@@ -50,7 +50,6 @@ const ResetPasswordRoute = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 400) {
           setError(err.response.data.message);
         }
@@ -80,7 +79,9 @@ const ResetPasswordRoute = () => {
                 Your new password should not be the same as your old password.
               </Text>
               {error.length > 0 && (
-                <Text textAlign="center" color="red.500" fontSize="0.85rem">{error}</Text>
+                <Text textAlign="center" color="red.500" fontSize="0.85rem">
+                  {error}
+                </Text>
               )}
             </Box>
 

@@ -1,11 +1,14 @@
 package com.backend.fitters.profile;
 
 import java.util.List;
+import java.util.ArrayList;
 
+import com.backend.fitters.profile.converters.StringListConverter;
 import com.backend.fitters.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +37,9 @@ public class Profile {
     private String country;
     @Column(name = "address", length = 255)
     private String address;
-    @ElementCollection
+    @Convert(converter = StringListConverter.class)
     @Column(name = "specialities")
-    private List<String> specialities;
+    private List<String> specialities = new ArrayList<>();
     @Column(name = "pricing")
     private Integer pricing;
     @Column(name = "site")
