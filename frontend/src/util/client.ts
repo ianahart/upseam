@@ -1,11 +1,23 @@
 import axios from 'axios';
-import { ILoginForm, IRegisterForm, IResetPasswordForm } from '../interfaces';
+import {
+  IEditUserForm,
+  ILoginForm,
+  IRegisterForm,
+  IResetPasswordForm,
+} from '../interfaces';
 
 export const http = axios.create({
   baseURL: 'http://localhost:5173/api/v1',
 });
 
 export const Client = {
+  updateUser: (form: IEditUserForm, userId: number) => {
+    return http.patch(`/users/${userId}`, {
+      firstName: form.firstName.value,
+      lastName: form.lastName.value,
+    });
+  },
+
   resetPassword: (uid: string | null, token: string | null, form: IResetPasswordForm) => {
     return http.post('/auth/reset-password', {
       id: uid,

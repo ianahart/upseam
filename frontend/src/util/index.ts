@@ -10,3 +10,11 @@ export const retreiveTokens = () => {
 export const slugify = (firstName: string, lastName: string) => {
   return (firstName + lastName).toLowerCase();
 };
+
+export const abbreviate = (firstName: string, lastName: string) => {
+  return firstName.slice(0, 1).toUpperCase() + lastName.slice(0, 1).toUpperCase();
+};
+
+export const capitalize = (value: string) => {
+  return value.slice(0, 1).toUpperCase() + value.slice(1).toLowerCase();
+};

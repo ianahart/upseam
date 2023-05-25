@@ -1,16 +1,20 @@
 package com.backend.fitters.user;
 
 import java.security.Key;
-
+import java.util.Optional;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.auth.dto.UserDto;
 import com.backend.fitters.auth.request.PasswordResetRequest;
 import com.backend.fitters.config.JwtService;
 import com.backend.fitters.advice.*;
+import com.backend.fitters.user.request.UpdateUserRequest;
+import com.backend.fitters.util.MyUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -88,5 +92,35 @@ public class UserService {
         }
         user.setPassword(this.passwordEncoder.encode(request.getNewPassword()));
         this.userRepository.save(user);
+    }
+
+    public boolean checkOwnerShip(Long userId) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        User user = this.userRepository.findByEmail(username)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        return user.getId() == userId;
+    }
+
+    public void updateUser(Long userId, UpdateUserRequest request) {
+        if (!checkOwnerShip(userId)) {
+            throw new ForbiddenException("Cannot update another user.");
+        }
+
+        User user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if (request.getFirstName() != null) {
+            user.setFirstName(MyUtils.capitalize(request.getFirstName()));
+        }
+
+        if (request.getLastName() != null) {
+            user.setLastName(MyUtils.capitalize(request.getLastName()));
+        }
+
+        System.out.println(request.getFirstName());
+        this.userRepository.save(user);
+
     }
 }

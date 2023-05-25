@@ -46,6 +46,13 @@ button.logout-button:hover {
   opacity: 0.8;
 }
 
+.editProfileForm {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .routerLink:hover {
   opacity: 0.8;
 }
