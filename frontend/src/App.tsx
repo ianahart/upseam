@@ -22,7 +22,7 @@ import HeartBeatRoute from './routes/HeartBeatRoute';
 import SettingsRoute from './routes/SettingsRoute';
 import EditProfile from './components/Settings/EditProfile/EditProfile';
 import Contacts from './components/Settings/Contacts';
-import MyProfile from './components/Profile/MyProfile';
+import MyProfile from './components/Settings/MyProfile/MyProfile';
 import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 import ResetPasswordRoute from './routes/ResetPasswordRoute';
 

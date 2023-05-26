@@ -20,4 +20,6 @@ public interface ProfileFieldsDto {
 
     String getSpecialities();
 
+    String getAvatarUrl();
+
 }
