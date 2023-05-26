@@ -64,7 +64,6 @@ export interface IProfile {
   zipCode: string;
   country: string;
   address: string;
-  specialities: string[];
   pricing: string;
   site: string;
   bio: string;

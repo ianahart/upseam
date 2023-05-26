@@ -44,12 +44,13 @@ const ProfileForm = ({
 
   const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+
     handleAddSpeciality(speciality);
+    setSpeciality('');
   };
 
   const handleOnTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     handleUpdateField(name, value, 'value', 'profile');
   };
 
@@ -58,13 +59,19 @@ const ProfileForm = ({
     handleUpdateField(name, value, 'value', 'profile');
   };
 
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleUpdateProfileForm();
+  };
+
   return (
     <Box>
-      <form>
+      <form onSubmit={handleOnSubmit}>
         <Flex direction={['column', 'row', 'row']} justify="space-between">
           <Flex direction="column">
             <FormLabel color="text.primary">Country</FormLabel>
             <Select
+              value={profileForm.country.value}
               onChange={handleOnSelectChange}
               name="country"
               width="100%"
@@ -79,6 +86,7 @@ const ProfileForm = ({
             <FormLabel color="text.primary">State</FormLabel>
             <Select
               onChange={handleOnSelectChange}
+              value={profileForm.state.value}
               name="state"
               width="100%"
               placeholder="Select State"
@@ -144,7 +152,7 @@ const ProfileForm = ({
           <Text mb="0.25rem" color="text.primary">
             {specialities.length}/5
           </Text>
-          {specialities.length !== 5 && (
+          {specialities !== null && specialities?.length !== 5 && (
             <Flex>
               <Input
                 onChange={(e) => setSpeciality(e.target.value)}
@@ -156,11 +164,18 @@ const ProfileForm = ({
               </Button>
             </Flex>
           )}
-          {specialities.length > 0 && (
+          {specialities !== null && specialities.length > 0 && (
             <Flex justify="space-around" wrap="wrap" my="2rem" width="60%">
               {specialities.map(({ id, text }) => {
                 return (
-                  <Box p="0.5rem" m="0.5rem" bg="gray.100" key={id} pos="relative">
+                  <Box
+                    borderRadius="8px"
+                    p="0.5rem"
+                    m="0.5rem"
+                    bg="gray.100"
+                    key={id}
+                    pos="relative"
+                  >
                     <Text>{text}</Text>
                     <Box
                       cursor="pointer"
@@ -181,6 +196,7 @@ const ProfileForm = ({
           <FormLabel color="text.primary">Your price range</FormLabel>
           <Select
             onChange={handleOnSelectChange}
+            value={profileForm.pricing.value}
             name="pricing"
             width="70%"
             placeholder="Select Pricing"
@@ -192,7 +208,7 @@ const ProfileForm = ({
         </Flex>
 
         <Flex justify="flex-end" my="2rem">
-          <Button onClick={handleUpdateProfileForm} colorScheme="blue" type="submit">
+          <Button colorScheme="blue" type="submit">
             Save
           </Button>
         </Flex>

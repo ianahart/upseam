@@ -18,15 +18,15 @@ export const Client = {
     specialities: ISpeciality[],
     profileId: number
   ) => {
-    return http.patch(`/profiles/${profileId}`, {
+    return http.put(`/profiles/${profileId}`, {
       specialities: JSON.stringify(specialities),
-      country: form.country,
-      state: form.state,
-      address: form.address,
-      zipCode: form.zipCode,
-      site: form.site,
-      bio: form.bio,
-      pricing: form.pricing,
+      country: form.country.value,
+      state: form.state.value,
+      address: form.address.value,
+      zipCode: form.zipCode.value,
+      site: form.site.value,
+      bio: form.bio.value,
+      pricing: form.pricing.value,
     });
   },
 

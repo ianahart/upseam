@@ -38,16 +38,17 @@ const EditProfile = () => {
   const handleUpdateProfileForm = () => {
     Client.updateProfile(profileForm, specialities, user.profileId)
       .then((res) => {
-        console.log(Res);
+        console.log(res);
         toast({
           title: 'Success',
-          description: 'Successfully updated personal information',
+          description: 'Successfully updated profile information',
           status: 'success',
           duration: 5000,
           isClosable: true,
         });
       })
       .catch((err) => {
+        console.log(err);
         throw new Error(err.response.data.message);
       });
   };
@@ -112,7 +113,17 @@ const EditProfile = () => {
   };
 
   const syncProfile = <T,>(data: T, setState: (arg: any) => void) => {
+    console.log(data);
     for (let prop in data) {
+      if (prop === 'specialities') {
+        if (data[prop] === null) {
+          //@ts-ignoree
+          data[prop] = [];
+        }
+        //@ts-ignore
+        setSpecialities(JSON.parse(data[prop]));
+      }
+
       setState((prevState: any) => ({
         ...prevState,
         [prop]: { ...prevState[prop], value: data[prop] === null ? '' : data[prop] },

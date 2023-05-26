@@ -1,13 +1,9 @@
 package com.backend.fitters.profile;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import com.backend.fitters.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,10 +31,10 @@ public class Profile {
     private String country;
     @Column(name = "address", length = 255)
     private String address;
-    @Column(name = "specialities")
+    @Column(name = "specialities", columnDefinition = "TEXT")
     private String specialities;
     @Column(name = "pricing")
-    private Integer pricing;
+    private String pricing;
     @Column(name = "site")
     private String site;
     @Column(name = "bio")
@@ -61,7 +57,7 @@ public class Profile {
             String country,
             String address,
             String specialities,
-            Integer pricing,
+            String pricing,
             String site,
             String bio,
             String state) {
@@ -102,7 +98,7 @@ public class Profile {
         return site;
     }
 
-    public Integer getPricing() {
+    public String getPricing() {
         return pricing;
     }
 
@@ -147,7 +143,7 @@ public class Profile {
         this.site = site;
     }
 
-    public void setPricing(Integer pricing) {
+    public void setPricing(String pricing) {
         this.pricing = pricing;
     }
 

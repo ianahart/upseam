@@ -59,7 +59,6 @@ export const profileState = {
   zipCode: '',
   country: '',
   address: '',
-  specialities: [],
   pricing: '',
   site: '',
   bio: '',

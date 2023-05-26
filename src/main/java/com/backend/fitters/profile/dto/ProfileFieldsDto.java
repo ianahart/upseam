@@ -18,6 +18,6 @@ public interface ProfileFieldsDto {
 
     String getState();
 
-    List<String> getSpecialities();
+    String getSpecialities();
 
 }

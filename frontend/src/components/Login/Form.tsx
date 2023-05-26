@@ -19,7 +19,6 @@ const Form = ({ title, helperText }: IFormProps) => {
   const [loginForm, setLoginForm] = useState(loginFormState);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  console.log(loginForm);
   const updateField = (name: string, value: string, attribute: string) => {
     setLoginForm((prevState) => ({
       ...prevState,
