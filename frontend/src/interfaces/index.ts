@@ -64,9 +64,24 @@ export interface IProfile {
   zipCode: string;
   country: string;
   address: string;
+  state: string;
   pricing: string;
   site: string;
   bio: string;
+}
+
+export interface IProfilePage {
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  zipCode: string;
+  state: string;
+  country: string;
+  address: string;
+  pricing: string;
+  site: string;
+  bio: string;
+  specialities: ISpeciality[];
 }
 
 export interface IMinimalUser {

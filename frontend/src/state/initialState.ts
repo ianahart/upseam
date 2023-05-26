@@ -60,8 +60,24 @@ export const profileState = {
   country: '',
   address: '',
   pricing: '',
+  state: '',
   site: '',
   bio: '',
+  specialities: [],
+};
+
+export const profilePageState = {
+  firstName: '',
+  lastName: '',
+  avatarUrl: '',
+  zipCode: '',
+  country: '',
+  address: '',
+  pricing: '',
+  state: '',
+  site: '',
+  bio: '',
+  specialities: [],
 };
 
 export const countries = [

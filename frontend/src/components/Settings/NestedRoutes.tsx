@@ -9,7 +9,12 @@ const NestedRoutes = () => {
   const [activeRoute, setActiveRoute] = useState('profile');
 
   return (
-    <Flex direction="column" m="1rem" minW={['100%', '250px', '250px']} minH="100vh">
+    <Flex
+      direction="column"
+      m={['0', '1rem', '1rem']}
+      minW={['100%', '250px', '250px']}
+      minH="100vh"
+    >
       <Box onClick={() => setActiveRoute('profile')}>
         <NestedRoute
           activeRoute={activeRoute}
