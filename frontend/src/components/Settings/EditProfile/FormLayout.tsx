@@ -8,8 +8,9 @@ const FormLayout = ({ children }: IFormLayoutProps) => {
   return (
     <Box
       minH="300px"
-            p="0.25rem"
+      p="0.25rem"
       border="1px solid"
+      my="2rem"
       borderBottomLeftRadius="8px"
       borderTopLeftRadius="8px"
       borderRight="none"

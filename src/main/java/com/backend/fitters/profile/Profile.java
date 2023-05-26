@@ -1,15 +1,9 @@
 package com.backend.fitters.profile;
 
-import java.util.List;
-import java.util.ArrayList;
-
-import com.backend.fitters.profile.converters.StringListConverter;
 import com.backend.fitters.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,15 +31,16 @@ public class Profile {
     private String country;
     @Column(name = "address", length = 255)
     private String address;
-    @Convert(converter = StringListConverter.class)
-    @Column(name = "specialities")
-    private List<String> specialities = new ArrayList<>();
+    @Column(name = "specialities", columnDefinition = "TEXT")
+    private String specialities;
     @Column(name = "pricing")
-    private Integer pricing;
+    private String pricing;
     @Column(name = "site")
     private String site;
     @Column(name = "bio")
     private String bio;
+    @Column(name = "state", length = 2)
+    private String state;
 
     @JsonIgnore
     @OneToOne(mappedBy = "profile")
@@ -61,10 +56,11 @@ public class Profile {
             String zipCode,
             String country,
             String address,
-            List<String> specialities,
-            Integer pricing,
+            String specialities,
+            String pricing,
             String site,
-            String bio) {
+            String bio,
+            String state) {
         this.id = id;
         this.avatarUrl = avatarUrl;
         this.avatarFileName = avatarFileName;
@@ -75,6 +71,7 @@ public class Profile {
         this.pricing = pricing;
         this.site = site;
         this.bio = bio;
+        this.state = state;
     }
 
     public Long getId() {
@@ -83,6 +80,10 @@ public class Profile {
 
     public User getUser() {
         return user;
+    }
+
+    public String getState() {
+        return state;
     }
 
     public String getAvatarUrl() {
@@ -97,7 +98,7 @@ public class Profile {
         return site;
     }
 
-    public Integer getPricing() {
+    public String getPricing() {
         return pricing;
     }
 
@@ -113,7 +114,7 @@ public class Profile {
         return country;
     }
 
-    public List<String> getSpecialities() {
+    public String getSpecialities() {
         return specialities;
     }
 
@@ -126,7 +127,11 @@ public class Profile {
         this.avatarUrl = avatarUrl;
     }
 
-    public void setSpecialities(List<String> specialities) {
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setSpecialities(String specialities) {
         this.specialities = specialities;
     }
 
@@ -138,7 +143,7 @@ public class Profile {
         this.site = site;
     }
 
-    public void setPricing(Integer pricing) {
+    public void setPricing(String pricing) {
         this.pricing = pricing;
     }
 

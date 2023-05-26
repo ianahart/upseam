@@ -19,13 +19,7 @@ const SettingsRoute = () => {
             minH="100vh"
             width={['95%', '95%', '95%']}
           >
-            <Box
-              maxW="1280px"
-              border="1px solid red"
-              p="0.5rem"
-              margin=" 0 auto"
-              width={['95%', '95%', '90%']}
-            >
+            <Box maxW="1280px" p="0.5rem" margin=" 0 auto" width={['95%', '95%', '90%']}>
               <Outlet />
             </Box>
           </Box>
