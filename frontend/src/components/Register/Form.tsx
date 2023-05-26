@@ -48,7 +48,7 @@ const Form = ({ title, helperText }: IFormProps) => {
     clearErrors();
     if (checkForErrors()) return;
     setIsLoading(true);
-    Client.register(registerForm)
+    Client.registerSeamster(registerForm)
       .then((res) => {
         setIsLoading(false);
         if (res.status === 201) {
