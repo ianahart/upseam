@@ -49,14 +49,14 @@ export const Client = {
     console.log(email);
     return http.post('/auth/forgot-password', { email });
   },
-  registerSeamster: (form: IRegisterForm) => {
+  register: (form: IRegisterForm, isChecked: boolean) => {
     return http.post('/auth/register', {
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       email: form.email.value,
       password: form.password.value,
       confirmPassword: form.confirmPassword.value,
-      role: 'SEAMSTER',
+      role: isChecked ? 'SEAMSTER' : 'USER',
     });
   },
   login: (form: ILoginForm) => {

@@ -10,9 +10,10 @@ import { Client } from '../../util/client';
 interface IFormProps {
   title: string;
   helperText: string;
+  isChecked: boolean;
 }
 
-const Form = ({ title, helperText }: IFormProps) => {
+const Form = ({ title, helperText, isChecked }: IFormProps) => {
   const navigate = useNavigate();
   const [registerForm, setRegisterForm] = useState(registerFormState);
   const [error, setError] = useState('');
@@ -48,7 +49,7 @@ const Form = ({ title, helperText }: IFormProps) => {
     clearErrors();
     if (checkForErrors()) return;
     setIsLoading(true);
-    Client.registerSeamster(registerForm)
+    Client.register(registerForm, isChecked)
       .then((res) => {
         setIsLoading(false);
         if (res.status === 201) {
