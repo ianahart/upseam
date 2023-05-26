@@ -38,7 +38,6 @@ const EditProfile = () => {
   const handleUpdateProfileForm = () => {
     Client.updateProfile(profileForm, specialities, user.profileId)
       .then((res) => {
-        console.log(res);
         toast({
           title: 'Success',
           description: 'Successfully updated profile information',
@@ -113,8 +112,10 @@ const EditProfile = () => {
   };
 
   const syncProfile = <T,>(data: T, setState: (arg: any) => void) => {
-    console.log(data);
     for (let prop in data) {
+      if (prop === 'avatarUrl') {
+        continue;
+      }
       if (prop === 'specialities') {
         if (data[prop] === null) {
           //@ts-ignoree
@@ -123,7 +124,6 @@ const EditProfile = () => {
         //@ts-ignore
         setSpecialities(JSON.parse(data[prop]));
       }
-
       setState((prevState: any) => ({
         ...prevState,
         [prop]: { ...prevState[prop], value: data[prop] === null ? '' : data[prop] },
