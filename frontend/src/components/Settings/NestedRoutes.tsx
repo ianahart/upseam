@@ -1,11 +1,14 @@
 import { Box, Flex, Button } from '@chakra-ui/react';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineUser } from 'react-icons/ai';
 import { BsPencil } from 'react-icons/bs';
 import { BiBookContent } from 'react-icons/bi';
 import NestedRoute from './NestedRoute';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../context/user';
+import { IUserContext } from '../../interfaces';
 
 const NestedRoutes = () => {
+  const { user } = useContext(UserContext) as IUserContext;
   const [activeRoute, setActiveRoute] = useState('profile');
 
   return (
@@ -31,6 +34,17 @@ const NestedRoutes = () => {
           icon={<BsPencil />}
         />
       </Box>
+      {user.role === 'USER' && (
+        <Box onClick={() => setActiveRoute('requests')}>
+          <NestedRoute
+            activeRoute={activeRoute}
+            to="requests"
+            routeName="Clothes Requests"
+            icon={<AiOutlinePlus />}
+          />
+        </Box>
+      )}
+
       <Box onClick={() => setActiveRoute('contacts')}>
         <NestedRoute
           activeRoute={activeRoute}
@@ -39,6 +53,7 @@ const NestedRoutes = () => {
           icon={<BiBookContent />}
         />
       </Box>
+
       <Box my="1rem">
         <Button
           _hover={{ background: 'transparent' }}

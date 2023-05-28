@@ -119,7 +119,6 @@ public class UserService {
             user.setLastName(MyUtils.capitalize(request.getLastName()));
         }
 
-        System.out.println(request.getFirstName());
         this.userRepository.save(user);
 
     }

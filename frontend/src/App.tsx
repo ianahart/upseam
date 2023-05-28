@@ -25,6 +25,8 @@ import Contacts from './components/Settings/Contacts';
 import MyProfile from './components/Settings/MyProfile/MyProfile';
 import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 import ResetPasswordRoute from './routes/ResetPasswordRoute';
+import ClothesRequests from './components/Settings/User/ClothesRequests';
+import RequireUser from './components/Guard/RequireUser';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -101,6 +103,14 @@ const router = createBrowserRouter(
             <RequireAuth>
               <MyProfile />
             </RequireAuth>
+          }
+        />
+        <Route
+          path="requests"
+          element={
+            <RequireUser>
+              <ClothesRequests />
+            </RequireUser>
           }
         />
       </Route>

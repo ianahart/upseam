@@ -10,7 +10,7 @@ const SettingsRoute = () => {
         <NestedRoutes />
         <Box bg="light.primary" width="100%" minH="100vh">
           <Box width={['95%', '95%', '750px']} m="2rem auto 1rem auto" as="header">
-            <Heading color="black.primary">Account Settings</Heading>
+            <Heading color="black.primary">My Account</Heading>
           </Box>
           <Box
             margin="3rem auto"

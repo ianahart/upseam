@@ -128,49 +128,51 @@ const MyProfile = () => {
           </Flex>
         </>
       </FormLayout>
-      <FormLayout>
-        <>
-          <FormHeader heading="About" />
-          <EditProfileLink />
-          <Box>
-            <Box my="1rem">
-              <Text color="text.primary">Personal Site</Text>
-              <Box color="blue.500">
-                <Link href={profile.site}>{profile.site}</Link>
+      {contextUser.role === 'SEAMSTER' && (
+        <FormLayout>
+          <>
+            <FormHeader heading="About" />
+            <EditProfileLink />
+            <Box>
+              <Box my="1rem">
+                <Text color="text.primary">Personal Site</Text>
+                <Box color="blue.500">
+                  <Link href={profile.site}>{profile.site}</Link>
+                </Box>
+              </Box>
+              <Box my="1rem">
+                <Text color="text.primary">Bio</Text>
+                <Text color="black.primary">{profile.bio}</Text>
               </Box>
             </Box>
             <Box my="1rem">
-              <Text color="text.primary">Bio</Text>
-              <Text color="black.primary">{profile.bio}</Text>
+              <FormHeader heading="Specialities" />
+              {profile.specialities !== null && profile.specialities.length > 0 && (
+                <Flex wrap="wrap" justifyContent="space-around">
+                  {profile.specialities.map(({ id, text }) => {
+                    return (
+                      <Box key={id} borderRadius="8px" p="0.5rem" bg="gray.100">
+                        <Text color="black.primary">{text}</Text>
+                      </Box>
+                    );
+                  })}
+                </Flex>
+              )}
             </Box>
-          </Box>
-          <Box my="1rem">
-            <FormHeader heading="Specialities" />
-            {profile.specialities !== null && profile.specialities.length > 0 && (
-              <Flex wrap="wrap" justifyContent="space-around">
-                {profile.specialities.map(({ id, text }) => {
-                  return (
-                    <Box key={id} borderRadius="8px" p="0.5rem" bg="gray.100">
-                      <Text color="black.primary">{text}</Text>
-                    </Box>
-                  );
-                })}
-              </Flex>
-            )}
-          </Box>
-          <Flex justify="flex-start" direction="column" align="flex-start" my="1rem">
-            <FormHeader heading="Typical price range" />
-            <Text
-              bg="rgba(16, 178, 16, 0.5)"
-              p="0.5rem"
-              borderRadius="8px"
-              color="black.primary"
-            >
-              {profile.pricing}
-            </Text>
-          </Flex>
-        </>
-      </FormLayout>
+            <Flex justify="flex-start" direction="column" align="flex-start" my="1rem">
+              <FormHeader heading="Typical price range" />
+              <Text
+                bg="rgba(16, 178, 16, 0.5)"
+                p="0.5rem"
+                borderRadius="8px"
+                color="black.primary"
+              >
+                {profile.pricing}
+              </Text>
+            </Flex>
+          </>
+        </FormLayout>
+      )}
     </Box>
   );
 };

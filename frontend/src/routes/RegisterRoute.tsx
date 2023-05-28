@@ -30,11 +30,11 @@ const RegisterRoute = () => {
       </Box>
 
       <Flex direction="column" align="center" justify="center" minH="100vh">
-          <Form
-            title="Create your account"
-            helperText="Create an account to view and bid on clothes."
-            isChecked={isChecked}
-          />
+        <Form
+          title="Create your account"
+          helperText="Create an account to view and bid on clothes."
+          isChecked={isChecked}
+        />
       </Flex>
     </Box>
   );

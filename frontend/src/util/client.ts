@@ -13,6 +13,22 @@ export const http = axios.create({
 });
 
 export const Client = {
+  createCloth: (
+    date: Date,
+    description: string,
+    file: File,
+    userId: number,
+    size: string
+  ) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('date', JSON.stringify(date));
+    formData.append('description', description);
+    formData.append('userId', userId.toString());
+    formData.append('size', size);
+    return http.post('/clothes', formData);
+  },
+
   updateProfile: (
     form: IEditProfileForm,
     specialities: ISpeciality[],
@@ -29,7 +45,6 @@ export const Client = {
       pricing: form.pricing.value,
     });
   },
-
   updateUser: (form: IEditUserForm, userId: number) => {
     return http.patch(`/users/${userId}`, {
       firstName: form.firstName.value,

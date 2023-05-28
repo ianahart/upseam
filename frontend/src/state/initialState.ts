@@ -20,6 +20,16 @@ export const userFormState = {
   lastName: { name: 'lastName', value: '', error: '', type: 'text' },
 };
 
+export const clothesSizeState = [
+  { id: 1, size: 'sm' },
+  { id: 2, size: 'md' },
+  { id: 3, size: 'lg' },
+  { id: 4, size: 'xl' },
+  { id: 5, size: 'xxl' },
+  { id: 6, size: '3xl' },
+  { id: 7, size: '4xl' },
+];
+
 export const editProfileState = {
   zipCode: { name: 'zipCode', value: '', error: '', type: 'text' },
   country: { name: 'country', value: '', error: '', type: 'text' },
