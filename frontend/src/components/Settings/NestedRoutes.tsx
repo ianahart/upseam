@@ -6,6 +6,7 @@ import NestedRoute from './NestedRoute';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
+import { GiClothes } from 'react-icons/gi';
 
 const NestedRoutes = () => {
   const { user } = useContext(UserContext) as IUserContext;
@@ -26,6 +27,16 @@ const NestedRoutes = () => {
           icon={<AiOutlineUser />}
         />
       </Box>
+      {user.role === 'USER' && (
+        <Box onClick={() => setActiveRoute('clothes')}>
+          <NestedRoute
+            activeRoute={activeRoute}
+            to="clothes"
+            routeName="My Clothes"
+            icon={<GiClothes />}
+          />
+        </Box>
+      )}
       <Box onClick={() => setActiveRoute('edit-profile')}>
         <NestedRoute
           activeRoute={activeRoute}

@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class CreateClothRequest {
     private MultipartFile file;
-    private LocalDate dueDate;
+    private String dueDate;
     private String description;
     private String size;
     private Long userId;
@@ -17,7 +17,7 @@ public class CreateClothRequest {
 
     public CreateClothRequest(
             MultipartFile file,
-            LocalDate dueDate,
+            String dueDate,
             String description,
             String size,
             Long userId) {
@@ -40,7 +40,7 @@ public class CreateClothRequest {
         return userId;
     }
 
-    public LocalDate getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
@@ -60,7 +60,7 @@ public class CreateClothRequest {
         this.file = file;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

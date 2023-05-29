@@ -6,6 +6,13 @@ export const registerFormState = {
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
 };
 
+export const clothesPaginationState = {
+  content: [],
+  totalPages: 0,
+  page: 0,
+  direction: 'next',
+};
+
 export const resetPasswordState = {
   password: { name: 'password', value: '', error: '', type: 'password' },
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },

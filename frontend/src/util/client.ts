@@ -1,4 +1,8 @@
 import axios from 'axios';
+import * as dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+
 import {
   IEditProfileForm,
   IEditUserForm,
@@ -13,6 +17,19 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getClothes: (
+    fetchType: string,
+    page: number,
+    pageSize: number,
+    direction: string,
+    userId?: number
+  ) => {
+    const url =
+      fetchType === 'user'
+        ? `/clothes?fetchType=${fetchType}&userId=${userId}`
+        : `/clothes?fetchType=${fetchType}`;
+    return http.get(`${url}&page=${page}&pageSize=${pageSize}&direction=${direction}`);
+  },
   createCloth: (
     date: Date,
     description: string,
@@ -22,7 +39,7 @@ export const Client = {
   ) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('date', JSON.stringify(date));
+    formData.append('dueDate', JSON.stringify(date.toISOString().substr(0, 10)));
     formData.append('description', description);
     formData.append('userId', userId.toString());
     formData.append('size', size);

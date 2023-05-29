@@ -23,4 +23,18 @@ public final class MyUtils {
         return String.join(" ", titleCased);
     }
 
+    public static int paginate(int page, String direction) {
+        int currentPage = page;
+
+        if (direction.equals("next")) {
+            currentPage = currentPage + 1;
+        }
+
+        if (direction.equals("prev") && page > 0) {
+            currentPage = currentPage - 1;
+        }
+
+        return currentPage;
+    }
+
 }

@@ -6,6 +6,7 @@ import com.backend.fitters.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +36,7 @@ public class Cloth {
     private String clothUrl;
     @Column(name = "cloth_filename")
     private String clothFilename;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "due_date")
     private LocalDate dueDate;
     @Column(name = "size")
@@ -57,7 +59,7 @@ public class Cloth {
             String clothFilename,
             LocalDate dueDate,
             String size,
-            String description) {
+            String description, User user) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -66,6 +68,7 @@ public class Cloth {
         this.dueDate = dueDate;
         this.size = size;
         this.description = description;
+        this.user = user;
     }
 
     public Cloth(

@@ -1,7 +1,13 @@
+import Header from '../Header';
 import ClothesRequestsForm from './ClothesRequestForm';
 
 const ClothesRequests = () => {
-  return <ClothesRequestsForm type="create" buttonText="Create" />;
+  return (
+    <>
+      <Header heading="Clothing Requests" />
+      <ClothesRequestsForm type="create" buttonText="Create" />
+    </>
+  );
 };
 
 export default ClothesRequests;

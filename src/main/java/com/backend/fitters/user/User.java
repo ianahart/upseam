@@ -129,6 +129,10 @@ public class User implements UserDetails {
         return createdAt;
     }
 
+    public List<Cloth> getClothes() {
+        return clothes;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -140,6 +144,10 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setClothes(List<Cloth> clothes) {
+        this.clothes = clothes;
     }
 
     public void setRole(Role role) {

@@ -27,6 +27,7 @@ import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 import ResetPasswordRoute from './routes/ResetPasswordRoute';
 import ClothesRequests from './components/Settings/User/ClothesRequests';
 import RequireUser from './components/Guard/RequireUser';
+import MyClothes from './components/Settings/MyClothes/MyClothes';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -110,6 +111,14 @@ const router = createBrowserRouter(
           element={
             <RequireUser>
               <ClothesRequests />
+            </RequireUser>
+          }
+        />
+        <Route
+          path="clothes"
+          element={
+            <RequireUser>
+              <MyClothes />
             </RequireUser>
           }
         />
