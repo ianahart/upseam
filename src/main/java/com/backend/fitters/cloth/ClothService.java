@@ -1,8 +1,6 @@
 package com.backend.fitters.cloth;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +8,16 @@ import java.util.Map;
 import com.backend.fitters.advice.BadRequestException;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.amazon.AmazonService;
-import com.backend.fitters.cloth.dto.ClothesDto;
 import com.backend.fitters.cloth.dto.ClothesWithPaginationDto;
 import com.backend.fitters.cloth.request.CreateClothRequest;
+import com.backend.fitters.cloth.request.UpdateClothRequest;
 import com.backend.fitters.user.User;
 import com.backend.fitters.user.UserRepository;
+import com.backend.fitters.user.UserService;
 import com.backend.fitters.util.MyUtils;
+import com.backend.fitters.cloth.dto.ClothDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,16 +30,62 @@ public class ClothService {
     private final ClothRepository clothRepository;
     private final UserRepository userRepository;
     private final AmazonService amazonService;
+    private final UserService userService;
     private final String bucketName = "arrow-date/upseam/clothes";
 
     @Autowired
     public ClothService(
             ClothRepository clothRepository,
+            UserService userService,
             AmazonService amazonService,
             UserRepository userRepository) {
         this.clothRepository = clothRepository;
         this.amazonService = amazonService;
         this.userRepository = userRepository;
+        this.userService = userService;
+    }
+
+    public void updateCloth(UpdateClothRequest request, Long clothId) {
+        Cloth cloth = this.clothRepository.findById(clothId)
+                .orElseThrow(() -> new BadRequestException("Cloth not found"));
+        User user = this.userService.getUserByAuth();
+        if (cloth.getUser().getId() != user.getId()) {
+            throw new BadRequestException("Cannot update another user's clothes");
+        }
+
+        if (request.getFile() != null && cloth.getClothFilename() != null) {
+            this.amazonService.delete(bucketName, cloth.getClothFilename());
+            String fileName = this.amazonService.upload(bucketName,
+                    request.getFile().getOriginalFilename(),
+                    request.getFile());
+            Map<String, String> fileContents = this.amazonService.getPublicUrl(bucketName, fileName);
+
+            cloth.setClothFilename(fileContents.get("fileName"));
+            cloth.setClothUrl((fileContents.get("url")));
+
+        }
+
+        if (request.getDescription().length() > 250) {
+            throw new BadRequestException("Clothes description must be under 250 characters");
+        }
+
+        cloth.setSize(request.getSize());
+        cloth.setDescription(request.getDescription());
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = request.getDueDate().replaceAll("^\"|\"$", "");
+        cloth.setDueDate(LocalDate.parse(date, df));
+
+        this.clothRepository.save(cloth);
+    }
+
+    public ClothDto syncCloth(String clothId) {
+        User user = this.userService.getUserByAuth();
+        ClothDto cloth = this.clothRepository.findByClothId(Long.parseLong(clothId));
+        if (cloth.getUserId() != user.getId()) {
+            throw new BadRequestException("Cannot update another user's clothes");
+        }
+
+        return cloth;
     }
 
     public ClothesWithPaginationDto getUserClothes(Long userId, int page, int pageSize, String direction) {

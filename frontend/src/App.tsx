@@ -28,6 +28,7 @@ import ResetPasswordRoute from './routes/ResetPasswordRoute';
 import ClothesRequests from './components/Settings/User/ClothesRequests';
 import RequireUser from './components/Guard/RequireUser';
 import MyClothes from './components/Settings/MyClothes/MyClothes';
+import EditCloth from './components/Settings/MyClothes/EditCloth';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -119,6 +120,14 @@ const router = createBrowserRouter(
           element={
             <RequireUser>
               <MyClothes />
+            </RequireUser>
+          }
+        />
+        <Route
+          path="clothes/edit/:clothId"
+          element={
+            <RequireUser>
+              <EditCloth />
             </RequireUser>
           }
         />

@@ -17,6 +17,29 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateCloth: (
+    date: Date,
+    description: string,
+    file: File | null,
+    userId: number,
+    size: string,
+    clothId: number
+  ) => {
+    const formData = new FormData();
+    if (file !== null) {
+      formData.append('file', file);
+    }
+    formData.append('dueDate', JSON.stringify(date.toISOString().substr(0, 10)));
+    formData.append('description', description);
+    formData.append('size', size);
+    formData.append('userId', userId.toString());
+
+    return http.patch(`/clothes/${clothId}`, formData);
+  },
+
+  syncCloth: (clothId: string) => {
+    return http.get(`/clothes/sync?clothId=${clothId}`);
+  },
   getClothes: (
     fetchType: string,
     page: number,

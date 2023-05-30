@@ -15,9 +15,12 @@ import {
   Flex,
   Tooltip,
 } from '@chakra-ui/react';
-
-import { IClothes } from '../../../interfaces';
+import { Link as RouterLink } from 'react-router-dom';
+import { IClothes, IUserContext } from '../../../interfaces';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { useContext } from 'react';
+import { UserContext } from '../../../context/user';
+import { slugify } from '../../../util';
 
 interface IClothProps {
   cloth: IClothes;
@@ -25,7 +28,7 @@ interface IClothProps {
 }
 
 const Cloth = ({ cloth, isEditable }: IClothProps) => {
-  console.log(cloth);
+  const { user } = useContext(UserContext) as IUserContext;
   return (
     <Card maxW="sm">
       <CardBody>
@@ -71,11 +74,17 @@ const Cloth = ({ cloth, isEditable }: IClothProps) => {
           </Text>
         </Box>
         <Box cursor="pointer" color="text.primary">
-          <Tooltip label="Edit Clothing" fontSize="md" placement="top-end">
-            <span>
-              <AiOutlineEdit fontSize="1rem" />
-            </span>
-          </Tooltip>
+          <RouterLink
+            to={`/settings/${slugify(user.firstName, user.lastName)}/clothes/edit/${
+              cloth.id
+            }`}
+          >
+            <Tooltip label="Edit Clothing" fontSize="sm" placement="top-end">
+              <span>
+                <AiOutlineEdit fontSize="1rem" />
+              </span>
+            </Tooltip>
+          </RouterLink>
         </Box>
       </CardFooter>
     </Card>

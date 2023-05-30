@@ -13,6 +13,8 @@ import com.backend.fitters.util.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,6 +40,18 @@ public class UserService {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public User getUserByAuth() {
+        String currentUserName = "";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            currentUserName = auth.getName();
+        }
+        User user = this.userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new NotFoundException("User not found."));
+        return user;
+
     }
 
     private Key getSignInKey() {

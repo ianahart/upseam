@@ -17,12 +17,16 @@ import { AiOutlineUpload } from 'react-icons/ai';
 import FormLayout from '../EditProfile/FormLayout';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import * as dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 import { Client } from '../../../util/client';
 import { UserContext } from '../../../context/user';
 import { IUserContext } from '../../../interfaces/index';
 import { clothesSizeState } from '../../../state/initialState';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { slugify } from '../../../util';
+import { useEffectOnce } from '../../../hooks/useEffectOnce';
 
 interface IClothesRequestsFormProps {
   type: string;
@@ -32,6 +36,7 @@ interface IClothesRequestsFormProps {
 const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
+  const params = useParams();
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [description, setDescription] = useState('');
@@ -40,12 +45,65 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
   const [charCounter, setCharCounter] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [size, setSize] = useState('');
+  const [clothId, setClothId] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
   const [error, setError] = useState('');
   const MAX_LENGTH = 250;
 
+  const syncForm = (clothId: string) => {
+    Client.syncCloth(clothId)
+      .then((res) => {
+        const { cloth } = res.data;
+        setClothId(cloth.id);
+        setDataURL(cloth.clothUrl);
+        setDescription(cloth.description);
+        setCharCounter(cloth.description.length);
+        setStartDate(dayjs(cloth.dueDate).toDate());
+        setSize(cloth.size);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffectOnce(() => {
+    if (params.clothId !== undefined) {
+      syncForm(params.clothId);
+    }
+  });
+
+  const createCloth = () => {
+    if (file === null) return;
+    Client.createCloth(startDate, description, file, user.id, size)
+      .then((res) => {
+        navigate(`/settings/${slugify(user.firstName, user.lastName)}/profile`);
+
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        if (err.response.status === 400) {
+          setError(err.response.data.message);
+        }
+        throw new Error(err.response.data.message);
+      });
+  };
+
+  const updateCloth = () => {
+    setIsLoading(true);
+    Client.updateCloth(startDate, description, file, user.id, size, clothId)
+      .then((response) => {
+        navigate(`/settings/${slugify(user.firstName, user.lastName)}/clothes`);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  };
+
   const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (file === null) {
+    if (file === null && type === 'create') {
       setError('Please upload an image of a piece of clothes you want made');
       return;
     }
@@ -54,20 +112,11 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
       return;
     }
     setIsLoading(true);
-    if (type === 'create') {
-      Client.createCloth(startDate, description, file, user.id, size)
-        .then((res) => {
-          navigate(`/settings/${slugify(user.firstName, user.lastName)}/profile`);
-
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          if (err.response.status === 400) {
-            setError(err.response.data.message);
-          }
-          throw new Error(err.response.data.message);
-        });
+    if (type === 'create' && file !== null) {
+      createCloth();
+    }
+    if (type === 'update') {
+      updateCloth();
     }
   };
 
@@ -221,7 +270,11 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
         </Box>
         <Box my="1rem">
           <Text color="text.primary">Size</Text>
-          <Select onChange={(e) => setSize(e.target.value)} placeholder="Select Size">
+          <Select
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+            placeholder="Select Size"
+          >
             {clothesSizeState.map(({ id, size }) => {
               return (
                 <option key={id} value={size}>

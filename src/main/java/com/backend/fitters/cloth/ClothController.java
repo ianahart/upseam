@@ -5,12 +5,18 @@ import java.util.Optional;
 import com.backend.fitters.cloth.request.CreateClothRequest;
 import com.backend.fitters.cloth.response.CreateClothResponse;
 import com.backend.fitters.cloth.response.GetClothesResponse;
+import com.backend.fitters.cloth.response.SyncClothResponse;
+import com.backend.fitters.cloth.response.UpdateClothResponse;
+import com.backend.fitters.cloth.request.UpdateClothRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +30,24 @@ public class ClothController {
     @Autowired
     public ClothController(ClothService clothService) {
         this.clothService = clothService;
+    }
+
+    @PatchMapping("/{clothId}")
+    public ResponseEntity<UpdateClothResponse> updateCloth(
+            @PathVariable("clothId") Long clothId,
+            UpdateClothRequest request) {
+        this.clothService.updateCloth(request, clothId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new UpdateClothResponse("success"));
+    }
+
+    @GetMapping("/sync")
+    public ResponseEntity<SyncClothResponse> syncClothes(@RequestParam("clothId") String clothId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SyncClothResponse(this.clothService.syncCloth(clothId), "success"));
     }
 
     @GetMapping
