@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.backend.fitters.cloth.request.CreateClothRequest;
 import com.backend.fitters.cloth.response.CreateClothResponse;
+import com.backend.fitters.cloth.response.FullClothResponse;
 import com.backend.fitters.cloth.response.GetClothesResponse;
 import com.backend.fitters.cloth.response.SyncClothResponse;
 import com.backend.fitters.cloth.response.UpdateClothResponse;
@@ -30,6 +31,13 @@ public class ClothController {
     @Autowired
     public ClothController(ClothService clothService) {
         this.clothService = clothService;
+    }
+
+    @GetMapping("/{clothId}")
+    public ResponseEntity<FullClothResponse> getCloth(@PathVariable("clothId") Long clothId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new FullClothResponse("success", this.clothService.getCloth(clothId)));
     }
 
     @PatchMapping("/{clothId}")
@@ -64,9 +72,7 @@ public class ClothController {
 
         } else {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new GetClothesResponse(this.clothService.getUserClothes(userId, page, pageSize, direction)));
-            // fetch all users clothes
-            // same as above query without the userid = :userId
+                    .body(new GetClothesResponse(this.clothService.getAllClothes(page, pageSize, direction)));
         }
 
     }

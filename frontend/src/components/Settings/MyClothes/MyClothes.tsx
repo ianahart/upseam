@@ -73,7 +73,7 @@ const MyClothes = () => {
         </Flex>
       )}
       <Clothes clothes={pagination.content} />
-      <Flex justify="center">
+      <Flex justify="center" mt="3rem">
         <Pagination
           userId={user.id}
           fetchType="user"

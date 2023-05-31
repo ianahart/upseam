@@ -17,6 +17,10 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getCloth: (clothId: string) => {
+    return http.get(`clothes/${clothId}`);
+  },
+
   updateCloth: (
     date: Date,
     description: string,
@@ -36,7 +40,6 @@ export const Client = {
 
     return http.patch(`/clothes/${clothId}`, formData);
   },
-
   syncCloth: (clothId: string) => {
     return http.get(`/clothes/sync?clothId=${clothId}`);
   },

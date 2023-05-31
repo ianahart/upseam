@@ -13,6 +13,20 @@ export const clothesPaginationState = {
   direction: 'next',
 };
 
+export const fullClothState = {
+  clothUrl: '',
+  createdAt: new Date(),
+  description: '',
+  dueDate: '',
+  email: '',
+  firstName: '',
+  id: 0,
+  lastName: '',
+  size: '',
+  updatedAt: new Date(),
+  userId: 0,
+};
+
 export const resetPasswordState = {
   password: { name: 'password', value: '', error: '', type: 'password' },
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },

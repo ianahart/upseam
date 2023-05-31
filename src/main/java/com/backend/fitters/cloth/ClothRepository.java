@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.backend.fitters.cloth.dto.ClothesDto;
 import com.backend.fitters.cloth.dto.ClothDto;
+import com.backend.fitters.cloth.dto.FullClothDto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +27,7 @@ public interface ClothRepository extends JpaRepository<Cloth, Long> {
             c.id, c.clothUrl, c.dueDate, c.size, c.description, c.createdAt,
             c.updatedAt, u.firstName, u.lastName, u.email, u.id AS userId
             ) FROM Cloth c LEFT JOIN c.user u""")
-    List<ClothesDto> findAllClothes(@Param("userId") Long userId);
+    Page<ClothesDto> findAllClothes(Pageable pageable);
 
     @Query(value = """
             SELECT new com.backend.fitters.cloth.dto.ClothDto(
@@ -34,7 +35,12 @@ public interface ClothRepository extends JpaRepository<Cloth, Long> {
              u.id AS userId)
              FROM Cloth c LEFT JOIN c.user u
              WHERE c.id = :clothId""")
-
     ClothDto findByClothId(@Param("clothId") Long clothId);
 
+    @Query(value = """
+            SELECT new com.backend.fitters.cloth.dto.FullClothDto(
+                   c.id, c.clothUrl, c.dueDate, c.size, c.description, c.createdAt,
+                  c.updatedAt, u.firstName, u.lastName, u.email, u.id AS userId
+                  ) FROM Cloth c LEFT JOIN c.user u WHERE c.id = :clothId""")
+    FullClothDto findFullClothById(@Param("clothId") Long clothId);
 }

@@ -19,6 +19,20 @@ export interface IClothesPagination {
   direction: string;
 }
 
+export interface IFullCloth {
+  clothUrl: string;
+  createdAt: Date;
+  description: string;
+  dueDate: string;
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  size: string;
+  updatedAt: Date;
+  userId: number;
+}
+
 export interface IRegisterForm {
   firstName: { name: string; value: string; error: string; type: string };
   lastName: { name: string; value: string; error: string; type: string };

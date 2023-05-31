@@ -9,6 +9,7 @@ import com.backend.fitters.advice.BadRequestException;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.amazon.AmazonService;
 import com.backend.fitters.cloth.dto.ClothesWithPaginationDto;
+import com.backend.fitters.cloth.dto.FullClothDto;
 import com.backend.fitters.cloth.request.CreateClothRequest;
 import com.backend.fitters.cloth.request.UpdateClothRequest;
 import com.backend.fitters.user.User;
@@ -43,6 +44,15 @@ public class ClothService {
         this.amazonService = amazonService;
         this.userRepository = userRepository;
         this.userService = userService;
+    }
+
+    public FullClothDto getCloth(Long clothId) {
+        boolean exists = this.clothRepository.existsById(clothId);
+        if (!exists) {
+            throw new BadRequestException("Cloth with the id " + clothId + " does not exist");
+        }
+
+        return this.clothRepository.findFullClothById(clothId);
     }
 
     public void updateCloth(UpdateClothRequest request, Long clothId) {
@@ -86,6 +96,15 @@ public class ClothService {
         }
 
         return cloth;
+    }
+
+    public ClothesWithPaginationDto getAllClothes(int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id"));
+
+        return new ClothesWithPaginationDto(this.clothRepository.findAllClothes(paging), currentPage,
+
+                direction);
     }
 
     public ClothesWithPaginationDto getUserClothes(Long userId, int page, int pageSize, String direction) {
