@@ -31,6 +31,7 @@ import MyClothes from './components/Settings/MyClothes/MyClothes';
 import EditCloth from './components/Settings/MyClothes/EditCloth';
 import AllClothes from './components/Settings/Clothes/AllClothes';
 import FullCloth from './components/Settings/Clothes/FullCloth';
+import PublicProfile from './components/Profile/PublicProfile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,14 @@ const router = createBrowserRouter(
           <RequireGuest>
             <RegisterRoute />
           </RequireGuest>
+        }
+      />
+      <Route
+        path=":username/profile"
+        element={
+          <RequireAuth>
+            <PublicProfile />
+          </RequireAuth>
         }
       />
       <Route

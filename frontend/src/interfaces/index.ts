@@ -12,6 +12,23 @@ export interface IClothes {
   userId: number;
 }
 
+export interface IBid {
+  avatarUrl: string;
+  id: number;
+  createdAt: Date;
+  firstName: string;
+  lastName: string;
+  bid: number;
+  profileId: number;
+}
+
+export interface IBidsPagination {
+  content: IBid[];
+  totalPages: number;
+  page: number;
+  direction: string;
+}
+
 export interface IClothesPagination {
   content: IClothes[];
   totalPages: number;

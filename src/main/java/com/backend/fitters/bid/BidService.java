@@ -3,6 +3,8 @@ package com.backend.fitters.bid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.backend.fitters.bid.BidRepository;
+import com.backend.fitters.bid.dto.BidDto;
+import com.backend.fitters.bid.dto.BidsWithPaginationDto;
 import com.backend.fitters.bid.dto.RelatedEntityDto;
 
 import java.math.BigDecimal;
@@ -15,6 +17,12 @@ import com.backend.fitters.cloth.Cloth;
 import com.backend.fitters.cloth.ClothRepository;
 import com.backend.fitters.user.User;
 import com.backend.fitters.user.UserRepository;
+import com.backend.fitters.util.MyUtils;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class BidService {
@@ -33,6 +41,16 @@ public class BidService {
         this.bidRepository = bidRepository;
         this.clothRepository = clothRepository;
         this.userRepository = userRepository;
+    }
+
+    public BidsWithPaginationDto getBids(Long clothId, int page, String direction, int pageSize) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id"));
+
+        return new BidsWithPaginationDto(
+                this.bidRepository.findAllBidsByClothId(clothId, paging),
+                currentPage,
+                direction);
     }
 
     private RelatedEntityDto getRelatedEntities(Long userId, Long clothId) {

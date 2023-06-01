@@ -13,6 +13,13 @@ export const clothesPaginationState = {
   direction: 'next',
 };
 
+export const bidsPaginationState = {
+  content: [],
+  totalPages: 0,
+  page: 0,
+  direction: 'next',
+};
+
 export const fullClothState = {
   clothUrl: '',
   createdAt: new Date(),

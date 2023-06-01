@@ -1,6 +1,7 @@
 package com.backend.fitters.bid;
 
 import com.backend.fitters.bid.request.CreateBidRequest;
+import com.backend.fitters.bid.response.AllBidsResponse;
 import com.backend.fitters.bid.response.CreateBidResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,6 +23,18 @@ public class BidController {
     @Autowired
     public BidController(BidService bidService) {
         this.bidService = bidService;
+    }
+
+    @GetMapping
+    public ResponseEntity<AllBidsResponse> getBids(
+            @RequestParam("clothId") Long clothId,
+            @RequestParam("page") int page,
+            @RequestParam("direction") String direction,
+            @RequestParam("pageSize") int pageSize) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new AllBidsResponse(this.bidService.getBids(
+                        clothId, page, direction, pageSize), "success"));
     }
 
     @PostMapping

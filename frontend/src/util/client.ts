@@ -17,8 +17,9 @@ export const http = axios.create({
 });
 
 export const Client = {
-  getBids: (clothId: number) => {
-    return http.get(`/bids?clothId=${clothId}`);
+  getBids: (clothId: number, page: number, direction: string, pageSize: number) => {
+    const url = `/bids?clothId=${clothId}&page=${page}&direction=${direction}&pageSize=${pageSize}`;
+    return http.get(url);
   },
 
   createBid: (userId: number, clothId: number, bid: string) => {
