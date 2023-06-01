@@ -3,6 +3,18 @@ import '@fontsource/bangers';
 import '@fontsource-variable/open-sans';
 
 export const theme = extendTheme({
+  components: {
+    Popover: {
+      variants: {
+        responsive: {
+          popper: {
+            maxWidth: 'unset',
+            width: 'unset',
+          },
+        },
+      },
+    },
+  },
   fonts: {
     heading: `'Bangers', sans-serif`,
     body: `'Open Sans', sans-serif`,

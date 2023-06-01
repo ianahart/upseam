@@ -66,7 +66,9 @@ public class ProfileService {
         System.out.println(profileFields.getZipCode());
         return new ProfileDto(profileFields, new MinimalUserDto(
                 profile.getUser().getFirstName(),
-                profile.getUser().getLastName()));
+                profile.getUser().getLastName(),
+                profile.getUser().getRole(),
+                profile.getUser().getId()));
 
     }
 

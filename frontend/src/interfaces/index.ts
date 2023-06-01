@@ -125,6 +125,8 @@ export interface IProfile {
 export interface IProfilePage {
   firstName: string;
   lastName: string;
+  profileUserId: number;
+  role: string;
   avatarUrl: string;
   zipCode: string;
   state: string;

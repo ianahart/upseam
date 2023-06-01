@@ -106,7 +106,9 @@ export const profileState = {
 
 export const profilePageState = {
   firstName: '',
+  profileUserId: 0,
   lastName: '',
+  role: '',
   avatarUrl: '',
   zipCode: '',
   country: '',

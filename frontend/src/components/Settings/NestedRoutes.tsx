@@ -61,7 +61,7 @@ const NestedRoutes = () => {
         <NestedRoute
           activeRoute={activeRoute}
           to="clothes"
-          routeName="Clothes"
+          routeName="Bid On Clothes"
           icon={<AiOutlineShoppingCart />}
         />
       </Box>
