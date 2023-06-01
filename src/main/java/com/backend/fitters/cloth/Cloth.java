@@ -2,6 +2,9 @@ package com.backend.fitters.cloth;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
+
+import com.backend.fitters.bid.Bid;
 import com.backend.fitters.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -47,6 +51,9 @@ public class Cloth {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne()
     private User user;
+
+    @OneToMany(mappedBy = "cloth")
+    private List<Bid> bids;
 
     public Cloth() {
 
@@ -92,6 +99,10 @@ public class Cloth {
 
     public User getUser() {
         return user;
+    }
+
+    public List<Bid> getBids() {
+        return bids;
     }
 
     public String getSize() {
@@ -140,6 +151,10 @@ public class Cloth {
 
     public void setClothFilename(String clothFilename) {
         this.clothFilename = clothFilename;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 
     public void setDueDate(LocalDate dueDate) {

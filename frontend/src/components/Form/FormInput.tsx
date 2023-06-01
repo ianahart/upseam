@@ -84,6 +84,7 @@ const FormInput = ({
           onClick={togglePasswordVisibility}
           fontSize="1.2rem"
           color="text.primary"
+          zIndex={5}
           position="absolute"
           bottom="10px"
           right="5px"

@@ -1,21 +1,44 @@
-import { Box, Flex, Spinner, Image, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Box,
+  Flex,
+  Spinner,
+  Image,
+  Text,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Input,
+} from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useEffectOnce } from '../../../hooks/useEffectOnce';
 import { Client } from '../../../util/client';
-import { IFullCloth } from '../../../interfaces';
+import { IFullCloth, IUserContext } from '../../../interfaces';
 import { fullClothState } from '../../../state/initialState';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { AiOutlineInfoCircle, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 import { BiRuler } from 'react-icons/bi';
 import Header from '../Header';
 import FormHeader from '../EditProfile/FormHeader';
+import { IoTicketOutline } from 'react-icons/io5';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { UserContext } from '../../../context/user';
+import Bids from './Bid/Bids';
 dayjs.extend(relativeTime);
 
 const FullCloth = () => {
+  const { user } = useContext(UserContext) as IUserContext;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [cloth, setCloth] = useState<IFullCloth>(fullClothState);
+  const [bid, setBid] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const params = useParams();
 
@@ -24,6 +47,25 @@ const FullCloth = () => {
       getCloth(params.clothId);
     }
   });
+
+  const makeBid = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!bid) {
+      return;
+    }
+    setIsLoading(true);
+    Client.createBid(user.id, cloth.id, bid)
+      .then((res) => {
+        setIsLoading(false);
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.response.data.message);
+        setIsLoading(false);
+        throw new Error(err.response.data.message);
+      });
+  };
 
   const getCloth = (clothId: string) => {
     setIsLoading(true);
@@ -130,7 +172,63 @@ const FullCloth = () => {
             <Text color="text.primary">Updated {dayjs(cloth.updatedAt).fromNow()}</Text>
           </Flex>
         </Flex>
+        {user.id !== cloth.userId && (
+          <Button colorScheme="blue" my="2rem" onClick={onOpen}>
+            Make Bid
+          </Button>
+        )}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader color="black.primary">Make a bid</ModalHeader>
+            {error && (
+              <Text color="red.500" fontSize="0.85rem">
+                {error}
+              </Text>
+            )}
+            <ModalCloseButton />
+            <ModalBody>
+              <Text color="text.primary" fontSize="0.85rem">
+                The lower the better.
+              </Text>
+              <Box pos="relative">
+                <Input
+                  onChange={(e) => setBid(parseFloat(e.target.value).toFixed(2))}
+                  pl="1.5rem"
+                  type="number"
+                  placeholder="bid"
+                />
+                <Box color="blue.500" pos="absolute" top="10px" left="5px">
+                  <IoTicketOutline />
+                </Box>
+              </Box>
+            </ModalBody>
+            <ModalFooter>
+              {isLoading && (
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
+              )}
+
+              {!isLoading && (
+                <Box>
+                  <Button colorScheme="blue" mr={3} onClick={makeBid}>
+                    Ok
+                  </Button>
+                  <Button variant="ghost" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                </Box>
+              )}
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
+      <Bids clothUserId={cloth.userId} clothId={cloth.id} />
     </Box>
   );
 };

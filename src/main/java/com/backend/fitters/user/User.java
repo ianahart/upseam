@@ -6,6 +6,7 @@ import com.backend.fitters.token.Token;
 import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.passwordreset.PasswordReset;
+import com.backend.fitters.bid.Bid;
 import com.backend.fitters.cloth.Cloth;
 
 import java.sql.Timestamp;
@@ -70,6 +71,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Cloth> clothes;
 
+    @OneToMany(mappedBy = "user")
+    private List<Bid> bids;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -133,6 +137,10 @@ public class User implements UserDetails {
         return clothes;
     }
 
+    public List<Bid> getBids() {
+        return bids;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -152,6 +160,10 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 
     public void setProfile(Profile profile) {

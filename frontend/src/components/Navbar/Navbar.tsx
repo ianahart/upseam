@@ -14,7 +14,7 @@ const Navbar = () => {
       <Box display="flex" alignItems="center" m="0.5rem">
         <Image src={logo} mr="0.5rem" />
         <Heading color="blackAlpha.700" as="h3">
-          Upsteam
+          Upseam
         </Heading>
       </Box>
       <Spacer />

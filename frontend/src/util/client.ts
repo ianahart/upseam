@@ -17,10 +17,20 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getBids: (clothId: number) => {
+    return http.get(`/bids?clothId=${clothId}`);
+  },
+
+  createBid: (userId: number, clothId: number, bid: string) => {
+    return http.post('/bids', {
+      userId,
+      clothId,
+      bid,
+    });
+  },
   getCloth: (clothId: string) => {
     return http.get(`clothes/${clothId}`);
   },
-
   updateCloth: (
     date: Date,
     description: string,
