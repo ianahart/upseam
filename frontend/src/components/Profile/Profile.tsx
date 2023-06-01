@@ -110,7 +110,7 @@ const Profile = ({ profile }: IProfileProps) => {
         <FormLayout>
           <>
             <FormHeader heading="About" />
-                                    {user.id === profile.profileUserId && <EditProfileLink />}
+            {user.id === profile.profileUserId && <EditProfileLink />}
 
             <Box>
               <Box my="1rem">
