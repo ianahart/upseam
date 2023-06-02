@@ -20,6 +20,7 @@ export interface IBid {
   lastName: string;
   bid: number;
   profileId: number;
+  userId: number;
 }
 
 export interface IBidsPagination {

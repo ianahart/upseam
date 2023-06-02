@@ -8,6 +8,7 @@ import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.passwordreset.PasswordReset;
 import com.backend.fitters.bid.Bid;
 import com.backend.fitters.cloth.Cloth;
+import com.backend.fitters.friendrequest.FriendRequest;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -73,6 +74,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Bid> bids;
+
+    @OneToMany(mappedBy = "requestee")
+    private List<FriendRequest> friendRequesteeRequests;
+
+    @OneToMany(mappedBy = "requester")
+    private List<FriendRequest> friendRequesterRequests;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -146,6 +153,14 @@ public class User implements UserDetails {
         return password;
     }
 
+    public List<FriendRequest> getFriendRequesteeRequests() {
+        return friendRequesteeRequests;
+    }
+
+    public List<FriendRequest> getFriendRequesterRequests() {
+        return friendRequesterRequests;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -156,6 +171,14 @@ public class User implements UserDetails {
 
     public void setClothes(List<Cloth> clothes) {
         this.clothes = clothes;
+    }
+
+    public void setFriendRequesteeRequests(List<FriendRequest> friendRequesteeRequests) {
+        this.friendRequesteeRequests = friendRequesteeRequests;
+    }
+
+    public void setFriendRequesterRequests(List<FriendRequest> friendRequesterRequests) {
+        this.friendRequesterRequests = friendRequesterRequests;
     }
 
     public void setRole(Role role) {

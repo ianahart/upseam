@@ -22,7 +22,7 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     @Query(value = """
             SELECT new com.backend.fitters.bid.dto.BidDto(
               b.id, b.createdAt, b.bid, u.firstName,
-              u.lastName, p.avatarUrl, p.id
+              u.lastName, p.avatarUrl, p.id AS profileId, u.id AS userId
             ) FROM Bid b INNER JOIN b.cloth c
             INNER JOIN b.user u
             INNER JOIN b.user.profile p

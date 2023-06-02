@@ -32,6 +32,20 @@ const Bids = ({ isNewBid, setIsNewBid, clothId, clothUserId }: IBidsProps) => {
   const [pagination, setPagination] = useState<IBidsPagination>(bidsPaginationState);
   const shouldRun = useRef(true);
 
+  const deleteBid = (id: number) => {
+    setPagination((prevState) => ({
+      ...prevState,
+      content: [...prevState.content.filter((item) => item.id !== id)],
+    }));
+    Client.deleteBid(id)
+      .then((res) => {
+        getBids('next', false);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
   const getBids = (direction: string, paginate: boolean) => {
     setIsLoading(true);
 
@@ -103,7 +117,7 @@ const Bids = ({ isNewBid, setIsNewBid, clothId, clothUserId }: IBidsProps) => {
               </Thead>
               <Tbody>
                 {pagination.content.map((bid) => {
-                  return <Bid key={bid.id} _bid={bid} />;
+                  return <Bid deleteBid={deleteBid} key={bid.id} _bid={bid} />;
                 })}
               </Tbody>
             </Table>

@@ -17,6 +17,16 @@ export const http = axios.create({
 });
 
 export const Client = {
+  createFriendRequest: (requestee: number, requester: number) => {
+    return http.post(`/friend-requests`, {
+      requestee,
+      requester,
+    });
+  },
+
+  deleteBid: (id: number) => {
+    return http.delete(`/bids/${id}`);
+  },
   getBids: (clothId: number, page: number, direction: string, pageSize: number) => {
     const url = `/bids?clothId=${clothId}&page=${page}&direction=${direction}&pageSize=${pageSize}`;
     return http.get(url);

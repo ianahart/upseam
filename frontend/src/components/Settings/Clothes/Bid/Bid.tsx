@@ -15,27 +15,42 @@ import {
   PopoverCloseButton,
   Flex,
 } from '@chakra-ui/react';
-import { IBid } from '../../../../interfaces';
+import { IBid, IUserContext } from '../../../../interfaces';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InitialIcon from '../../../Shared/InitialIcon';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { slugify } from '../../../../util';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
+import { Client } from '../../../../util/client';
+import { UserContext } from '../../../../context/user';
 dayjs.extend(relativeTime);
 
 export interface IBidProps {
   _bid: IBid;
+  deleteBid: (id: number) => void;
 }
 
-const Bid = ({ _bid }: IBidProps) => {
+const Bid = ({ _bid, deleteBid }: IBidProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const initialFocusRef = useRef(null);
   const navigate = useNavigate();
 
   const sendToProfile = () => {
     const { firstName, lastName, profileId } = _bid;
     navigate(`/${slugify(firstName, lastName)}/profile`, { state: { profileId } });
+  };
+
+  const sendFriendRequest = () => {
+    Client.createFriendRequest(_bid.userId, user.id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new Error(err.response.data.message);
+      });
   };
 
   return (
@@ -73,7 +88,7 @@ const Bid = ({ _bid }: IBidProps) => {
             <PopoverBody minW={{ base: '100%', lg: 'max-content' }}>
               <Flex direction="column" justify="center" align="center">
                 <Text>Send a friend request to {_bid.firstName}?</Text>
-                <Button mt="0.5rem" colorScheme="blue">
+                <Button onClick={sendFriendRequest} mt="0.5rem" colorScheme="blue">
                   Send Request
                 </Button>
               </Flex>
@@ -89,6 +104,17 @@ const Bid = ({ _bid }: IBidProps) => {
                   View Profile
                 </Button>
               </Flex>
+              {user.id === _bid.userId && (
+                <Flex justify="flex-end">
+                  <Button
+                    onClick={() => deleteBid(_bid.id)}
+                    colorScheme="gray"
+                    color="text.primary"
+                  >
+                    Delete
+                  </Button>
+                </Flex>
+              )}
             </PopoverFooter>
           </PopoverContent>
         </Popover>

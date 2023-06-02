@@ -11,6 +11,7 @@ public class BidDto {
     private String lastName;
     private String avatarUrl;
     private Long profileId;
+    private Long userId;
 
     public BidDto() {
 
@@ -23,7 +24,8 @@ public class BidDto {
             String firstName,
             String lastName,
             String avatarUrl,
-            Long profileId) {
+            Long profileId,
+            Long userId) {
 
         this.id = id;
         this.createdAt = createdAt;
@@ -32,6 +34,7 @@ public class BidDto {
         this.lastName = lastName;
         this.avatarUrl = avatarUrl;
         this.profileId = profileId;
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -40,6 +43,10 @@ public class BidDto {
 
     public String getAvatarUrl() {
         return avatarUrl;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public Long getProfileId() {
@@ -68,6 +75,10 @@ public class BidDto {
 
     public void setBid(BigDecimal bid) {
         this.bid = bid;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setFirstName(String firstName) {

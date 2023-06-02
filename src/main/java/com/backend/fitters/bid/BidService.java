@@ -77,4 +77,8 @@ public class BidService {
                 entities.getUser(),
                 entities.getCloth()));
     }
+
+    public void deleteBid(Long bidId) {
+        this.bidRepository.deleteById(bidId);
+    }
 }
