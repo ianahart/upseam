@@ -7,6 +7,7 @@ import com.backend.fitters.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class PasswordReset {
     private String token;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public PasswordReset() {

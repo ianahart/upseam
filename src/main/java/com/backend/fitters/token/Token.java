@@ -3,6 +3,7 @@ package com.backend.fitters.token;
 import java.util.Objects;
 import com.backend.fitters.user.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,7 +34,7 @@ public class Token {
     @Column(name = "revoked")
     private Boolean revoked;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

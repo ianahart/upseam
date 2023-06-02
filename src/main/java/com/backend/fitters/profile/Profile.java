@@ -3,6 +3,7 @@ package com.backend.fitters.profile;
 import com.backend.fitters.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Profile {
     private String state;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "profile")
+    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
     private User user;
 
     public Profile() {
