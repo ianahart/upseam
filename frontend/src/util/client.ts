@@ -17,13 +17,30 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateFriendRequest: (
+    id: number,
+    requesteeId: number,
+    requesterId: number,
+    action: string
+  ) => {
+    return http.patch(`/friendships/${id}`, {
+      requesteeId,
+      requesterId,
+      action,
+    });
+  },
+
+  getFriendRequests: (requestee: number, page: number, pageSize: number) => {
+    return http.get(
+      `/friendships?requesteeId=${requestee}&page=${page}&pageSize=${pageSize}`
+    );
+  },
   createFriendRequest: (requestee: number, requester: number) => {
     return http.post(`/friendships`, {
       requestee,
       requester,
     });
   },
-
   deleteBid: (id: number) => {
     return http.delete(`/bids/${id}`);
   },

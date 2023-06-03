@@ -47,7 +47,6 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
   const sendFriendRequest = () => {
     Client.createFriendRequest(_bid.userId, user.id)
       .then((res) => {
-        console.log(res);
         onClose();
       })
       .catch((err) => {

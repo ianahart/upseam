@@ -22,7 +22,7 @@ public class RefreshToken {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

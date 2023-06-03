@@ -23,6 +23,16 @@ export interface IBid {
   userId: number;
 }
 
+export interface IFriendRequest {
+  avatarUrl: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  profileId: number;
+  requesteeId: number;
+  requesterId: number;
+}
+
 export interface IBidsPagination {
   content: IBid[];
   totalPages: number;
