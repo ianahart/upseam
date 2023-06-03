@@ -8,7 +8,7 @@ import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.passwordreset.PasswordReset;
 import com.backend.fitters.bid.Bid;
 import com.backend.fitters.cloth.Cloth;
-import com.backend.fitters.friendrequest.FriendRequest;
+import com.backend.fitters.friendship.FriendShip;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -76,10 +76,10 @@ public class User implements UserDetails {
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "requestee")
-    private List<FriendRequest> friendRequesteeRequests;
+    private List<FriendShip> friendRequestees;
 
     @OneToMany(mappedBy = "requester")
-    private List<FriendRequest> friendRequesterRequests;
+    private List<FriendShip> friendRequesters;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -123,6 +123,14 @@ public class User implements UserDetails {
         return role;
     }
 
+    public List<FriendShip> getFriendRequestees() {
+        return friendRequestees;
+    }
+
+    public List<FriendShip> getFriendRequesters() {
+        return friendRequesters;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -153,14 +161,6 @@ public class User implements UserDetails {
         return password;
     }
 
-    public List<FriendRequest> getFriendRequesteeRequests() {
-        return friendRequesteeRequests;
-    }
-
-    public List<FriendRequest> getFriendRequesterRequests() {
-        return friendRequesterRequests;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -170,19 +170,7 @@ public class User implements UserDetails {
     }
 
     public void setClothes(List<Cloth> clothes) {
-        this.clothes = clothes;
-    }
 
-    public void setFriendRequesteeRequests(List<FriendRequest> friendRequesteeRequests) {
-        this.friendRequesteeRequests = friendRequesteeRequests;
-    }
-
-    public void setFriendRequesterRequests(List<FriendRequest> friendRequesterRequests) {
-        this.friendRequesterRequests = friendRequesterRequests;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public void setBids(List<Bid> bids) {
@@ -195,6 +183,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setFriendRequestees(List<FriendShip> friendRequestees) {
+        this.friendRequestees = friendRequestees;
+    }
+
+    public void setFriendRequesters(List<FriendShip> friendRequesters) {
+        this.friendRequesters = friendRequesters;
     }
 
     public void setCreatedAt(Timestamp createdAt) {

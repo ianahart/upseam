@@ -42,6 +42,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public User getUserById(Long id) {
+        return this.userRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
     public User getUserByAuth() {
         String currentUserName = "";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

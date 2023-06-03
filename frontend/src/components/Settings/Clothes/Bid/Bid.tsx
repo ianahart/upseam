@@ -6,20 +6,20 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Box,
   Button,
   PopoverFooter,
   PopoverHeader,
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
+  useDisclosure,
   Flex,
 } from '@chakra-ui/react';
 import { IBid, IUserContext } from '../../../../interfaces';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InitialIcon from '../../../Shared/InitialIcon';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { slugify } from '../../../../util';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -33,6 +33,8 @@ export interface IBidProps {
 }
 
 const Bid = ({ _bid, deleteBid }: IBidProps) => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+  const [error, setError] = useState('');
   const { user } = useContext(UserContext) as IUserContext;
   const initialFocusRef = useRef(null);
   const navigate = useNavigate();
@@ -46,9 +48,10 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
     Client.createFriendRequest(_bid.userId, user.id)
       .then((res) => {
         console.log(res);
+        onClose();
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.response.data.message);
         throw new Error(err.response.data.message);
       });
   };
@@ -67,11 +70,16 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
             alt={`Description of ${_bid.firstName}`}
           />
         )}
-        <Popover initialFocusRef={initialFocusRef} placement="bottom" closeOnBlur={false}>
+        <Popover
+          isOpen={isOpen}
+          initialFocusRef={initialFocusRef}
+          placement="bottom"
+          closeOnBlur={false}
+        >
           <PopoverTrigger>
-            <Td cursor="pointer" color="text.primary">
+            <Text onClick={onOpen} cursor="pointer" color="text.primary">
               {_bid.firstName} {_bid.lastName}
-            </Td>
+            </Text>
           </PopoverTrigger>
           <PopoverContent
             minW="500px"
@@ -84,9 +92,14 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
               Get In Touch With {_bid.firstName}
             </PopoverHeader>
             <PopoverArrow />
-            <PopoverCloseButton />
+            <PopoverCloseButton onClick={() => onClose()} />
             <PopoverBody minW={{ base: '100%', lg: 'max-content' }}>
               <Flex direction="column" justify="center" align="center">
+                {error.length > 0 && (
+                  <Text fontSize="0.85rem" color="red.500">
+                    {error}
+                  </Text>
+                )}
                 <Text>Send a friend request to {_bid.firstName}?</Text>
                 <Button onClick={sendFriendRequest} mt="0.5rem" colorScheme="blue">
                   Send Request

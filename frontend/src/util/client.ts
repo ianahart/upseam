@@ -18,7 +18,7 @@ export const http = axios.create({
 
 export const Client = {
   createFriendRequest: (requestee: number, requester: number) => {
-    return http.post(`/friend-requests`, {
+    return http.post(`/friendships`, {
       requestee,
       requester,
     });

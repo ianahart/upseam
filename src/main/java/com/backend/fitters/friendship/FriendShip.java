@@ -1,4 +1,4 @@
-package com.backend.fitters.friendrequest;
+package com.backend.fitters.friendship;
 
 import java.sql.Timestamp;
 
@@ -19,11 +19,11 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "friend_request")
-public class FriendRequest {
+@Table(name = "friendship")
+public class FriendShip {
     @Id
-    @SequenceGenerator(name = "friend_request", sequenceName = "friendrequest", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friend_request")
+    @SequenceGenerator(name = "friendship_sequence", sequenceName = "friendship_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friendship_sequence")
     @Column(name = "id")
     private Long id;
     @CreationTimestamp
@@ -45,11 +45,11 @@ public class FriendRequest {
     @JoinColumn(name = "requestee_id", referencedColumnName = "id")
     private User requestee;
 
-    public FriendRequest() {
+    public FriendShip() {
 
     }
 
-    public FriendRequest(
+    public FriendShip(
             Long id,
             Timestamp createdAt,
             Timestamp updatedAt,
@@ -63,6 +63,22 @@ public class FriendRequest {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.pending = pending;
+        this.accepted = accepted;
+        this.declined = declined;
+        this.requester = requester;
+        this.requestee = requestee;
+
+    }
+
+    public FriendShip(
+            Boolean pending,
+            Boolean accepted,
+            Boolean declined,
+            User requester,
+            User requestee
+
+    ) {
         this.pending = pending;
         this.accepted = accepted;
         this.declined = declined;
