@@ -2,6 +2,7 @@ package com.backend.fitters.friendship;
 
 import java.util.List;
 import com.backend.fitters.friendship.dto.GetFriendShipsDto;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FriendShipRepository extends JpaRepository<FriendShip, Long> {
+
+    @Query(value = """
+            SELECT * FROM friendship
+            WHERE (requester_id = :requesterId AND requestee_id = :requesteeId)
+            OR (requester_id = :requesteeId AND requestee_id = :requesterId)
+            """, nativeQuery = true)
+    List<FriendShip> checkForDuplicateFriendShip(@Param("requesterId") Long requesterId,
+            @Param("requesteeId") Long requesteeId);
 
     @Query(value = """
             SELECT EXISTS(SELECT 1

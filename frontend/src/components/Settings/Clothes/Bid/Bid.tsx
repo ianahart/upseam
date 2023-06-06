@@ -45,6 +45,7 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
   };
 
   const sendFriendRequest = () => {
+    if (_bid.userId === user.id) return;
     Client.createFriendRequest(_bid.userId, user.id)
       .then((res) => {
         onClose();

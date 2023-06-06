@@ -1,5 +1,7 @@
 package com.backend.fitters.friendship;
 
+import java.util.List;
+
 import com.backend.fitters.friendship.request.CreateFriendShipRequest;
 import com.backend.fitters.friendship.request.UpdateFriendShipRequest;
 import com.backend.fitters.friendship.response.CreateFriendShipResponse;

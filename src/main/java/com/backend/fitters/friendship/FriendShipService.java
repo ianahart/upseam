@@ -1,5 +1,6 @@
 package com.backend.fitters.friendship;
 
+import java.util.List;
 import com.backend.fitters.friendship.request.CreateFriendShipRequest;
 import com.backend.fitters.friendship.request.UpdateFriendShipRequest;
 import com.backend.fitters.user.User;
@@ -7,6 +8,7 @@ import com.backend.fitters.friendship.dto.GetFriendShipsDto;
 import com.backend.fitters.user.UserService;
 import com.backend.fitters.util.MyUtils;
 import com.backend.fitters.advice.NotFoundException;
+import com.backend.fitters.friend.FriendService;
 import com.backend.fitters.advice.BadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,16 @@ public class FriendShipService {
 
     private final FriendShipRepository friendShipRepository;
     private final UserService userService;
+    private final FriendService friendService;
 
     @Autowired
     public FriendShipService(
             FriendShipRepository friendShipRepository,
-            UserService userService) {
+            UserService userService,
+            FriendService friendService) {
         this.friendShipRepository = friendShipRepository;
         this.userService = userService;
+        this.friendService = friendService;
     }
 
     public Page<GetFriendShipsDto> getFriendRequests(Long requesteeId, int page, int pageSize) {
@@ -56,6 +61,18 @@ public class FriendShipService {
                 requestee));
     }
 
+    private void checkForDuplicateFriendShip(Long requesterId, Long requesteeId) {
+        List<FriendShip> friendships = this.friendShipRepository
+                .checkForDuplicateFriendShip(requesterId, requesteeId);
+        for (FriendShip fs : friendships) {
+            fs.setPending(false);
+            fs.setAccepted(true);
+            fs.setDeclined(false);
+            this.friendShipRepository.save(fs);
+
+        }
+    }
+
     public void updateFriendShip(Long friendShipId, UpdateFriendShipRequest request) {
         FriendShip fs = this.friendShipRepository.findById(friendShipId)
                 .orElseThrow(() -> new NotFoundException("Friendship not found"));
@@ -68,6 +85,9 @@ public class FriendShipService {
         }
 
         fs.setPending(false);
+        checkForDuplicateFriendShip(request.getRequesterId(), request.getRequesteeId());
+        this.friendService.createFriend(request.getRequesterId(), request.getRequesteeId());
+        this.friendService.createFriend(request.getRequesteeId(), request.getRequesterId());
 
         this.friendShipRepository.save(fs);
     }

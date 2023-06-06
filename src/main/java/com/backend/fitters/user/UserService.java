@@ -1,12 +1,14 @@
 package com.backend.fitters.user;
 
 import java.security.Key;
+import java.util.List;
 import java.util.Optional;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.auth.dto.UserDto;
 import com.backend.fitters.auth.request.PasswordResetRequest;
 import com.backend.fitters.config.JwtService;
 import com.backend.fitters.advice.*;
+import com.backend.fitters.user.dto.GetFriendsDto;
 import com.backend.fitters.user.request.UpdateUserRequest;
 import com.backend.fitters.util.MyUtils;
 
@@ -141,5 +143,9 @@ public class UserService {
 
         this.userRepository.save(user);
 
+    }
+
+    public List<GetFriendsDto> getFriends(List<Long> friendsIds) {
+        return this.userRepository.getFriends(friendsIds);
     }
 }

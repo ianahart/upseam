@@ -8,6 +8,7 @@ import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.passwordreset.PasswordReset;
 import com.backend.fitters.bid.Bid;
 import com.backend.fitters.cloth.Cloth;
+import com.backend.fitters.friend.Friend;
 import com.backend.fitters.friendship.FriendShip;
 
 import java.sql.Timestamp;
@@ -81,6 +82,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "requester")
     private List<FriendShip> friendRequesters;
 
+    @OneToMany(mappedBy = "friend")
+    private List<Friend> friends;
+
+    @OneToMany(mappedBy = "user")
+    private List<Friend> users;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -131,6 +138,14 @@ public class User implements UserDetails {
         return friendRequesters;
     }
 
+    public List<Friend> getFriends() {
+        return friends;
+    }
+
+    public List<Friend> getUsers() {
+        return users;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -179,6 +194,15 @@ public class User implements UserDetails {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
+
+    }
+
+    public void setUsers(List<Friend> users) {
+        this.users = users;
     }
 
     public void setEmail(String email) {

@@ -17,6 +17,11 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getFriends: (userId: number, page: number, pageSize: number, direction: string) => {
+    return http.get(
+      `/friends?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
   updateFriendRequest: (
     id: number,
     requesteeId: number,
@@ -29,7 +34,6 @@ export const Client = {
       action,
     });
   },
-
   getFriendRequests: (requestee: number, page: number, pageSize: number) => {
     return http.get(
       `/friendships?requesteeId=${requestee}&page=${page}&pageSize=${pageSize}`

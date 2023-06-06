@@ -20,6 +20,21 @@ export const bidsPaginationState = {
   direction: 'next',
 };
 
+export const contactsPaginationState = {
+  content: [],
+  totalPages: 0,
+  page: 0,
+  direction: 'next',
+};
+
+export const contactState = {
+  avatarUrl: '',
+  firstName: '',
+  lastName: '',
+  profileId: 0,
+  userId: 0,
+};
+
 export const fullClothState = {
   clothUrl: '',
   createdAt: new Date(),

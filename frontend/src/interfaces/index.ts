@@ -33,6 +33,21 @@ export interface IFriendRequest {
   requesterId: number;
 }
 
+export interface IContact {
+  avatarUrl: string;
+  firstName: string;
+  lastName: string;
+  profileId: number;
+  userId: number;
+}
+
+export interface IContactsPagination {
+  content: IContact[];
+  totalPages: number;
+  page: number;
+  direction: string;
+}
+
 export interface IBidsPagination {
   content: IBid[];
   totalPages: number;
