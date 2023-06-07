@@ -39,9 +39,9 @@ public class FriendShip {
     @Column(name = "declined", nullable = false)
     private Boolean declined;
     @JoinColumn(name = "requester_id", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private User requester;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "requestee_id", referencedColumnName = "id")
     private User requestee;
 

@@ -33,9 +33,9 @@ public class Friend {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "friend_id", referencedColumnName = "id")
     private User friend;
 

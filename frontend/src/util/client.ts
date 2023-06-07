@@ -17,6 +17,9 @@ export const http = axios.create({
 });
 
 export const Client = {
+  removeFriend: (userId: number, friendId: number) => {
+    return http.post('friends/unfriend', { userId, friendId });
+  },
   getFriends: (userId: number, page: number, pageSize: number, direction: string) => {
     return http.get(
       `/friends?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`

@@ -3,6 +3,7 @@ package com.backend.fitters.friend;
 import java.util.List;
 
 import com.backend.fitters.friend.dto.CheckIfFriendDto;
+import com.backend.fitters.friend.dto.FindFriendDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +34,25 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
             """, nativeQuery = true)
     Page<Long> getFriendsIds(@Param("currentUserId") Long currentUserId, Pageable pageable);
 
+    @Query(value = """
+            SELECT new com.backend.fitters.friend.dto.FindFriendDto(
+              fs.id AS friendObjectId
+            ) FROM Friend fs
+            INNER JOIN fs.user _u
+            INNER JOIN fs.friend _f
+            WHERE _u.id = :userId AND _f.id = :friendId
+            """)
+    FindFriendDto findFriend(@Param("userId") Long userId, @Param("friendId") Long friendId);
+
+    // @Query(value = """
+    // SELECT fs.id FROM friend fs
+    // INNER JOIN _user u ON fs.user_id = u.id
+    // INNER JOIN _user f on fs.friend_id = f.id
+    // WHERE u.id = :userId AND f.id = :friendId
+    // LIMIT 1
+    // """, nativeQuery = true)
+    //
+    // Friend findFriend(@Param("userId") Long userId, @Param("friendId") Long
+    // friendId);
+    //
 }
