@@ -8,6 +8,7 @@ import com.backend.fitters.user.dto.GetFriendsDto;
 import com.backend.fitters.friend.dto.CheckIfFriendDto;
 import com.backend.fitters.friend.dto.FindFriendDto;
 import com.backend.fitters.friend.dto.FriendsPaginationDto;
+import com.backend.fitters.friend.request.CheckFriendsRequest;
 import com.backend.fitters.friend.request.RemoveFriendRequest;
 import com.backend.fitters.friendship.FriendShip;
 import com.backend.fitters.friendship.FriendShipRepository;
@@ -36,6 +37,11 @@ public class FriendService {
         this.friendShipRepository = friendShipRepository;
     }
 
+    public boolean checkIfFriends(CheckFriendsRequest request) {
+        return this.friendRepository.checkIfFriends(request.getCurrentUserId(), request.getUserId());
+
+    }
+
     public void removeFriend(RemoveFriendRequest request) {
         FindFriendDto userOne = this.friendRepository.findFriend(request.getUserId(), request.getFriendId());
         FindFriendDto userTwo = this.friendRepository.findFriend(request.getFriendId(), request.getUserId());
@@ -54,12 +60,12 @@ public class FriendService {
 
         if (fsOne != null) {
 
-       this.friendShipRepository.deleteById(fsOne.getId());
+            this.friendShipRepository.deleteById(fsOne.getId());
         }
 
         if (fsTwo != null) {
 
-       this.friendRepository.deleteById(fsTwo.getId());
+            this.friendRepository.deleteById(fsTwo.getId());
         }
 
     }

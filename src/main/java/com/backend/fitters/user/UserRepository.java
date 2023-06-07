@@ -4,13 +4,26 @@ import java.util.List;
 import java.util.Optional;
 
 import com.backend.fitters.user.dto.GetFriendsDto;
+import com.backend.fitters.user.dto.GetUsersDto;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
+
+    @Query(value = """
+            SELECT new com.backend.fitters.user.dto.GetUsersDto(
+              u.id, u.firstName, u.lastName,
+              _p.id, _p.avatarUrl
+            ) FROM User u
+            INNER JOIN u.profile _p
+            WHERE LOWER(u.firstName) LIKE %:term% OR LOWER(u.lastName) LIKE %:term%
+                    """)
+    Page<GetUsersDto> searchUsers(@Param("term") String term, Pageable paging);
 
     @Query(value = """
             SELECT DISTINCT new com.backend.fitters.user.dto.GetFriendsDto(

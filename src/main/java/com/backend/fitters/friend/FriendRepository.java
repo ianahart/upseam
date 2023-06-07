@@ -1,6 +1,7 @@
 package com.backend.fitters.friend;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.backend.fitters.friend.dto.CheckIfFriendDto;
 import com.backend.fitters.friend.dto.FindFriendDto;
@@ -44,15 +45,14 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
             """)
     FindFriendDto findFriend(@Param("userId") Long userId, @Param("friendId") Long friendId);
 
-    // @Query(value = """
-    // SELECT fs.id FROM friend fs
-    // INNER JOIN _user u ON fs.user_id = u.id
-    // INNER JOIN _user f on fs.friend_id = f.id
-    // WHERE u.id = :userId AND f.id = :friendId
-    // LIMIT 1
-    // """, nativeQuery = true)
-    //
-    // Friend findFriend(@Param("userId") Long userId, @Param("friendId") Long
-    // friendId);
-    //
+    @Query(value = """
+            SELECT EXISTS(SELECT 1
+            FROM friend fs
+            INNER JOIN _user u ON fs.user_id = u.id
+            INNER JOIN _user f ON fs.friend_id = f.id
+            WHERE u.id = :currentUserId
+            AND f.id = :userId
+            )
+              """, nativeQuery = true)
+    boolean checkIfFriends(@Param("currentUserId") Long currentUserId, @Param("userId") Long userId);
 }

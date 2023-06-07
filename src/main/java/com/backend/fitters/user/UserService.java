@@ -9,11 +9,17 @@ import com.backend.fitters.auth.request.PasswordResetRequest;
 import com.backend.fitters.config.JwtService;
 import com.backend.fitters.advice.*;
 import com.backend.fitters.user.dto.GetFriendsDto;
+import com.backend.fitters.user.dto.GetUsersDto;
 import com.backend.fitters.user.request.UpdateUserRequest;
 import com.backend.fitters.util.MyUtils;
+import com.backend.fitters.user.dto.SearchDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,6 +48,14 @@ public class UserService {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public SearchDto searchUsers(String term, int page) {
+        int currentPage = MyUtils.paginate(page, "next");
+        Pageable paging = PageRequest.of(currentPage, 3, Sort.by("id"));
+        Page<GetUsersDto> result = this.userRepository.searchUsers(term.toLowerCase(), paging);
+
+        return new SearchDto(result.getContent(), result.getTotalPages(), currentPage);
     }
 
     public User getUserById(Long id) {

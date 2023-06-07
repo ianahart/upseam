@@ -3,6 +3,7 @@ package com.backend.fitters.user;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.auth.dto.UserDto;
 import com.backend.fitters.user.request.UpdateUserRequest;
+import com.backend.fitters.user.response.SearchResponse;
 import com.backend.fitters.user.response.UpdateUserResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +29,13 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<SearchResponse> searchUsers(@RequestParam("term") String term,
+            @RequestParam("page") int page) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new SearchResponse(this.userService.searchUsers(term, page), "success"));
     }
 
     @GetMapping("/sync")

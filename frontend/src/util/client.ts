@@ -17,6 +17,12 @@ export const http = axios.create({
 });
 
 export const Client = {
+  checkIfFriends: (currentUserId: number, userId: number) => {
+    return http.post('/friends/check-friend', { currentUserId, userId });
+  },
+  searchUser: (term: string, page: number) => {
+    return http.get(`/users/search?term=${term}&page=${page}`);
+  },
   removeFriend: (userId: number, friendId: number) => {
     return http.post('friends/unfriend', { userId, friendId });
   },

@@ -54,7 +54,6 @@ const Requests = () => {
         setTotalPages(totalPages);
       })
       .catch((err) => {
-        console.log(err);
         throw new Error(err.response.data.message);
       });
   };
@@ -134,6 +133,11 @@ const Requests = () => {
       {totalPages !== page && (
         <Flex my="2rem" justify="center">
           <Button onClick={getFriendRequests}>Load More</Button>
+        </Flex>
+      )}
+      {friendRequests.length === 0 && (
+        <Flex justify="center" textAlign="center">
+          <Text color="text.primary">You currently do not have any friend requests</Text>
         </Flex>
       )}
     </Box>

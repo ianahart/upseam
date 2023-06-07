@@ -12,6 +12,14 @@ export interface IClothes {
   userId: number;
 }
 
+export interface ISearchUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  profileId: number;
+  avatarUrl: string;
+}
+
 export interface IBid {
   avatarUrl: string;
   id: number;

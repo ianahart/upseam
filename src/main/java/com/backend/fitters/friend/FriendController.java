@@ -2,7 +2,9 @@ package com.backend.fitters.friend;
 
 import java.util.List;
 
+import com.backend.fitters.friend.request.CheckFriendsRequest;
 import com.backend.fitters.friend.request.RemoveFriendRequest;
+import com.backend.fitters.friend.response.CheckIfFriendsResponse;
 import com.backend.fitters.friend.response.GetFriendsResponse;
 import com.backend.fitters.friend.response.RemoveFriendResponse;
 import com.backend.fitters.user.dto.GetFriendsDto;
@@ -26,6 +28,12 @@ public class FriendController {
     @Autowired
     public FriendController(FriendService friendService) {
         this.friendService = friendService;
+    }
+
+    @PostMapping("/check-friend")
+    public ResponseEntity<CheckIfFriendsResponse> checkIfFriends(@RequestBody CheckFriendsRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new CheckIfFriendsResponse(this.friendService.checkIfFriends(request), "success"));
     }
 
     @PostMapping("/unfriend")

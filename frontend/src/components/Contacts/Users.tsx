@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
 import { useContext, useRef, useEffect, useState } from 'react';
 import { UserContext } from '../../context/user';
 import { IContactsPagination, IUserContext } from '../../interfaces';
@@ -67,24 +67,34 @@ const Users = () => {
           />
         )}
       </Box>
-      <Box>
-        {pagination.content.map((contact) => {
-          return (
-            <User
-              key={contact.userId}
-              handleRemoveFriend={handleRemoveFriend}
-              contact={contact}
-            />
-          );
-        })}
-      </Box>
-      <Flex justify="center" my="0.5rem">
-        <Pagination
-          fetchData={getFriends}
-          totalPages={pagination.totalPages}
-          page={pagination.page}
-        />
-      </Flex>
+
+      {!isLoading && pagination.content.length > 0 && (
+        <Box>
+          {pagination.content.map((contact) => {
+            return (
+              <User
+                key={contact.userId}
+                handleRemoveFriend={handleRemoveFriend}
+                contact={contact}
+              />
+            );
+          })}
+        </Box>
+      )}
+      {!isLoading && pagination.content.length === 0 && (
+        <Flex justify="center" mt="3rem">
+          <Text color="text.primary">You currently do not have any contacts.</Text>
+        </Flex>
+      )}
+      {!isLoading && pagination.content.length > 0 && (
+        <Flex justify="center" my="0.5rem">
+          <Pagination
+            fetchData={getFriends}
+            totalPages={pagination.totalPages}
+            page={pagination.page}
+          />
+        </Flex>
+      )}
     </Box>
   );
 };
