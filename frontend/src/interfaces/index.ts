@@ -18,6 +18,7 @@ export interface ISearchUser {
   lastName: string;
   profileId: number;
   avatarUrl: string;
+  role: string;
 }
 
 export interface IBid {

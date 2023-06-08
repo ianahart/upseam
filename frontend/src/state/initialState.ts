@@ -35,6 +35,15 @@ export const contactState = {
   userId: 0,
 };
 
+export const searchUserState = {
+  avatarUrl: '',
+  firstName: '',
+  lastName: '',
+  profileId: 0,
+  userId: 0,
+  role: '',
+};
+
 export const fullClothState = {
   clothUrl: '',
   createdAt: new Date(),

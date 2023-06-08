@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = """
             SELECT new com.backend.fitters.user.dto.GetUsersDto(
-              u.id, u.firstName, u.lastName,
+             u.role, u.id, u.firstName, u.lastName,
               _p.id, _p.avatarUrl
             ) FROM User u
             INNER JOIN u.profile _p

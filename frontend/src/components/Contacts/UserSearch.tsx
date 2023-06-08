@@ -23,6 +23,7 @@ const UserSearch = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  console.log(searchUsers);
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
   };
@@ -119,7 +120,7 @@ const UserSearch = () => {
           className="overflow-scroll"
           height="250px"
         >
-          {searchUsers.map(({ id, profileId, firstName, lastName, avatarUrl }) => {
+          {searchUsers.map(({ role, id, profileId, firstName, lastName, avatarUrl }) => {
             return (
               <Box my="1.5rem" key={id}>
                 {avatarUrl ? (
@@ -148,6 +149,7 @@ const UserSearch = () => {
                   firstName={firstName}
                   lastName={lastName}
                   profileId={profileId}
+                  role={role}
                 />
               </Box>
             );

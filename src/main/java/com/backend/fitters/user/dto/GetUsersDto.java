@@ -1,6 +1,9 @@
 package com.backend.fitters.user.dto;
 
+import com.backend.fitters.user.Role;
+
 public class GetUsersDto {
+    private Role role;
     private Long id;
     private String firstName;
     private String lastName;
@@ -11,11 +14,14 @@ public class GetUsersDto {
 
     }
 
-    public GetUsersDto(Long id,
+    public GetUsersDto(
+            Role role,
+            Long id,
             String firstName,
             String lastName,
             Long profileId,
             String avatarUrl) {
+        this.role = role;
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +31,10 @@ public class GetUsersDto {
 
     public Long getId() {
         return id;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public String getLastName() {
@@ -57,6 +67,10 @@ public class GetUsersDto {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setProfileId(Long profileId) {

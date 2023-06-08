@@ -13,6 +13,7 @@ import {
   Text,
   Box,
   Flex,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -20,18 +21,28 @@ import { slugify } from '../../util';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 import { Client } from '../../util/client';
-import { AiOutlineCheck } from 'react-icons/ai';
+import { AiOutlineCheck, AiOutlineUser } from 'react-icons/ai';
 
 interface IUserPopOverProps {
   userId: number;
   firstName: string;
   lastName: string;
   profileId: number;
+  role: string;
 }
 
-const UserPopOver = ({ userId, firstName, lastName, profileId }: IUserPopOverProps) => {
+const UserPopOver = ({
+  userId,
+  firstName,
+  lastName,
+  profileId,
+  role,
+}: IUserPopOverProps) => {
   const { user } = useContext(UserContext) as IUserContext;
+
   const [areFriends, setAreFriends] = useState(false);
+  const { onOpen, onClose, isOpen } = useDisclosure();
+
   const navigate = useNavigate();
 
   const initialFocusRef = useRef(null);
@@ -50,8 +61,26 @@ const UserPopOver = ({ userId, firstName, lastName, profileId }: IUserPopOverPro
     navigate(`/${slugify(firstName, lastName)}/profile`, { state: { profileId } });
   };
 
+  const sendFriendRequest = () => {
+    Client.createFriendRequest(userId, user.id)
+      .then((res) => {
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new Error(err.response.data.message);
+      });
+  };
+
   return (
-    <Popover initialFocusRef={initialFocusRef} placement="bottom" closeOnBlur={false}>
+    <Popover
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+      initialFocusRef={initialFocusRef}
+      placement="bottom"
+      closeOnBlur={false}
+    >
       <PopoverTrigger>
         <Text onClick={() => checkIfFriends()} role="button" color="text.primary">
           {firstName} {lastName}
@@ -61,6 +90,9 @@ const UserPopOver = ({ userId, firstName, lastName, profileId }: IUserPopOverPro
         <PopoverHeader pt={4} fontWeight="bold" border="0">
           {firstName} {lastName}
         </PopoverHeader>
+        <Text p="0.25rem" mx="1rem">
+          {role.toLowerCase()}
+        </Text>
         <PopoverArrow bg="blue.800" />
         <PopoverCloseButton />
         <PopoverFooter
@@ -71,6 +103,11 @@ const UserPopOver = ({ userId, firstName, lastName, profileId }: IUserPopOverPro
           pb={4}
         >
           <ButtonGroup size="sm">
+            {!areFriends && (
+              <Button onClick={sendFriendRequest} color="black.primary">
+                <AiOutlineUser /> Add Friend
+              </Button>
+            )}
             {areFriends && (
               <Button color="black.primary">
                 <AiOutlineCheck /> Friends
