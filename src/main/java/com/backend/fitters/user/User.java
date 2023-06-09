@@ -7,6 +7,7 @@ import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.passwordreset.PasswordReset;
 import com.backend.fitters.bid.Bid;
+import com.backend.fitters.chat.ChatMessage;
 import com.backend.fitters.cloth.Cloth;
 import com.backend.fitters.friend.Friend;
 import com.backend.fitters.friendship.FriendShip;
@@ -82,6 +83,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "requester")
     private List<FriendShip> friendRequesters;
 
+    @OneToMany(mappedBy = "sender")
+    private List<ChatMessage> senders;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<ChatMessage> receivers;
+
     @OneToMany(mappedBy = "friend")
     private List<Friend> friends;
 
@@ -128,6 +135,14 @@ public class User implements UserDetails {
 
     public Role getRole() {
         return role;
+    }
+
+    public List<ChatMessage> getSenders() {
+        return senders;
+    }
+
+    public List<ChatMessage> getReceivers() {
+        return receivers;
     }
 
     public List<FriendShip> getFriendRequestees() {
@@ -194,6 +209,14 @@ public class User implements UserDetails {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public void setSenders(List<ChatMessage> senders) {
+        this.senders = senders;
+    }
+
+    public void setReceivers(List<ChatMessage> receivers) {
+        this.receivers = receivers;
     }
 
     public void setFriends(List<Friend> friends) {

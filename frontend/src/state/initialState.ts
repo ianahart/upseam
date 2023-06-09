@@ -6,6 +6,30 @@ export const registerFormState = {
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
 };
 
+export const simpleUserProfileState = {
+  address: '',
+  avatarUrl: '',
+  country: '',
+  email: '',
+  firstName: '',
+  id: 0,
+  lastName: '',
+  state: '',
+  zipCode: '',
+};
+
+export const chatMessageState = {
+  id: 0,
+  receiverAvatarUrl: '',
+  receiverFirstName: '',
+  receiverLastName: '',
+  receiverUserId: 0,
+  senderAvatarUrl: '',
+  senderUserId: 0,
+  content: '',
+  createdAt: '',
+};
+
 export const clothesPaginationState = {
   content: [],
   totalPages: 0,

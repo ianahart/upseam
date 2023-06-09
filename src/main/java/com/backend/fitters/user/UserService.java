@@ -9,6 +9,7 @@ import com.backend.fitters.auth.request.PasswordResetRequest;
 import com.backend.fitters.config.JwtService;
 import com.backend.fitters.advice.*;
 import com.backend.fitters.user.dto.GetFriendsDto;
+import com.backend.fitters.user.dto.GetUserSimpleProfileDto;
 import com.backend.fitters.user.dto.GetUsersDto;
 import com.backend.fitters.user.request.UpdateUserRequest;
 import com.backend.fitters.util.MyUtils;
@@ -62,6 +63,10 @@ public class UserService {
         return this.userRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    public GetUserSimpleProfileDto getUserSimpleProfile(Long userId) {
+        return this.userRepository.getUserSimpleProfile(userId);
     }
 
     public User getUserByAuth() {

@@ -12,6 +12,30 @@ export interface IClothes {
   userId: number;
 }
 
+export interface ISimpleUserProfile {
+  address: string;
+  avatarUrl: string;
+  country: string;
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface IChatMessage {
+  id: number;
+  receiverAvatarUrl: string;
+  receiverFirstName: string;
+  receiverLastName: string;
+  receiverUserId: number;
+  senderAvatarUrl: string;
+  senderUserId: number;
+  content: string;
+  createdAt: string;
+}
+
 export interface ISearchUser {
   id: number;
   firstName: string;

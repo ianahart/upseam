@@ -32,6 +32,7 @@ import EditCloth from './components/Settings/MyClothes/EditCloth';
 import AllClothes from './components/Settings/Clothes/AllClothes';
 import FullCloth from './components/Settings/Clothes/FullCloth';
 import PublicProfile from './components/Profile/PublicProfile';
+import MessagesRoute from './routes/MessagesRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -86,6 +87,15 @@ const router = createBrowserRouter(
           </RequireAuth>
         }
       />
+      <Route
+        path=":username/messages/"
+        element={
+          <RequireAuth>
+            <MessagesRoute />
+          </RequireAuth>
+        }
+      />
+
       <Route
         path="settings/:username"
         element={

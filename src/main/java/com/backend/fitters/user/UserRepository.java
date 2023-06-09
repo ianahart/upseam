@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.backend.fitters.user.dto.GetFriendsDto;
+import com.backend.fitters.user.dto.GetUserSimpleProfileDto;
 import com.backend.fitters.user.dto.GetUsersDto;
 
 import org.springframework.data.domain.Page;
@@ -39,4 +40,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     """)
     List<GetFriendsDto> getFriends(@Param("friendsIds") List<Long> friendsIds);
 
+    @Query(value = """
+              SELECT new com.backend.fitters.user.dto.GetUserSimpleProfileDto(
+              u.id, u.email, p.avatarUrl, p.address, p.country,
+             p.zipCode, p.state,
+             u.firstName, u.lastName
+              ) FROM User u
+              INNER JOIN u.profile p
+              WHERE u.id = :userId
+            """)
+    GetUserSimpleProfileDto getUserSimpleProfile(@Param("userId") Long userId);
 }

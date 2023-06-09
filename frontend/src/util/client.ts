@@ -17,6 +17,20 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getSimpleUser: (userId: number) => {
+    return http.get(`/users/${userId}`);
+  },
+
+  getChatMessages: (receiverUserId: number, senderUserId: number) => {
+    return http.get(
+      `/chat?receiverUserId=${receiverUserId}&senderUserId=${senderUserId}`
+    );
+  },
+
+  sendChatMessage: (message: string, receiverUserId: number, senderUserId: number) => {
+    return http.post('/chat', { message, receiverUserId, senderUserId });
+  },
+
   checkIfFriends: (currentUserId: number, userId: number) => {
     return http.post('/friends/check-friend', { currentUserId, userId });
   },

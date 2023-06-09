@@ -3,6 +3,7 @@ package com.backend.fitters.user;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.auth.dto.UserDto;
 import com.backend.fitters.user.request.UpdateUserRequest;
+import com.backend.fitters.user.response.GetUserSimpleProfileResponse;
 import com.backend.fitters.user.response.SearchResponse;
 import com.backend.fitters.user.response.UpdateUserResponse;
 
@@ -52,6 +53,15 @@ public class UserController {
 
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<GetUserSimpleProfileResponse> getUser(@PathVariable("userId") Long userId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        new GetUserSimpleProfileResponse(this.userService.getUserSimpleProfile(userId), "success"));
+
+    }
+
     @PatchMapping("/{userId}")
     public ResponseEntity<UpdateUserResponse> updateUser(@PathVariable("userId") Long userId,
             @RequestBody UpdateUserRequest request) {
@@ -61,4 +71,5 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(new UpdateUserResponse("success"));
     }
+
 }
