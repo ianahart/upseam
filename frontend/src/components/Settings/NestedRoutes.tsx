@@ -1,5 +1,5 @@
 import { Box, Flex, Button } from '@chakra-ui/react';
-import { AiOutlinePlus, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
 import { BsPencil } from 'react-icons/bs';
 import { BiBookContent } from 'react-icons/bi';
 import NestedRoute from './NestedRoute';
@@ -72,6 +72,14 @@ const NestedRoutes = () => {
           to="contacts"
           routeName="Contacts"
           icon={<BiBookContent />}
+        />
+      </Box>
+      <Box onClick={() => setActiveRoute('messages')}>
+        <NestedRoute
+          activeRoute={activeRoute}
+          to="messages"
+          routeName="Messages"
+          icon={<AiOutlineMail />}
         />
       </Box>
 

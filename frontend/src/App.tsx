@@ -87,14 +87,6 @@ const router = createBrowserRouter(
           </RequireAuth>
         }
       />
-      <Route
-        path=":username/messages/"
-        element={
-          <RequireAuth>
-            <MessagesRoute />
-          </RequireAuth>
-        }
-      />
 
       <Route
         path="settings/:username"
@@ -120,6 +112,16 @@ const router = createBrowserRouter(
             </RequireAuth>
           }
         />
+
+        <Route
+          path="messages"
+          element={
+            <RequireAuth>
+              <MessagesRoute />
+            </RequireAuth>
+          }
+        />
+
         <Route
           path="profile"
           element={

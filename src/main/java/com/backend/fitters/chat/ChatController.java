@@ -2,6 +2,7 @@ package com.backend.fitters.chat;
 
 import com.backend.fitters.chat.request.SendChatMessageRequest;
 import com.backend.fitters.chat.response.GetChatMessagesResponse;
+import com.backend.fitters.chat.response.GetUsersWithMessagesResponse;
 import com.backend.fitters.chat.response.SendChatMessageResponse;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,16 @@ public class ChatController {
 
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<GetUsersWithMessagesResponse> getUsersWithMessages(
+            @RequestParam("currentUserId") Long currentUserId,
+            @RequestParam("page") int page) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new GetUsersWithMessagesResponse("success",
+                        this.chatService.getUsersWithMessages(currentUserId, page)));
     }
 
     @GetMapping

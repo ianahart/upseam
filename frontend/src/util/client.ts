@@ -17,6 +17,10 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getUsersWithMessages: (currentUserId: number, page: number) => {
+    return http.get(`/chat/users?currentUserId=${currentUserId}&page=${page}`);
+  },
+
   getSimpleUser: (userId: number) => {
     return http.get(`/users/${userId}`);
   },

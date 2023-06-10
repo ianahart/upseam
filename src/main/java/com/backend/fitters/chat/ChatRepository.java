@@ -3,7 +3,11 @@ package com.backend.fitters.chat;
 import java.util.List;
 
 import com.backend.fitters.chat.dto.ChatMessageDto;
+import com.backend.fitters.chat.dto.GetUserWithMessageDto;
+import com.backend.fitters.chat.dto.GetUsersWithMessagesDto;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +15,18 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
+
+    @Query(value = """
+            SELECT DISTINCT ON (r.id) r.id AS receiverUserId, cm.id AS id, cm.content AS content,
+            r.first_name AS firstName, r.last_name AS lastName
+            FROM chat_message cm
+            INNER JOIN _user r ON cm.receiver_id = r.id
+            INNER JOIN _user s ON cm.sender_id = s.id
+            WHERE s.id = :currentUserId
+            ORDER BY r.id
+                 """, nativeQuery = true)
+
+    Page<GetUsersWithMessagesDto> getUsersWithMessages(@Param("currentUserId") Long currentUserId, Pageable pageable);
 
     @Query("""
             SELECT new com.backend.fitters.chat.dto.ChatMessageDto(

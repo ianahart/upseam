@@ -12,6 +12,15 @@ export interface IClothes {
   userId: number;
 }
 
+export interface IUserWithMessage {
+  receiverUserId: number;
+  id: number;
+  content: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+}
+
 export interface ISimpleUserProfile {
   address: string;
   avatarUrl: string;

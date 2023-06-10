@@ -73,6 +73,20 @@ button.logout-button:hover {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
+.rotate {
+  animation: rotate-keyframes 1s;
+}
+
+@keyframes rotate-keyframes {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 @media (max-width: 1050px) {
   .settingsContainer {
     display: flex;

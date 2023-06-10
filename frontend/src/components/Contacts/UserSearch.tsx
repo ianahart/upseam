@@ -23,7 +23,6 @@ const UserSearch = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  console.log(searchUsers);
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
   };
