@@ -8,7 +8,11 @@ import { Client } from '../util/client';
 import { IChatMessage, IUserContext, IUserWithMessage } from '../interfaces';
 import { simpleUserProfileState } from '../state/initialState';
 import { UserContext } from '../context/user';
+import { over } from 'stompjs';
+import SockJS from 'sockjs-client';
+import { useEffectOnce } from '../hooks/useEffectOnce';
 
+let stompClient: any = null;
 const MessagesRoute = () => {
   const { user } = useContext(UserContext) as IUserContext;
   const location = useLocation();
@@ -25,6 +29,41 @@ const MessagesRoute = () => {
   const [showLoadMoreUsers, setShowLoadMoreUsers] = useState(false);
   const [usersWithMessages, setUsersWithMessages] = useState<IUserWithMessage[]>([]);
   const shouldRun = useRef(true);
+
+  const connect = () => {
+    let Sock = new SockJS('http://localhost:8080/ws');
+    stompClient = over(Sock);
+    stompClient.connect({}, onConnected, onError);
+  };
+
+  const sendMessage = (message: string) => {
+    if (stompClient) {
+      stompClient.send(
+        '/api/v1/private-message',
+        {},
+        JSON.stringify({ message, receiverUserId, senderUserId })
+      );
+    }
+    //  Client.sendChatMessage(message, receiverUserId, senderUserId)
+    //    .then((res) => {
+    //      setChatMessages((prevState) => [res.data.chatMessage, ...prevState]);
+    //    })
+    //    .catch((err) => {
+    //      throw new Error(err.response.data.message);
+    //    });
+  };
+
+  const onConnected = () => {
+    stompClient.subscribe(`/user/${user.id}/private`, onPrivateMessage);
+  };
+
+  const onPrivateMessage = (payload: any) => {
+    const chatMessage = JSON.parse(payload.body);
+    setChatMessages((prevState) => [chatMessage, ...prevState]);
+    console.log(payload);
+  };
+
+  const onError = () => {};
 
   const handleSetFilterTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilterTerm(e.target.value);
@@ -47,10 +86,14 @@ const MessagesRoute = () => {
   }, [usersWithMessages, filterTerm]);
 
   const handleOnChangeUser = (receiverUserId: number) => {
+    if (stompClient) {
+      stompClient.disconnect();
+    }
     getMessages(receiverUserId, user.id);
     setReceiverUserId(receiverUserId);
     setSenderUserId(user.id);
     getReceiverProfile(receiverUserId);
+    connect();
   };
 
   const getMessages = (receiverUserId: number, senderUserId: number) => {
@@ -103,7 +146,8 @@ const MessagesRoute = () => {
     if (
       location.state !== null &&
       Object.keys(location.state).length &&
-      shouldRun.current
+      shouldRun.current &&
+      user.id !== 0
     ) {
       shouldRun.current = false;
       const { receiverUserId, senderUserId } = location.state;
@@ -111,6 +155,7 @@ const MessagesRoute = () => {
       setSenderUserId(senderUserId);
       getMessages(receiverUserId, senderUserId);
       getReceiverProfile(receiverUserId);
+      handleOnChangeUser(receiverUserId);
       getUsersWithMessages(senderUserId, false);
     }
     if (shouldRun.current && user.id !== 0) {
@@ -118,16 +163,6 @@ const MessagesRoute = () => {
       getUsersWithMessages(user.id, false);
     }
   }, [location.state, user.id]);
-
-  const sendMessage = (message: string) => {
-    Client.sendChatMessage(message, receiverUserId, senderUserId)
-      .then((res) => {
-        setChatMessages((prevState) => [res.data.chatMessage, ...prevState]);
-      })
-      .catch((err) => {
-        throw new Error(err.response.data.message);
-      });
-  };
 
   return (
     <Box minH="100vh">
