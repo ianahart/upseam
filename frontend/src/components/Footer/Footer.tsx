@@ -18,11 +18,9 @@ const Footer = () => {
   const subscribe = () => {
     Client.subscribeToUpseam(email)
       .then((res) => {
-        console.log(res);
         setEmail('');
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 400) {
           setError(err.response.data.message);
         }
