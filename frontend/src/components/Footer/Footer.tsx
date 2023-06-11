@@ -9,7 +9,42 @@ import {
   Text,
   Link,
 } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Client } from '../../util/client';
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  const subscribe = () => {
+    Client.subscribeToUpseam(email)
+      .then((res) => {
+        console.log(res);
+        setEmail('');
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 400) {
+          setError(err.response.data.message);
+        }
+      });
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setEmail(value);
+  };
+
+  const handleOnClick = () => {
+    setError('');
+    if (email.trim().length === 0) {
+      setError('Please provide an email address');
+    }
+    if (error.length) {
+      return;
+    }
+    subscribe();
+  };
+
   return (
     <Container maxW="100%" textAlign="center" as="footer" role="contentinfo">
       <Stack
@@ -53,9 +88,25 @@ const Footer = () => {
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
               Stay up to date
             </Text>
+            {error.length > 0 && (
+              <Text color="red.500" fontSize="0.85rem">
+                {error}
+              </Text>
+            )}
             <Stack spacing="4" direction={{ base: 'column', sm: 'row' }}>
-              <Input placeholder="Enter your email" type="email" required />
-              <Button variant="primary" type="submit" flexShrink={0}>
+              <Input
+                value={email}
+                onChange={handleOnChange}
+                placeholder="Enter your email"
+                type="email"
+                required
+              />
+              <Button
+                onClick={handleOnClick}
+                variant="primary"
+                type="submit"
+                flexShrink={0}
+              >
                 Subscribe
               </Button>
             </Stack>

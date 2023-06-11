@@ -17,6 +17,10 @@ export const http = axios.create({
 });
 
 export const Client = {
+  subscribeToUpseam: (email: string) => {
+    return http.post('/subscribers', { email });
+  },
+
   getUsersWithMessages: (currentUserId: number, page: number) => {
     return http.get(`/chat/users?currentUserId=${currentUserId}&page=${page}`);
   },

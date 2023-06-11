@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "ws/**")
+                .requestMatchers("/api/v1/auth/**", "ws/**", "/api/v1/subscribers/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
