@@ -5,6 +5,7 @@ import { Client } from './util/client';
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
   RouterProvider,
 } from 'react-router-dom';
@@ -33,6 +34,7 @@ import AllClothes from './components/Settings/Clothes/AllClothes';
 import FullCloth from './components/Settings/Clothes/FullCloth';
 import PublicProfile from './components/Profile/PublicProfile';
 import MessagesRoute from './routes/MessagesRoute';
+import NotFoundRoute from './routes/NotFoundRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -172,6 +174,8 @@ const router = createBrowserRouter(
           }
         />
       </Route>
+      <Route path="/404" element={<NotFoundRoute />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Route>
   )
 );
