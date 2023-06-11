@@ -140,6 +140,7 @@ const MessagesRoute = () => {
       >
         <GridItem>
           <Sidebar
+            isLoading={isLoading}
             handleOnChangeUser={handleOnChangeUser}
             showLoadMoreUsers={showLoadMoreUsers}
             getUsersWithMessages={getUsersWithMessages}
