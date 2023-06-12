@@ -1,9 +1,9 @@
 import { Box, Flex, Heading, Spacer, VStack } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 import NavLink from '../components/Navbar/NavLink';
-import NestedRoutes from '../components/Settings/NestedRoutes';
+import NestedRoutes from '../components/Menu/NestedRoutes';
 
-const SettingsRoute = () => {
+const MenuRoute = () => {
   return (
     <Box minH="100vh">
       <Flex className="settingsContainer">
@@ -29,4 +29,4 @@ const SettingsRoute = () => {
   );
 };
 
-export default SettingsRoute;
+export default MenuRoute;

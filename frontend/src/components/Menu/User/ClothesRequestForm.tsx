@@ -76,7 +76,7 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
     if (file === null) return;
     Client.createCloth(startDate, description, file, user.id, size)
       .then((res) => {
-        navigate(`/settings/${slugify(user.firstName, user.lastName)}/profile`);
+        navigate(`/menu/${slugify(user.firstName, user.lastName)}/profile`);
 
         setIsLoading(false);
       })
@@ -93,7 +93,7 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
     setIsLoading(true);
     Client.updateCloth(startDate, description, file, user.id, size, clothId)
       .then((response) => {
-        navigate(`/settings/${slugify(user.firstName, user.lastName)}/clothes`);
+        navigate(`/menu/${slugify(user.firstName, user.lastName)}/clothes`);
         setIsLoading(false);
       })
       .catch((err) => {

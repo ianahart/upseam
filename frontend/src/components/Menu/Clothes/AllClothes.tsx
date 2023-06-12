@@ -63,7 +63,7 @@ const AllClothes = () => {
               return (
                 <GridItem key={cloth.id}>
                   <RouterLink
-                    to={`/settings/${slugify(user.firstName, user.lastName)}/clothes/${
+                    to={`/menu/${slugify(user.firstName, user.lastName)}/clothes/${
                       cloth.id
                     }`}
                   >

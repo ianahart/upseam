@@ -75,7 +75,7 @@ const Cloth = ({ cloth, isEditable }: IClothProps) => {
         </Box>
         <Box cursor="pointer" color="text.primary">
           <RouterLink
-            to={`/settings/${slugify(user.firstName, user.lastName)}/clothes/edit/${
+            to={`/menu/${slugify(user.firstName, user.lastName)}/clothes/edit/${
               cloth.id
             }`}
           >

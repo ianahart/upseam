@@ -1,9 +1,9 @@
 import { Box, Text, Flex, Image, Link } from '@chakra-ui/react';
-import FormLayout from '../Settings/EditProfile/FormLayout';
-import Header from '../Settings/Header';
-import EditProfileLink from '../Settings/MyProfile/EditProfileLink';
+import FormLayout from '../Menu/EditProfile/FormLayout';
+import Header from '../Menu/Header';
+import EditProfileLink from '../Menu/MyProfile/EditProfileLink';
 import InitialIcon from '../Shared/InitialIcon';
-import FormHeader from '../Settings/EditProfile/FormHeader';
+import FormHeader from '../Menu/EditProfile/FormHeader';
 import { IProfilePage, IUserContext } from '../../interfaces';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
@@ -16,7 +16,7 @@ const Profile = ({ profile }: IProfileProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   return (
     <Box>
-      <Header heading="My Profile" />
+      <Header heading="Profile" />
       <FormLayout>
         <>
           {user.id === profile.profileUserId && <EditProfileLink />}

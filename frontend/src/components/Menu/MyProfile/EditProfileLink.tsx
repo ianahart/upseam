@@ -10,7 +10,7 @@ const EditProfileLink = () => {
   const { user } = useContext(UserContext) as IUserContext;
 
   return (
-    <RouterLink to={`/settings/${slugify(user.firstName, user.lastName)}/edit-profile`}>
+    <RouterLink to={`/menu/${slugify(user.firstName, user.lastName)}/edit-profile`}>
       <Flex justify="flex-end" m="1rem" color="text.primary">
         <Flex
           borderRadius="20px"

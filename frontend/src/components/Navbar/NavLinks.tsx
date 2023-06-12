@@ -1,6 +1,6 @@
 import { AiOutlineHome } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import { BsPencil } from 'react-icons/bs';
+import { BsMap, BsPencil } from 'react-icons/bs';
 import { CiLogin, CiSettings } from 'react-icons/ci';
 import NavLink from './NavLink';
 import { useContext } from 'react';
@@ -40,9 +40,9 @@ const NavLinks = () => {
       )}
       {user.isLoggedIn && (
         <NavLink
-          to={`settings/${slugify(user.firstName, user.lastName)}/profile`}
-          routeName="Settings"
-          icon={<CiSettings />}
+          to={`menu/${slugify(user.firstName, user.lastName)}/profile`}
+          routeName="Menu"
+          icon={<BsMap />}
         />
       )}
       {user.isLoggedIn && (

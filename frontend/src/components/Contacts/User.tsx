@@ -25,7 +25,7 @@ const User = ({ contact, handleRemoveFriend }: IUserProps) => {
   const sendMessage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    navigate(`/settings/${slugify(contact.firstName, contact.lastName)}/messages/`, {
+    navigate(`/menu/${slugify(contact.firstName, contact.lastName)}/messages/`, {
       state: {
         receiverUserId: contact.userId,
         senderUserId: user.id,
