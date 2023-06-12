@@ -45,7 +45,7 @@ public class BidService {
 
     public BidsWithPaginationDto getBids(Long clothId, int page, String direction, int pageSize) {
         int currentPage = MyUtils.paginate(page, direction);
-        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id"));
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("bid"));
 
         return new BidsWithPaginationDto(
                 this.bidRepository.findAllBidsByClothId(clothId, paging),
