@@ -1,4 +1,5 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text, chakra, shouldForwardProp } from '@chakra-ui/react';
+import { isValidMotionProp, motion } from 'framer-motion';
 
 interface IMarketingProps {
   img: string;
@@ -8,30 +9,36 @@ interface IMarketingProps {
 
 const Marketing = ({ img, marketingInformation, isContentReverse }: IMarketingProps) => {
   return (
-    <Flex
-      p="0.5rem"
-      my="10rem"
-      direction={
-        isContentReverse
-          ? ['column', 'column', 'row-reverse']
-          : ['column', 'column', 'row']
-      }
-      align="center"
-      minH="600px"
-      width="100%"
-      bg="#fff"
+    <motion.div
+      initial={{ opacity: 0, x: '300px' }}
+      transition={{ delay: 0.25 }}
+      whileInView={{ opacity: 1, x: 0 }}
     >
-      <Text
-        fontSize="1.2rem"
-        textAlign="center"
-        my={['2rem', '2rem', '0']}
-        mx="3rem"
-        color="text.primary"
+      <Flex
+        p="0.5rem"
+        my="10rem"
+        direction={
+          isContentReverse
+            ? ['column', 'column', 'row-reverse']
+            : ['column', 'column', 'row']
+        }
+        align="center"
+        minH="600px"
+        width="100%"
+        bg="#fff"
       >
-        {marketingInformation}
-      </Text>
-      <Image height="400px" src={img} alt="marketing related information" />
-    </Flex>
+        <Text
+          fontSize="1.2rem"
+          textAlign="center"
+          my={['2rem', '2rem', '0']}
+          mx="3rem"
+          color="text.primary"
+        >
+          {marketingInformation}
+        </Text>
+        <Image height="400px" src={img} alt="marketing related information" />
+      </Flex>
+    </motion.div>
   );
 };
 
