@@ -9,23 +9,23 @@ interface IMarketingProps {
 
 const Marketing = ({ img, marketingInformation, isContentReverse }: IMarketingProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: '300px' }}
-      transition={{ delay: 0.25 }}
-      whileInView={{ opacity: 1, x: 0 }}
+    <Flex
+      p="0.5rem"
+      my="10rem"
+      direction={
+        isContentReverse
+          ? ['column', 'column', 'row-reverse']
+          : ['column', 'column', 'row']
+      }
+      align="center"
+      minH="600px"
+      width="100%"
+      bg="#fff"
     >
-      <Flex
-        p="0.5rem"
-        my="10rem"
-        direction={
-          isContentReverse
-            ? ['column', 'column', 'row-reverse']
-            : ['column', 'column', 'row']
-        }
-        align="center"
-        minH="600px"
-        width="100%"
-        bg="#fff"
+      <motion.div
+        initial={{ opacity: 0, y: '300' }}
+        transition={{ delay: 0.5 }}
+        whileInView={{ opacity: 1, y: 0 }}
       >
         <Text
           fontSize="1.2rem"
@@ -36,9 +36,15 @@ const Marketing = ({ img, marketingInformation, isContentReverse }: IMarketingPr
         >
           {marketingInformation}
         </Text>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: '-300px' }}
+        transition={{ delay: 0.5 }}
+        whileInView={{ opacity: 1, x: 0 }}
+      >
         <Image height="400px" src={img} alt="marketing related information" />
-      </Flex>
-    </motion.div>
+      </motion.div>
+    </Flex>
   );
 };
 
