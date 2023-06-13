@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.backend.fitters.bid.Bid;
+import com.backend.fitters.order.Order;
 import com.backend.fitters.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,6 +49,10 @@ public class Cloth {
     private String size;
     @Column(name = "description")
     private String description;
+    @Column(name = "closed")
+    private Boolean closed;
+    @Column(name = "closedId")
+    private Long closedId;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(cascade = CascadeType.ALL)
@@ -55,6 +60,9 @@ public class Cloth {
 
     @OneToMany(mappedBy = "cloth")
     private List<Bid> bids;
+
+    @OneToMany(mappedBy = "cloth")
+    private List<Order> orders;
 
     public Cloth() {
 
@@ -67,7 +75,9 @@ public class Cloth {
             String clothFilename,
             LocalDate dueDate,
             String size,
-            String description, User user) {
+            String description, User user,
+            Boolean closed,
+            Long closedId) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -77,6 +87,8 @@ public class Cloth {
         this.size = size;
         this.description = description;
         this.user = user;
+        this.closed = closed;
+        this.closedId = closedId;
     }
 
     public Cloth(
@@ -85,21 +97,35 @@ public class Cloth {
             LocalDate dueDate,
             String size,
             String description,
-            User user) {
+            User user,
+            Boolean closed) {
         this.clothUrl = clothUrl;
         this.clothFilename = clothFilename;
         this.dueDate = dueDate;
         this.size = size;
         this.description = description;
         this.user = user;
+        this.closed = closed;
     }
 
     public Long getId() {
         return id;
     }
 
+    public Long getClosedId() {
+        return closedId;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     public User getUser() {
         return user;
+    }
+
+    public Boolean getClosed() {
+        return closed;
     }
 
     public List<Bid> getBids() {
@@ -138,6 +164,10 @@ public class Cloth {
         this.id = id;
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -148,6 +178,10 @@ public class Cloth {
 
     public void setClothUrl(String clothUrl) {
         this.clothUrl = clothUrl;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
     }
 
     public void setClothFilename(String clothFilename) {
@@ -172,5 +206,9 @@ public class Cloth {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setClosedId(Long closedId) {
+        this.closedId = closedId;
     }
 }

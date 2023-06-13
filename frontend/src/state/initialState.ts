@@ -18,6 +18,17 @@ export const simpleUserProfileState = {
   zipCode: '',
 };
 
+export const orderState = {
+  avatarUrl: '',
+  clothId: 0,
+  clothUrl: '',
+  complete: false,
+  dueDate: '',
+  firstName: '',
+  lastName: '',
+  id: 0,
+};
+
 export const chatMessageState = {
   id: 0,
   receiverAvatarUrl: '',
@@ -80,6 +91,8 @@ export const fullClothState = {
   size: '',
   updatedAt: new Date(),
   userId: 0,
+  closed: false,
+  closedId: 0,
 };
 
 export const resetPasswordState = {

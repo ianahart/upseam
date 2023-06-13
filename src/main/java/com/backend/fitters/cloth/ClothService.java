@@ -46,6 +46,21 @@ public class ClothService {
         this.userService = userService;
     }
 
+    public void updateClothClosed(Long clothId, Long closedId) {
+        boolean exists = this.clothRepository.existsById(clothId);
+        if (!exists) {
+            throw new BadRequestException("Cloth with the id " + clothId + " does not exist");
+        }
+
+        Cloth cloth = this.clothRepository
+                .findById(clothId)
+                .orElseThrow(() -> new NotFoundException("Cloth not found"));
+
+        cloth.setClosedId(closedId);
+        cloth.setClosed(true);
+        this.clothRepository.save(cloth);
+    }
+
     public FullClothDto getCloth(Long clothId) {
         boolean exists = this.clothRepository.existsById(clothId);
         if (!exists) {
@@ -131,6 +146,7 @@ public class ClothService {
             throw new BadRequestException("Please select a size");
         }
         cloth.setSize(request.getSize());
+        cloth.setClosed(false);
 
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = request.getDueDate().replaceAll("^\"|\"$", "");

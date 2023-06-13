@@ -20,6 +20,16 @@ export interface IUserWithMessage {
   lastName: string;
   avatarUrl: string;
 }
+export interface IOrder {
+  avatarUrl: string;
+  clothId: number;
+  clothUrl: string;
+  complete: boolean;
+  dueDate: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+}
 
 export interface ISimpleUserProfile {
   address: string;
@@ -116,6 +126,8 @@ export interface IFullCloth {
   size: string;
   updatedAt: Date;
   userId: number;
+  closed: boolean;
+  closedId: number;
 }
 
 export interface IRegisterForm {

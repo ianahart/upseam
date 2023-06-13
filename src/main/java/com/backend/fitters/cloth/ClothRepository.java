@@ -40,7 +40,8 @@ public interface ClothRepository extends JpaRepository<Cloth, Long> {
     @Query(value = """
             SELECT new com.backend.fitters.cloth.dto.FullClothDto(
                    c.id, c.clothUrl, c.dueDate, c.size, c.description, c.createdAt,
-                  c.updatedAt, u.firstName, u.lastName, u.email, u.id AS userId
+                  c.updatedAt, u.firstName, u.lastName, u.email, u.id AS userId, c.closed,
+                  c.closedId
                   ) FROM Cloth c LEFT JOIN c.user u WHERE c.id = :clothId""")
     FullClothDto findFullClothById(@Param("clothId") Long clothId);
 }
