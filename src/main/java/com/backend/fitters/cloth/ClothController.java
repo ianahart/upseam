@@ -3,10 +3,12 @@ package com.backend.fitters.cloth;
 import java.util.Optional;
 
 import com.backend.fitters.cloth.request.CreateClothRequest;
+import com.backend.fitters.cloth.request.UpdateClothClosedRequest;
 import com.backend.fitters.cloth.response.CreateClothResponse;
 import com.backend.fitters.cloth.response.FullClothResponse;
 import com.backend.fitters.cloth.response.GetClothesResponse;
 import com.backend.fitters.cloth.response.SyncClothResponse;
+import com.backend.fitters.cloth.response.UpdateClothClosedResponse;
 import com.backend.fitters.cloth.response.UpdateClothResponse;
 import com.backend.fitters.cloth.request.UpdateClothRequest;
 
@@ -31,6 +33,13 @@ public class ClothController {
     @Autowired
     public ClothController(ClothService clothService) {
         this.clothService = clothService;
+    }
+
+    @PatchMapping("/select/{clothId}")
+    public ResponseEntity<UpdateClothClosedResponse> updateClothClosed(@PathVariable("clothId") Long clothId,
+            @RequestBody UpdateClothClosedRequest request) {
+        this.clothService.updateClothClosed(clothId, request.getBidId());
+        return ResponseEntity.status(HttpStatus.OK).body(new UpdateClothClosedResponse("success"));
     }
 
     @GetMapping("/{clothId}")

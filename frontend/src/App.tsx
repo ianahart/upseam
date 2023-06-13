@@ -35,6 +35,7 @@ import FullCloth from './components/Menu/Clothes/FullCloth';
 import PublicProfile from './components/Profile/PublicProfile';
 import MessagesRoute from './routes/MessagesRoute';
 import NotFoundRoute from './routes/NotFoundRoute';
+import Orders from './components/Menu/Order/Orders';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -124,6 +125,14 @@ const router = createBrowserRouter(
           }
         />
 
+        <Route
+          path="orders"
+          element={
+            <RequireAuth>
+              <Orders />
+            </RequireAuth>
+          }
+        />
         <Route
           path="profile"
           element={

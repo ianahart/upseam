@@ -10,6 +10,7 @@ import {
   Tr,
   Th,
   Tbody,
+  Td,
 } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
 import Header from '../../Header';
@@ -20,13 +21,26 @@ import { IBidsPagination } from '../../../../interfaces';
 import Bid from './Bid';
 
 interface IBidsProps {
+  closedId: number;
   clothId: number;
   clothUserId: number;
   isNewBid: boolean;
   setIsNewBid: (isNewBid: boolean) => void;
+  ownerUserId: number;
+  handleSelectBid: (clothId: number, _bidId: number, _bidUserId: number) => void;
+  clothClosed: boolean;
 }
 
-const Bids = ({ isNewBid, setIsNewBid, clothId, clothUserId }: IBidsProps) => {
+const Bids = ({
+  isNewBid,
+  setIsNewBid,
+  clothId,
+  clothUserId,
+  ownerUserId,
+  handleSelectBid,
+  clothClosed,
+  closedId,
+}: IBidsProps) => {
   const PAGE_SIZE = 4;
   const [isLoading, setIsLoading] = useState(false);
   const [pagination, setPagination] = useState<IBidsPagination>(bidsPaginationState);
@@ -113,11 +127,23 @@ const Bids = ({ isNewBid, setIsNewBid, clothId, clothUserId }: IBidsProps) => {
                   <Th>Full Name</Th>
                   <Th>Bid Offer</Th>
                   <Th>Date Posted</Th>
+                  <Th>Action</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {pagination.content.map((bid) => {
-                  return <Bid deleteBid={deleteBid} key={bid.id} _bid={bid} />;
+                  return (
+                    <Bid
+                      closedId={closedId}
+                      clothClosed={clothClosed}
+                      handleSelectBid={handleSelectBid}
+                      clothId={clothId}
+                      ownerUserId={ownerUserId}
+                      deleteBid={deleteBid}
+                      key={bid.id}
+                      _bid={bid}
+                    />
+                  );
                 })}
               </Tbody>
             </Table>

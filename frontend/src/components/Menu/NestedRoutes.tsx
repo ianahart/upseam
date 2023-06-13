@@ -7,7 +7,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 import { GiClothes } from 'react-icons/gi';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { AiOutlineShoppingCart, AiOutlineInbox } from 'react-icons/ai';
 
 const NestedRoutes = () => {
   const { user } = useContext(UserContext) as IUserContext;
@@ -53,6 +53,17 @@ const NestedRoutes = () => {
             to="requests"
             routeName="Request Clothes"
             icon={<AiOutlinePlus />}
+          />
+        </Box>
+      )}
+
+      {user.role === 'SEAMSTER' && (
+        <Box onClick={() => setActiveRoute('orders')}>
+          <NestedRoute
+            activeRoute={activeRoute}
+            to="orders"
+            routeName="Orders"
+            icon={<AiOutlineInbox />}
           />
         </Box>
       )}

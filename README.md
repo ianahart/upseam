@@ -22,5 +22,5 @@ Users can connect with Seamsters and chat about making the clothing.
 
 ### Regular User
 
--u: smith@gmail.com
+-u: test@gmail.com
 -p: Test12345%

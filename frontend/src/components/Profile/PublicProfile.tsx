@@ -10,7 +10,6 @@ const PublicProfile = () => {
   const location = useLocation();
   const [profile, setProfile] = useState<IProfilePage>(profilePageState);
 
-  console.log(profile);
   useEffect(() => {
     if (location.state.profileId !== 0) {
       fetchProfile();

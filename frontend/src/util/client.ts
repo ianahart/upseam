@@ -17,6 +17,22 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateOrder: (orderId: number, complete: boolean) => {
+    return http.patch(`/orders/${orderId}`, { complete });
+  },
+
+  getOrders: (userId: number, page: number) => {
+    return http.get(`/orders?userId=${userId}&page=${page}`);
+  },
+
+  createOrder: (clothId: number, userId: number, bidUserId: number) => {
+    return http.post('/orders', { clothId, userId, bidUserId });
+  },
+
+  selectBid: (clothId: number, bidId: number) => {
+    return http.patch(`/clothes/select/${clothId}`, { bidId });
+  },
+
   subscribeToUpseam: (email: string) => {
     return http.post('/subscribers', { email });
   },

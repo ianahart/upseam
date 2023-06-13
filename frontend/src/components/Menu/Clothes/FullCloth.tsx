@@ -49,6 +49,31 @@ const FullCloth = () => {
     }
   });
 
+  const handleSelectBid = (clothId: number, _bidId: number, bidUserId: number) => {
+    //selectBid(clothId, _bidId);
+    createOrder(clothId, user.id, bidUserId);
+  };
+
+  const createOrder = (clothId: number, userId: number, bidUserId: number) => {
+    Client.createOrder(clothId, userId, bidUserId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const selectBid = (clothId: number, _bidId: number) => {
+    Client.selectBid(clothId, _bidId)
+      .then((res) => {
+        setCloth({ ...cloth, closed: true, closedId: _bidId });
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
   const makeBid = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     if (!bid) {
@@ -62,7 +87,6 @@ const FullCloth = () => {
         onClose();
       })
       .catch((err) => {
-        console.log(err);
         setError(err.response.data.message);
         setIsLoading(false);
         throw new Error(err.response.data.message);
@@ -180,7 +204,7 @@ const FullCloth = () => {
                 </Text>
               </Flex>
             </Flex>
-            {user.id !== cloth.userId && (
+            {user.id !== cloth.userId && !cloth.closed && (
               <Button colorScheme="blue" my="2rem" onClick={onOpen}>
                 Make Bid
               </Button>
@@ -239,10 +263,14 @@ const FullCloth = () => {
         </Box>
       )}
       <Bids
+        closedId={cloth.closedId}
+        handleSelectBid={handleSelectBid}
+        ownerUserId={cloth.userId}
         setIsNewBid={setIsNewBid}
         isNewBid={isNewBid}
         clothUserId={cloth.userId}
         clothId={cloth.id}
+        clothClosed={cloth.closed}
       />
     </Box>
   );

@@ -30,9 +30,22 @@ dayjs.extend(relativeTime);
 export interface IBidProps {
   _bid: IBid;
   deleteBid: (id: number) => void;
+  ownerUserId: number;
+  clothId: number;
+  handleSelectBid: (clothId: number, _bidId: number, _bidUserId: number) => void;
+  clothClosed: boolean;
+  closedId: number;
 }
 
-const Bid = ({ _bid, deleteBid }: IBidProps) => {
+const Bid = ({
+  _bid,
+  deleteBid,
+  ownerUserId,
+  clothId,
+  handleSelectBid,
+  clothClosed,
+  closedId,
+}: IBidProps) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [error, setError] = useState('');
   const { user } = useContext(UserContext) as IUserContext;
@@ -56,8 +69,12 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
       });
   };
 
+  const handleOnClick = () => {
+    handleSelectBid(clothId, _bid.id, _bid.userId);
+  };
+
   return (
-    <Tr>
+    <Tr bg={clothClosed && _bid.id === closedId ? '#00ff7f7a' : '#fff'}>
       <Td display="flex" align="center">
         {!_bid.avatarUrl ? (
           <InitialIcon />
@@ -137,6 +154,17 @@ const Bid = ({ _bid, deleteBid }: IBidProps) => {
         {' '}
         {dayjs(_bid.createdAt).fromNow()}
       </Td>
+      {ownerUserId === user.id && !clothClosed ? (
+        <Td>
+          <Button onClick={handleOnClick}>Select</Button>
+        </Td>
+      ) : (
+        <Td>
+          <Text color="text.primary">
+            {clothClosed && _bid.id === closedId ? 'Selected' : 'Unavailable'}
+          </Text>
+        </Td>
+      )}
     </Tr>
   );
 };

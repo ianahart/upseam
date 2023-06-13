@@ -11,6 +11,7 @@ import com.backend.fitters.chat.ChatMessage;
 import com.backend.fitters.cloth.Cloth;
 import com.backend.fitters.friend.Friend;
 import com.backend.fitters.friendship.FriendShip;
+import com.backend.fitters.order.Order;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -77,6 +78,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Bid> bids;
 
+    @OneToMany(mappedBy = "bidUser")
+    private List<Order> orders;
+
     @OneToMany(mappedBy = "requestee")
     private List<FriendShip> friendRequestees;
 
@@ -135,6 +139,10 @@ public class User implements UserDetails {
 
     public Role getRole() {
         return role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     public List<ChatMessage> getSenders() {
@@ -201,6 +209,10 @@ public class User implements UserDetails {
 
     public void setClothes(List<Cloth> clothes) {
 
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public void setBids(List<Bid> bids) {

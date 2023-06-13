@@ -15,6 +15,8 @@ public class FullClothDto {
     private String lastName;
     private String email;
     private Long userId;
+    private Boolean closed;
+    private Long closedId;
 
     public FullClothDto() {
 
@@ -31,7 +33,9 @@ public class FullClothDto {
             String firstName,
             String lastName,
             String email,
-            Long userId) {
+            Long userId,
+            Boolean closed,
+            Long closedId) {
         this.id = id;
         this.clothUrl = clothUrl;
         this.dueDate = dueDate;
@@ -43,14 +47,24 @@ public class FullClothDto {
         this.lastName = lastName;
         this.email = email;
         this.userId = userId;
+        this.closed = closed;
+        this.closedId = closedId;
     }
 
     public Long getId() {
         return id;
     }
 
+    public Boolean getClosed() {
+        return closed;
+    }
+
     public Long getUserId() {
         return userId;
+    }
+
+    public Long getClosedId() {
+        return closedId;
     }
 
     public String getSize() {
@@ -93,6 +107,10 @@ public class FullClothDto {
         this.size = size;
     }
 
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -127,6 +145,10 @@ public class FullClothDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public void setClosedId(Long closedId) {
+        this.closedId = closedId;
     }
 
     public void setDescription(String description) {
