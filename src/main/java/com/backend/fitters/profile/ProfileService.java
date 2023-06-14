@@ -6,6 +6,7 @@ import com.backend.fitters.amazon.AmazonService;
 import com.backend.fitters.profile.request.ProfilePhotoRequest;
 import com.backend.fitters.profile.request.UpdateProfileRequest;
 import com.backend.fitters.profile.dto.ProfileFieldsDto;
+import com.backend.fitters.profile.dto.ProfileShippingDto;
 import com.backend.fitters.advice.NotFoundException;
 import com.backend.fitters.advice.ForbiddenException;
 import com.backend.fitters.profile.dto.ProfileDto;
@@ -26,6 +27,10 @@ public class ProfileService {
     public ProfileService(ProfileRepository profileRepository, AmazonService amazonService) {
         this.profileRepository = profileRepository;
         this.amazonService = amazonService;
+    }
+
+    public ProfileShippingDto getProfileShipping(Long profileId) {
+        return this.profileRepository.getProfileShipping(profileId);
     }
 
     private String getCurrentUserName() {

@@ -1,3 +1,12 @@
+export interface IShippingForm {
+  firstName: { name: string; value: string; error: string; type: string };
+  lastName: { name: string; value: string; error: string; type: string };
+  zipCode: { name: string; value: string; error: string; type: string };
+  country: { name: string; value: string; error: string; type: string };
+  address: { name: string; value: string; error: string; type: string };
+  state: { name: string; value: string; error: string; type: string };
+}
+
 export interface IClothes {
   clothUrl: string;
   createdAt: Date;
@@ -10,6 +19,29 @@ export interface IClothes {
   size: string;
   updatedAt: Date;
   userId: number;
+}
+
+export interface IShippingProfile {
+  [key: string]: string;
+  address: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface IPreviousAddress {
+  id: number;
+  address: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  shippingType: string;
+  shippingValue: string;
+  state: string;
+  userId: number;
+  zipCode: string;
 }
 
 export interface IUserWithMessage {

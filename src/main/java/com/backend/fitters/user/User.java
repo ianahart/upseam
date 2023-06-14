@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.backend.fitters.token.Token;
 import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
+import com.backend.fitters.shipping.Shipping;
 import com.backend.fitters.passwordreset.PasswordReset;
 import com.backend.fitters.bid.Bid;
 import com.backend.fitters.chat.ChatMessage;
@@ -78,6 +79,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Bid> bids;
 
+    @OneToMany(mappedBy = "user")
+    private List<Shipping> shippings;
+
     @OneToMany(mappedBy = "bidUser")
     private List<Order> orders;
 
@@ -131,6 +135,10 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Shipping> getShippings() {
+        return shippings;
     }
 
     public Profile getProfile() {
@@ -262,6 +270,10 @@ public class User implements UserDetails {
 
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
+    }
+
+    public void setShippings(List<Shipping> shippings) {
+        this.shippings = shippings;
     }
 
     public void setPassword(String password) {

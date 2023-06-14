@@ -36,6 +36,7 @@ import PublicProfile from './components/Profile/PublicProfile';
 import MessagesRoute from './routes/MessagesRoute';
 import NotFoundRoute from './routes/NotFoundRoute';
 import Orders from './components/Menu/Order/Orders';
+import Shipping from './components/Shipping/Shipping';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -122,6 +123,15 @@ const router = createBrowserRouter(
             <RequireAuth>
               <MessagesRoute />
             </RequireAuth>
+          }
+        />
+
+        <Route
+          path="shipping"
+          element={
+            <RequireUser>
+              <Shipping />
+            </RequireUser>
           }
         />
 

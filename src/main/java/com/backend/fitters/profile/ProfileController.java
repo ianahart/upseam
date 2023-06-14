@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.backend.fitters.profile.request.UpdateProfileRequest;
 import com.backend.fitters.profile.request.ProfilePhotoRequest;
+import com.backend.fitters.profile.response.GetProfileShippingResponse;
 import com.backend.fitters.profile.response.ProfilePhotoResponse;
 import com.backend.fitters.profile.response.ProfileResponse;
 import com.backend.fitters.profile.response.UpdateProfileResponse;
@@ -36,6 +37,14 @@ public class ProfileController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new UpdateProfileResponse("success"));
+    }
+
+    @GetMapping("/{profileId}/shipping")
+    public ResponseEntity<GetProfileShippingResponse> getProfileShipping(@PathVariable("profileId") Long profileId) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new GetProfileShippingResponse("success", this.profileService.getProfileShipping(profileId)));
     }
 
     @GetMapping("/{profileId}")

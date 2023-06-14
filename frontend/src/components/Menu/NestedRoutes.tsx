@@ -1,17 +1,24 @@
-import { Box, Flex, Button } from '@chakra-ui/react';
+import { Box, Flex, Button, Text } from '@chakra-ui/react';
 import { AiOutlinePlus, AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
-import { BsPencil } from 'react-icons/bs';
+import { BsPencil, BsTicket } from 'react-icons/bs';
+import { CiSettings } from 'react-icons/ci';
 import { BiBookContent } from 'react-icons/bi';
 import NestedRoute from './NestedRoute';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 import { GiClothes } from 'react-icons/gi';
+import { MdOutlineLocalShipping } from 'react-icons/md';
 import { AiOutlineShoppingCart, AiOutlineInbox } from 'react-icons/ai';
 
 const NestedRoutes = () => {
   const { user } = useContext(UserContext) as IUserContext;
   const [activeRoute, setActiveRoute] = useState('profile');
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const handleSettingsOpen = () => {
+    setSettingsOpen((prevState) => !prevState);
+  };
 
   return (
     <Flex
@@ -52,7 +59,7 @@ const NestedRoutes = () => {
             activeRoute={activeRoute}
             to="requests"
             routeName="Request Clothes"
-            icon={<AiOutlinePlus />}
+            icon={<AiOutlineShoppingCart />}
           />
         </Box>
       )}
@@ -73,7 +80,7 @@ const NestedRoutes = () => {
           activeRoute={activeRoute}
           to="clothes"
           routeName="Bid On Clothes"
-          icon={<AiOutlineShoppingCart />}
+          icon={<BsTicket />}
         />
       </Box>
 
@@ -92,6 +99,33 @@ const NestedRoutes = () => {
           routeName="Messages"
           icon={<AiOutlineMail />}
         />
+      </Box>
+      <Box>
+        <Flex
+          onClick={handleSettingsOpen}
+          cursor="pointer"
+          my="0.5rem"
+          color="text.primary"
+          fontWeight="bold"
+          align="center"
+        >
+          <Box>
+            <CiSettings />
+          </Box>
+          <Text>Settings</Text>
+        </Flex>
+        {settingsOpen && (
+          <Box ml="2rem">
+            <Box onClick={() => setActiveRoute('shipping')}>
+              <NestedRoute
+                activeRoute={activeRoute}
+                to="shipping"
+                routeName="Shipping"
+                icon={<MdOutlineLocalShipping />}
+              />
+            </Box>
+          </Box>
+        )}
       </Box>
 
       <Box my="1rem">

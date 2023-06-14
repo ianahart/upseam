@@ -204,7 +204,7 @@ const FullCloth = () => {
                 </Text>
               </Flex>
             </Flex>
-            {user.id !== cloth.userId && !cloth.closed && (
+            {user.id !== cloth.userId && !cloth.closed && user.role === 'SEAMSTER' && (
               <Button colorScheme="blue" my="2rem" onClick={onOpen}>
                 Make Bid
               </Button>

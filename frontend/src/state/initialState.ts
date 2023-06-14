@@ -6,6 +6,21 @@ export const registerFormState = {
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
 };
 
+export const shippingFormState = {
+  firstName: { name: 'firstName', value: '', error: '', type: 'text' },
+  lastName: { name: 'lastName', value: '', error: '', type: 'text' },
+  zipCode: { name: 'zipCode', value: '', error: '', type: 'text' },
+  country: { name: 'country', value: '', error: '', type: 'text' },
+  address: { name: 'address', value: '', error: '', type: 'text' },
+  state: { name: 'state', value: '', error: '', type: 'text' },
+};
+
+export const shippingState = {
+  premium: { name: '1', value: '1-3 days $7.99' },
+  medium: { name: '2', value: '3-5 days $2.99' },
+  normal: { name: '3', value: '1 week FREE shipping' },
+};
+
 export const simpleUserProfileState = {
   address: '',
   avatarUrl: '',

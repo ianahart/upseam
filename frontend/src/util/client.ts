@@ -9,6 +9,7 @@ import {
   ILoginForm,
   IRegisterForm,
   IResetPasswordForm,
+  IShippingForm,
   ISpeciality,
 } from '../interfaces';
 
@@ -17,6 +18,37 @@ export const http = axios.create({
 });
 
 export const Client = {
+  removeShipping: (shippingId: number) => {
+    return http.delete(`shippings/${shippingId}`);
+  },
+
+  getShipping: (userId: number) => {
+    return http.get(`/shippings?userId=${userId}`);
+  },
+
+  createOrUpdateShipping: (
+    userId: number,
+    form: IShippingForm,
+    shippingType: string,
+    shippingValue: string
+  ) => {
+    return http.post('/shippings', {
+      userId,
+      zipCode: form.zipCode.value,
+      state: form.state.value,
+      country: form.country.value,
+      address: form.address.value,
+      firstName: form.firstName.value,
+      lastName: form.lastName.value,
+      shippingType,
+      shippingValue,
+    });
+  },
+
+  getProfileShipping: (profileId: number) => {
+    return http.get(`/profiles/${profileId}/shipping`);
+  },
+
   updateOrder: (orderId: number, complete: boolean) => {
     return http.patch(`/orders/${orderId}`, { complete });
   },
