@@ -57,10 +57,24 @@ const Orders = () => {
     setSeamsterOrders(updatedOrders);
   };
 
-  const completeOrder = (orderId: number, isCompleted: boolean) => {
+  const completeOrder = (orderId: number, isCompleted: boolean, bid: number) => {
     Client.updateOrder(orderId, isCompleted)
       .then((res) => {
         updateOrder(orderId, isCompleted);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+
+    if (isCompleted) {
+      createInvoice(orderId, user.id, bid);
+    }
+  };
+
+  const createInvoice = (orderId: number, seamsterId: number, bid: number) => {
+    Client.createInvoice(orderId, seamsterId, bid)
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -109,6 +123,9 @@ const Orders = () => {
                 </Text>
               </Box>
               <Flex align="center">
+                <Text color="text.primary" fontStyle="italic">
+                  ${o.bid.toFixed(2)}
+                </Text>
                 <RouterLink
                   to={`/menu/${slugify(user.firstName, user.lastName)}/clothes/${
                     o.clothId
@@ -139,14 +156,16 @@ const Orders = () => {
                     <Button
                       mx="0.25rem"
                       mt="0.5rem"
-                      onClick={() => completeOrder(o.id, false)}
+                      onClick={() => completeOrder(o.id, false, o.bid)}
                     >
                       UnComplete
                     </Button>
                   </Box>
                 ) : (
                   <Box mx="1rem">
-                    <Button onClick={() => completeOrder(o.id, true)}>Complete</Button>
+                    <Button onClick={() => completeOrder(o.id, true, o.bid)}>
+                      Complete
+                    </Button>
                   </Box>
                 )}
               </Flex>

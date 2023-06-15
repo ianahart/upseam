@@ -12,6 +12,7 @@ import com.backend.fitters.chat.ChatMessage;
 import com.backend.fitters.cloth.Cloth;
 import com.backend.fitters.friend.Friend;
 import com.backend.fitters.friendship.FriendShip;
+import com.backend.fitters.invoice.Invoice;
 import com.backend.fitters.order.Order;
 
 import java.sql.Timestamp;
@@ -85,6 +86,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "bidUser")
     private List<Order> orders;
 
+    @OneToMany(mappedBy = "user")
+    private List<Invoice> invoices;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Invoice> ownerInvoices;
+
     @OneToMany(mappedBy = "requestee")
     private List<FriendShip> friendRequestees;
 
@@ -139,6 +146,10 @@ public class User implements UserDetails {
 
     public List<Shipping> getShippings() {
         return shippings;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
     public Profile getProfile() {
@@ -278,6 +289,10 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     public void setFirstName(String firstName) {

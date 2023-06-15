@@ -1,6 +1,7 @@
 package com.backend.fitters.order.dto;
 
 import java.time.LocalDate;
+import java.math.BigDecimal;
 
 public class OrderDto {
     private Long id;
@@ -11,6 +12,7 @@ public class OrderDto {
     private String avatarUrl;
     private LocalDate dueDate;
     private Boolean complete;
+    private BigDecimal bid;
 
     public OrderDto() {
 
@@ -24,7 +26,8 @@ public class OrderDto {
             String lastName,
             String avatarUrl,
             LocalDate dueDate,
-            Boolean complete) {
+            Boolean complete,
+            BigDecimal bid) {
 
         this.id = id;
         this.clothId = clothId;
@@ -34,6 +37,7 @@ public class OrderDto {
         this.avatarUrl = avatarUrl;
         this.dueDate = dueDate;
         this.complete = complete;
+        this.bid = bid;
     }
 
     public Long getId() {
@@ -42,6 +46,10 @@ public class OrderDto {
 
     public Boolean getComplete() {
         return complete;
+    }
+
+    public BigDecimal getBid() {
+        return bid;
     }
 
     public LocalDate getDueDate() {
@@ -74,6 +82,10 @@ public class OrderDto {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public void setBid(BigDecimal bid) {
+        this.bid = bid;
     }
 
     public void setClothId(Long clothId) {

@@ -32,7 +32,12 @@ export interface IBidProps {
   deleteBid: (id: number) => void;
   ownerUserId: number;
   clothId: number;
-  handleSelectBid: (clothId: number, _bidId: number, _bidUserId: number) => void;
+  handleSelectBid: (
+    clothId: number,
+    _bidId: number,
+    _bidUserId: number,
+    _bidBid: number
+  ) => void;
   clothClosed: boolean;
   closedId: number;
 }
@@ -70,7 +75,7 @@ const Bid = ({
   };
 
   const handleOnClick = () => {
-    handleSelectBid(clothId, _bid.id, _bid.userId);
+    handleSelectBid(clothId, _bid.id, _bid.userId, _bid.bid);
   };
 
   return (
@@ -161,7 +166,7 @@ const Bid = ({
       ) : (
         <Td>
           <Text color="text.primary">
-            {clothClosed && _bid.id === closedId ? 'Selected' : 'Unavailable'}
+            {clothClosed && _bid.id === closedId ? 'Selected' : 'Not selected'}
           </Text>
         </Td>
       )}

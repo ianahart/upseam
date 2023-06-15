@@ -62,6 +62,6 @@ public class OrderService {
         Cloth cloth = this.clothRepository.findById(request.getClothId())
                 .orElseThrow(() -> new NotFoundException("cloth not found"));
         this.orderRepository.save(
-                new Order(user, cloth, bidUser, false));
+                new Order(user, cloth, bidUser, false, request.getBid()));
     }
 }

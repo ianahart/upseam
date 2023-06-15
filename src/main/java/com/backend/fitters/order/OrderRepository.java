@@ -17,7 +17,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("""
             SELECT new com.backend.fitters.order.dto.OrderDto(
               o.id, c.id AS clothId, c.clothUrl, r.firstName, r.lastName,
-              p.avatarUrl, c.dueDate, o.complete
+              p.avatarUrl, c.dueDate, o.complete, o.bid
             ) FROM Order o
             INNER JOIN o.receiverUser r
             INNER JOIN o.receiverUser.profile p

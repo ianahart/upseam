@@ -61,6 +61,7 @@ export interface IOrder {
   firstName: string;
   id: number;
   lastName: string;
+  bid: number;
 }
 
 export interface ISimpleUserProfile {

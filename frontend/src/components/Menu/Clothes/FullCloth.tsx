@@ -49,13 +49,23 @@ const FullCloth = () => {
     }
   });
 
-  const handleSelectBid = (clothId: number, _bidId: number, bidUserId: number) => {
-    //selectBid(clothId, _bidId);
-    createOrder(clothId, user.id, bidUserId);
+  const handleSelectBid = (
+    clothId: number,
+    _bidId: number,
+    bidUserId: number,
+    _bidBid: number
+  ) => {
+    selectBid(clothId, _bidId);
+    createOrder(clothId, user.id, bidUserId, _bidBid);
   };
 
-  const createOrder = (clothId: number, userId: number, bidUserId: number) => {
-    Client.createOrder(clothId, userId, bidUserId)
+  const createOrder = (
+    clothId: number,
+    userId: number,
+    bidUserId: number,
+    bid: number
+  ) => {
+    Client.createOrder(clothId, userId, bidUserId, bid)
       .then((res) => {
         console.log(res);
       })

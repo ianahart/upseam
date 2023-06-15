@@ -1,8 +1,11 @@
 package com.backend.fitters.order;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.math.BigDecimal;
 
 import com.backend.fitters.cloth.Cloth;
+import com.backend.fitters.invoice.Invoice;
 import com.backend.fitters.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -32,6 +36,8 @@ public class Order {
     private Timestamp createdAt;
     @Column(name = "complete")
     private Boolean complete;
+    @Column(name = "bid")
+    private BigDecimal bid;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne()
@@ -45,15 +51,19 @@ public class Order {
     @ManyToOne()
     private Cloth cloth;
 
+    @OneToMany(mappedBy = "order")
+    private List<Invoice> invoices;
+
     public Order() {
 
     }
 
-    public Order(User receiverUser, Cloth cloth, User bidUser, Boolean complete) {
+    public Order(User receiverUser, Cloth cloth, User bidUser, Boolean complete, BigDecimal bid) {
         this.receiverUser = receiverUser;
         this.cloth = cloth;
         this.bidUser = bidUser;
         this.complete = complete;
+        this.bid = bid;
     }
 
     public Order(
@@ -62,7 +72,8 @@ public class Order {
             User receiverUser,
             Cloth cloth,
             User bidUser,
-            Boolean complete) {
+            Boolean complete,
+            BigDecimal bid) {
 
         this.id = id;
         this.createdAt = createdAt;
@@ -70,6 +81,7 @@ public class Order {
         this.cloth = cloth;
         this.bidUser = bidUser;
         this.complete = complete;
+        this.bid = bid;
     }
 
     public Long getId() {
@@ -80,12 +92,25 @@ public class Order {
         return complete;
     }
 
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public BigDecimal getBid() {
+
+        return bid;
+    }
+
     public User getBidUser() {
         return bidUser;
     }
 
     public User getReceiverUser() {
         return receiverUser;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     public Cloth getCloth() {
@@ -98,6 +123,10 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setBid(BigDecimal bid) {
+        this.bid = bid;
     }
 
     public void setReceiverUser(User receiverUser) {

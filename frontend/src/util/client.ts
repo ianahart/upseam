@@ -18,6 +18,10 @@ export const http = axios.create({
 });
 
 export const Client = {
+  createInvoice: (orderId: number, seamsterId: number, bid: number) => {
+    return http.post('/invoices', { orderId, seamsterId, bid });
+  },
+
   removeShipping: (shippingId: number) => {
     return http.delete(`shippings/${shippingId}`);
   },
@@ -57,8 +61,8 @@ export const Client = {
     return http.get(`/orders?userId=${userId}&page=${page}`);
   },
 
-  createOrder: (clothId: number, userId: number, bidUserId: number) => {
-    return http.post('/orders', { clothId, userId, bidUserId });
+  createOrder: (clothId: number, userId: number, bidUserId: number, bid: number) => {
+    return http.post('/orders', { clothId, userId, bidUserId, bid });
   },
 
   selectBid: (clothId: number, bidId: number) => {

@@ -27,7 +27,12 @@ interface IBidsProps {
   isNewBid: boolean;
   setIsNewBid: (isNewBid: boolean) => void;
   ownerUserId: number;
-  handleSelectBid: (clothId: number, _bidId: number, _bidUserId: number) => void;
+  handleSelectBid: (
+    clothId: number,
+    _bidId: number,
+    _bidUserId: number,
+    _bidBid: number
+  ) => void;
   clothClosed: boolean;
 }
 
