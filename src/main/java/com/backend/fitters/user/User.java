@@ -7,6 +7,7 @@ import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
 import com.backend.fitters.shipping.Shipping;
 import com.backend.fitters.passwordreset.PasswordReset;
+import com.backend.fitters.payment.Payment;
 import com.backend.fitters.bid.Bid;
 import com.backend.fitters.chat.ChatMessage;
 import com.backend.fitters.cloth.Cloth;
@@ -73,6 +74,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<PasswordReset> passwordResets;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Payment> customerPayments;
+
+    @OneToMany(mappedBy = "biller")
+    private List<Payment> billerPayments;
 
     @OneToMany(mappedBy = "user")
     private List<Cloth> clothes;
@@ -146,6 +153,14 @@ public class User implements UserDetails {
 
     public List<Shipping> getShippings() {
         return shippings;
+    }
+
+    public List<Payment> getBillerPayments() {
+        return billerPayments;
+    }
+
+    public List<Payment> getCustomerPayments() {
+        return customerPayments;
     }
 
     public List<Invoice> getInvoices() {
@@ -228,6 +243,14 @@ public class User implements UserDetails {
 
     public void setClothes(List<Cloth> clothes) {
 
+    }
+
+    public void setBillerPayments(List<Payment> billerPayments) {
+        this.billerPayments = billerPayments;
+    }
+
+    public void setCustomerPayments(List<Payment> customerPayments) {
+        this.customerPayments = customerPayments;
     }
 
     public void setOrders(List<Order> orders) {

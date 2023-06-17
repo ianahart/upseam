@@ -24,3 +24,9 @@ Users can connect with Seamsters and chat about making the clothing.
 
 -u: test@gmail.com
 -p: Test12345%
+
+### Stripe Testing
+
+**Important**
+Stripe is in testing mode so it will not charge you thus,
+the only way it will work is if you repeat 4242 for the card number

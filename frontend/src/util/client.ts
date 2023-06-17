@@ -7,6 +7,7 @@ import {
   IEditProfileForm,
   IEditUserForm,
   ILoginForm,
+  IPaymentObj,
   IRegisterForm,
   IResetPasswordForm,
   IShippingForm,
@@ -18,6 +19,15 @@ export const http = axios.create({
 });
 
 export const Client = {
+  createPayment: (obj: IPaymentObj) => {
+    return http.post('/payments', {
+      amount: obj.amount,
+      customerUserId: obj.userId,
+      email: obj.email,
+      billerUserId: obj.billerUserId,
+    });
+  },
+
   updateInvoice: (invoiceId: number) => {
     return http.patch(`/invoices/${invoiceId}`);
   },
