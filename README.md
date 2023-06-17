@@ -12,6 +12,7 @@ Users can connect with Seamsters and chat about making the clothing.
 - TypeScript + React
 - Amazon S3
 - Java + Spring Boot
+- Stripe
 
 ## Test Accounts
 
