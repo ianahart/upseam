@@ -148,4 +148,72 @@ public class Order {
     public void setComplete(Boolean complete) {
         this.complete = complete;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((complete == null) ? 0 : complete.hashCode());
+        result = prime * result + ((bid == null) ? 0 : bid.hashCode());
+        result = prime * result + ((receiverUser == null) ? 0 : receiverUser.hashCode());
+        result = prime * result + ((bidUser == null) ? 0 : bidUser.hashCode());
+        result = prime * result + ((cloth == null) ? 0 : cloth.hashCode());
+        result = prime * result + ((invoices == null) ? 0 : invoices.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Order other = (Order) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (complete == null) {
+            if (other.complete != null)
+                return false;
+        } else if (!complete.equals(other.complete))
+            return false;
+        if (bid == null) {
+            if (other.bid != null)
+                return false;
+        } else if (!bid.equals(other.bid))
+            return false;
+        if (receiverUser == null) {
+            if (other.receiverUser != null)
+                return false;
+        } else if (!receiverUser.equals(other.receiverUser))
+            return false;
+        if (bidUser == null) {
+            if (other.bidUser != null)
+                return false;
+        } else if (!bidUser.equals(other.bidUser))
+            return false;
+        if (cloth == null) {
+            if (other.cloth != null)
+                return false;
+        } else if (!cloth.equals(other.cloth))
+            return false;
+        if (invoices == null) {
+            if (other.invoices != null)
+                return false;
+        } else if (!invoices.equals(other.invoices))
+            return false;
+        return true;
+    }
+
 }

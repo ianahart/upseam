@@ -150,4 +150,72 @@ public class FriendShip {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        result = prime * result + ((pending == null) ? 0 : pending.hashCode());
+        result = prime * result + ((accepted == null) ? 0 : accepted.hashCode());
+        result = prime * result + ((declined == null) ? 0 : declined.hashCode());
+        result = prime * result + ((requester == null) ? 0 : requester.hashCode());
+        result = prime * result + ((requestee == null) ? 0 : requestee.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FriendShip other = (FriendShip) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (updatedAt == null) {
+            if (other.updatedAt != null)
+                return false;
+        } else if (!updatedAt.equals(other.updatedAt))
+            return false;
+        if (pending == null) {
+            if (other.pending != null)
+                return false;
+        } else if (!pending.equals(other.pending))
+            return false;
+        if (accepted == null) {
+            if (other.accepted != null)
+                return false;
+        } else if (!accepted.equals(other.accepted))
+            return false;
+        if (declined == null) {
+            if (other.declined != null)
+                return false;
+        } else if (!declined.equals(other.declined))
+            return false;
+        if (requester == null) {
+            if (other.requester != null)
+                return false;
+        } else if (!requester.equals(other.requester))
+            return false;
+        if (requestee == null) {
+            if (other.requestee != null)
+                return false;
+        } else if (!requestee.equals(other.requestee))
+            return false;
+        return true;
+    }
+
 }

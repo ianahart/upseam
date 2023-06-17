@@ -82,17 +82,46 @@ public class RefreshToken {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof RefreshToken that))
-            return false;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user)
-                && Objects.equals(refreshToken, that.refreshToken) && Objects.equals(expiryDate, that.expiryDate);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        result = prime * result + ((refreshToken == null) ? 0 : refreshToken.hashCode());
+        result = prime * result + ((expiryDate == null) ? 0 : expiryDate.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, user, refreshToken, expiryDate);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        RefreshToken other = (RefreshToken) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        if (refreshToken == null) {
+            if (other.refreshToken != null)
+                return false;
+        } else if (!refreshToken.equals(other.refreshToken))
+            return false;
+        if (expiryDate == null) {
+            if (other.expiryDate != null)
+                return false;
+        } else if (!expiryDate.equals(other.expiryDate))
+            return false;
+        return true;
     }
+
 }

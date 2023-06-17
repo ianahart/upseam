@@ -211,4 +211,102 @@ public class Cloth {
     public void setClosedId(Long closedId) {
         this.closedId = closedId;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        result = prime * result + ((clothUrl == null) ? 0 : clothUrl.hashCode());
+        result = prime * result + ((clothFilename == null) ? 0 : clothFilename.hashCode());
+        result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
+        result = prime * result + ((size == null) ? 0 : size.hashCode());
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((closed == null) ? 0 : closed.hashCode());
+        result = prime * result + ((closedId == null) ? 0 : closedId.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        result = prime * result + ((bids == null) ? 0 : bids.hashCode());
+        result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cloth other = (Cloth) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (updatedAt == null) {
+            if (other.updatedAt != null)
+                return false;
+        } else if (!updatedAt.equals(other.updatedAt))
+            return false;
+        if (clothUrl == null) {
+            if (other.clothUrl != null)
+                return false;
+        } else if (!clothUrl.equals(other.clothUrl))
+            return false;
+        if (clothFilename == null) {
+            if (other.clothFilename != null)
+                return false;
+        } else if (!clothFilename.equals(other.clothFilename))
+            return false;
+        if (dueDate == null) {
+            if (other.dueDate != null)
+                return false;
+        } else if (!dueDate.equals(other.dueDate))
+            return false;
+        if (size == null) {
+            if (other.size != null)
+                return false;
+        } else if (!size.equals(other.size))
+            return false;
+        if (description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!description.equals(other.description))
+            return false;
+        if (closed == null) {
+            if (other.closed != null)
+                return false;
+        } else if (!closed.equals(other.closed))
+            return false;
+        if (closedId == null) {
+            if (other.closedId != null)
+                return false;
+        } else if (!closedId.equals(other.closedId))
+            return false;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        if (bids == null) {
+            if (other.bids != null)
+                return false;
+        } else if (!bids.equals(other.bids))
+            return false;
+        if (orders == null) {
+            if (other.orders != null)
+                return false;
+        } else if (!orders.equals(other.orders))
+            return false;
+        return true;
+    }
+
 }

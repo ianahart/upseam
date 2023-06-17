@@ -359,18 +359,175 @@ public class User implements UserDetails {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof User user))
-            return false;
-        return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName)
-                && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email)
-                && Objects.equals(password, user.password) && Objects.equals(role, user.role) && role == user.role;
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((abbreviation == null) ? 0 : abbreviation.hashCode());
+        result = prime * result + ((profile == null) ? 0 : profile.hashCode());
+        result = prime * result + ((refreshTokens == null) ? 0 : refreshTokens.hashCode());
+        result = prime * result + ((tokens == null) ? 0 : tokens.hashCode());
+        result = prime * result + ((passwordResets == null) ? 0 : passwordResets.hashCode());
+        result = prime * result + ((customerPayments == null) ? 0 : customerPayments.hashCode());
+        result = prime * result + ((billerPayments == null) ? 0 : billerPayments.hashCode());
+        result = prime * result + ((clothes == null) ? 0 : clothes.hashCode());
+        result = prime * result + ((bids == null) ? 0 : bids.hashCode());
+        result = prime * result + ((shippings == null) ? 0 : shippings.hashCode());
+        result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+        result = prime * result + ((invoices == null) ? 0 : invoices.hashCode());
+        result = prime * result + ((ownerInvoices == null) ? 0 : ownerInvoices.hashCode());
+        result = prime * result + ((friendRequestees == null) ? 0 : friendRequestees.hashCode());
+        result = prime * result + ((friendRequesters == null) ? 0 : friendRequesters.hashCode());
+        result = prime * result + ((senders == null) ? 0 : senders.hashCode());
+        result = prime * result + ((receivers == null) ? 0 : receivers.hashCode());
+        result = prime * result + ((friends == null) ? 0 : friends.hashCode());
+        result = prime * result + ((users == null) ? 0 : users.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, role, password);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (password == null) {
+            if (other.password != null)
+                return false;
+        } else if (!password.equals(other.password))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (abbreviation == null) {
+            if (other.abbreviation != null)
+                return false;
+        } else if (!abbreviation.equals(other.abbreviation))
+            return false;
+        if (profile == null) {
+            if (other.profile != null)
+                return false;
+        } else if (!profile.equals(other.profile))
+            return false;
+        if (refreshTokens == null) {
+            if (other.refreshTokens != null)
+                return false;
+        } else if (!refreshTokens.equals(other.refreshTokens))
+            return false;
+        if (tokens == null) {
+            if (other.tokens != null)
+                return false;
+        } else if (!tokens.equals(other.tokens))
+            return false;
+        if (passwordResets == null) {
+            if (other.passwordResets != null)
+                return false;
+        } else if (!passwordResets.equals(other.passwordResets))
+            return false;
+        if (customerPayments == null) {
+            if (other.customerPayments != null)
+                return false;
+        } else if (!customerPayments.equals(other.customerPayments))
+            return false;
+        if (billerPayments == null) {
+            if (other.billerPayments != null)
+                return false;
+        } else if (!billerPayments.equals(other.billerPayments))
+            return false;
+        if (clothes == null) {
+            if (other.clothes != null)
+                return false;
+        } else if (!clothes.equals(other.clothes))
+            return false;
+        if (bids == null) {
+            if (other.bids != null)
+                return false;
+        } else if (!bids.equals(other.bids))
+            return false;
+        if (shippings == null) {
+            if (other.shippings != null)
+                return false;
+        } else if (!shippings.equals(other.shippings))
+            return false;
+        if (orders == null) {
+            if (other.orders != null)
+                return false;
+        } else if (!orders.equals(other.orders))
+            return false;
+        if (invoices == null) {
+            if (other.invoices != null)
+                return false;
+        } else if (!invoices.equals(other.invoices))
+            return false;
+        if (ownerInvoices == null) {
+            if (other.ownerInvoices != null)
+                return false;
+        } else if (!ownerInvoices.equals(other.ownerInvoices))
+            return false;
+        if (friendRequestees == null) {
+            if (other.friendRequestees != null)
+                return false;
+        } else if (!friendRequestees.equals(other.friendRequestees))
+            return false;
+        if (friendRequesters == null) {
+            if (other.friendRequesters != null)
+                return false;
+        } else if (!friendRequesters.equals(other.friendRequesters))
+            return false;
+        if (senders == null) {
+            if (other.senders != null)
+                return false;
+        } else if (!senders.equals(other.senders))
+            return false;
+        if (receivers == null) {
+            if (other.receivers != null)
+                return false;
+        } else if (!receivers.equals(other.receivers))
+            return false;
+        if (friends == null) {
+            if (other.friends != null)
+                return false;
+        } else if (!friends.equals(other.friends))
+            return false;
+        if (users == null) {
+            if (other.users != null)
+                return false;
+        } else if (!users.equals(other.users))
+            return false;
+        if (role != other.role)
+            return false;
+        return true;
     }
+
 }

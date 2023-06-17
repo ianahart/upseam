@@ -170,6 +170,93 @@ public class Profile {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((avatarUrl == null) ? 0 : avatarUrl.hashCode());
+        result = prime * result + ((avatarFileName == null) ? 0 : avatarFileName.hashCode());
+        result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+        result = prime * result + ((country == null) ? 0 : country.hashCode());
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
+        result = prime * result + ((specialities == null) ? 0 : specialities.hashCode());
+        result = prime * result + ((pricing == null) ? 0 : pricing.hashCode());
+        result = prime * result + ((site == null) ? 0 : site.hashCode());
+        result = prime * result + ((bio == null) ? 0 : bio.hashCode());
+        result = prime * result + ((state == null) ? 0 : state.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Profile other = (Profile) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (avatarUrl == null) {
+            if (other.avatarUrl != null)
+                return false;
+        } else if (!avatarUrl.equals(other.avatarUrl))
+            return false;
+        if (avatarFileName == null) {
+            if (other.avatarFileName != null)
+                return false;
+        } else if (!avatarFileName.equals(other.avatarFileName))
+            return false;
+        if (zipCode == null) {
+            if (other.zipCode != null)
+                return false;
+        } else if (!zipCode.equals(other.zipCode))
+            return false;
+        if (country == null) {
+            if (other.country != null)
+                return false;
+        } else if (!country.equals(other.country))
+            return false;
+        if (address == null) {
+            if (other.address != null)
+                return false;
+        } else if (!address.equals(other.address))
+            return false;
+        if (specialities == null) {
+            if (other.specialities != null)
+                return false;
+        } else if (!specialities.equals(other.specialities))
+            return false;
+        if (pricing == null) {
+            if (other.pricing != null)
+                return false;
+        } else if (!pricing.equals(other.pricing))
+            return false;
+        if (site == null) {
+            if (other.site != null)
+                return false;
+        } else if (!site.equals(other.site))
+            return false;
+        if (bio == null) {
+            if (other.bio != null)
+                return false;
+        } else if (!bio.equals(other.bio))
+            return false;
+        if (state == null) {
+            if (other.state != null)
+                return false;
+        } else if (!state.equals(other.state))
+            return false;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        return true;
+    }
+
 }
