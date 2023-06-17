@@ -82,9 +82,7 @@ const InvoicesRoute = () => {
   };
 
   const handleOnPayment = (invoiceId: number, receiverUserId: number) => {
-    // user.email, user.id(currentUser), receiverUserId(seamster) <-- params for payment method
-    console.log(invoiceId);
-    //updateStatus(invoiceId);
+    updateStatus(invoiceId);
   };
 
   const updateStatus = (invoiceId: number) => {

@@ -38,6 +38,7 @@ import NotFoundRoute from './routes/NotFoundRoute';
 import Orders from './components/Menu/Order/Orders';
 import Shipping from './components/Shipping/Shipping';
 import InvoicesRoute from './routes/InvoicesRoute';
+import PaymentSuccessRoute from './routes/PaymentSuccessRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -56,6 +57,14 @@ const router = createBrowserRouter(
         element={
           <RequireAuth>
             <PublicProfile />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="payment-success"
+        element={
+          <RequireAuth>
+            <PaymentSuccessRoute />
           </RequireAuth>
         }
       />
