@@ -18,6 +18,20 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateInvoice: (invoiceId: number) => {
+    return http.patch(`/invoices/${invoiceId}`);
+  },
+  getInvoices: (
+    direction: string,
+    sortBy: string,
+    page: number,
+    userId: number,
+    pageSize: number
+  ) => {
+    return http.get(
+      `/invoices?direction=${direction}&sort=${sortBy}&page=${page}&userId=${userId}&pageSize=${pageSize}`
+    );
+  },
   createInvoice: (orderId: number, seamsterId: number, bid: number) => {
     return http.post('/invoices', { orderId, seamsterId, bid });
   },

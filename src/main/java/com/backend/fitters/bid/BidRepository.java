@@ -26,7 +26,8 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
             ) FROM Bid b INNER JOIN b.cloth c
             INNER JOIN b.user u
             INNER JOIN b.user.profile p
-            WHERE c.id = :clothId""")
+            WHERE c.id = :clothId
+            ORDER BY c.closed DESC""")
     Page<BidDto> findAllBidsByClothId(@Param("clothId") Long clothId, Pageable pageable);
 
 }

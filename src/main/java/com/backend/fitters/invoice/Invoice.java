@@ -31,6 +31,8 @@ public class Invoice {
     private Timestamp createdAt;
     @Column(name = "bid")
     private BigDecimal bid;
+    @Column(name = "paid")
+    private Boolean paid;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne()
@@ -52,30 +54,33 @@ public class Invoice {
             User user,
             Order order,
             User owner,
-            BigDecimal bid) {
+            BigDecimal bid,
+            Boolean paid) {
         this.id = id;
         this.createdAt = createdAt;
         this.user = user;
         this.order = order;
         this.owner = owner;
         this.bid = bid;
+        this.paid = paid;
     }
 
     public Invoice(
             User user,
             Order order,
             User owner,
-            BigDecimal bid) {
+            BigDecimal bid,
+            Boolean paid) {
         this.user = user;
         this.order = order;
         this.owner = owner;
         this.bid = bid;
+        this.paid = paid;
     }
 
     public Long getId() {
         return id;
     }
-
 
     public BigDecimal getBid() {
         return bid;
@@ -83,6 +88,10 @@ public class Invoice {
 
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    public Boolean getPaid() {
+        return paid;
     }
 
     public User getUser() {
@@ -115,6 +124,10 @@ public class Invoice {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
     }
 
     public void setCreatedAt(Timestamp createdAt) {

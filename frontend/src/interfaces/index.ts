@@ -7,6 +7,17 @@ export interface IShippingForm {
   state: { name: string; value: string; error: string; type: string };
 }
 
+export interface IInvoice {
+  avatarUrl: string;
+  bid: number;
+  clothUrl: string;
+  firstName: string;
+  invoiceId: number;
+  lastName: string;
+  paid: boolean;
+  userId: number;
+}
+
 export interface IClothes {
   clothUrl: string;
   createdAt: Date;

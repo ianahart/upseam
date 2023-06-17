@@ -73,11 +73,8 @@ const Orders = () => {
 
   const createInvoice = (orderId: number, seamsterId: number, bid: number) => {
     Client.createInvoice(orderId, seamsterId, bid)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => {
-        console.log(err);
         throw new Error(err.response.data.message);
       });
   };

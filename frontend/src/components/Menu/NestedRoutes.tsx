@@ -10,6 +10,7 @@ import { IUserContext } from '../../interfaces';
 import { GiClothes } from 'react-icons/gi';
 import { MdOutlineLocalShipping } from 'react-icons/md';
 import { AiOutlineShoppingCart, AiOutlineInbox } from 'react-icons/ai';
+import { TbFileInvoice } from 'react-icons/tb';
 
 const NestedRoutes = () => {
   const { user } = useContext(UserContext) as IUserContext;
@@ -100,6 +101,18 @@ const NestedRoutes = () => {
           icon={<AiOutlineMail />}
         />
       </Box>
+
+      {user.role === 'USER' && (
+        <Box onClick={() => setActiveRoute('invoices')}>
+          <NestedRoute
+            activeRoute={activeRoute}
+            to="invoices"
+            routeName="Invoices"
+            icon={<TbFileInvoice />}
+          />
+        </Box>
+      )}
+
       <Box>
         <Flex
           onClick={handleSettingsOpen}

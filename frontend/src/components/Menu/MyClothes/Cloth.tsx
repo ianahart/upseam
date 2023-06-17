@@ -32,11 +32,15 @@ const Cloth = ({ cloth, isEditable }: IClothProps) => {
   return (
     <Card maxW="sm">
       <CardBody>
-        <Image
-          src={cloth.clothUrl}
-          alt="a peice of clothing belonging to you"
-          borderRadius="lg"
-        />
+        <RouterLink
+          to={`/menu/${slugify(user.firstName, user.lastName)}/clothes/${cloth.id}`}
+        >
+          <Image
+            src={cloth.clothUrl}
+            alt="a peice of clothing belonging to you"
+            borderRadius="lg"
+          />
+        </RouterLink>
         <Stack mt="6" spacing="3">
           <Heading color="black.primary" size="md">
             {cloth.firstName} {cloth.lastName}
