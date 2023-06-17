@@ -12,7 +12,12 @@ const NavLink = ({ to, routeName, icon, fontWeight }: INavLinkProps) => {
   return (
     <Flex alignItems="center">
       <RouterLink className="routerLink" to={to}>
-        <Box color="text.primary" mr="0.25rem" display={['block', 'block', 'none']}>
+        <Box
+          color="text.primary"
+          mr="0.25rem"
+          fontWeight={fontWeight ? 'bold' : 'normal'}
+          display={['block', 'block', 'none']}
+        >
           {icon}
         </Box>
         {routeName}

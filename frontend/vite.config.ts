@@ -18,7 +18,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api/v1/': 'http://localhost:8080', // THIS IS BACKEND'S URL,  THE FRONTEND'S URL IS FROM -> http://localhost:5173
+      '/api/v1/': 'https://upseam-7bbd70a20145.herokuapp.com', // THIS IS BACKEND'S URL,  THE FRONTEND'S URL IS FROM -> http://localhost:5173
     },
   },
 } as VitestConfigExport);

@@ -1,6 +1,5 @@
-import { Box, Flex, Heading, Spacer, VStack } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import NavLink from '../components/Navbar/NavLink';
 import NestedRoutes from '../components/Menu/NestedRoutes';
 
 const MenuRoute = () => {

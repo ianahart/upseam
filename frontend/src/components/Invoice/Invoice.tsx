@@ -66,6 +66,7 @@ const CheckoutForm = ({ invoice, handleOnPayment }: ICheckoutFormProps) => {
     const response = await Client.createPayment(obj);
     handleOnPayment(invoice.invoiceId, user.id);
 
+    //@ts-ignore
     const { error } = await stripe?.confirmPayment({
       elements,
       clientSecret: response.data.clientSecret,
@@ -105,11 +106,6 @@ const Invoice = ({ invoice, handleOnPayment }: IInvoiceProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
 
-  //  const handlePayNow = (e: React.FormEvent<HTMLFormElement>) => {
-  //    const { invoiceId, userId } = invoice;
-  //    handleOnPayment(invoiceId, userId);
-  //  };
-  //
   return (
     <Tr>
       <Td>
@@ -152,6 +148,7 @@ const Invoice = ({ invoice, handleOnPayment }: IInvoiceProps) => {
                 <ModalHeader>Pay Now</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
+                  {/*@ts-ignore*/}
                   <Elements stripe={stripePromise} options={options}>
                     <CheckoutForm invoice={invoice} handleOnPayment={handleOnPayment} />
                   </Elements>

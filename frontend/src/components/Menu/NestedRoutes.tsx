@@ -1,5 +1,5 @@
 import { Box, Flex, Button, Text } from '@chakra-ui/react';
-import { AiOutlinePlus, AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
 import { BsPencil, BsTicket } from 'react-icons/bs';
 import { CiSettings } from 'react-icons/ci';
 import { BiBookContent } from 'react-icons/bi';

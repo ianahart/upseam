@@ -1,14 +1,9 @@
-import { Box, Image, Flex, Text, Link } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { Client } from '../../../util/client';
-import Header from '../Header';
 import { UserContext } from '../../../context/user';
-import { IProfilePage, ISpeciality, IUserContext } from '../../../interfaces';
+import { IProfilePage, IUserContext } from '../../../interfaces';
 import { profilePageState } from '../../../state/initialState';
-import FormLayout from '../EditProfile/FormLayout';
-import EditProfileLink from './EditProfileLink';
-import FormHeader from '../EditProfile/FormHeader';
-import InitialIcon from '../../Shared/InitialIcon';
 import Profile from '../../Profile/Profile';
 
 const MyProfile = () => {

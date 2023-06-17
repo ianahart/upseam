@@ -1,4 +1,4 @@
-import { Box, Container, useToast } from '@chakra-ui/react';
+import { Box, useToast } from '@chakra-ui/react';
 import Header from '../Header';
 import { useContext, useEffect, useState } from 'react';
 import { editProfileState, userFormState } from '../../../state/initialState';
@@ -37,7 +37,7 @@ const EditProfile = () => {
 
   const handleUpdateProfileForm = () => {
     Client.updateProfile(profileForm, specialities, user.profileId)
-      .then((res) => {
+      .then(() => {
         toast({
           title: 'Success',
           description: 'Successfully updated profile information',
@@ -53,7 +53,7 @@ const EditProfile = () => {
 
   const handleUpdateUserForm = (form: IEditUserForm) => {
     Client.updateUser(form, user.id)
-      .then((res) => {
+      .then(() => {
         updateUser({
           ...user,
           firstName: capitalize(form.firstName.value),
@@ -137,7 +137,7 @@ const EditProfile = () => {
         updateUser(Object.assign({}, { ...user, avatarUrl: res.data.url }));
         setIsPhotoUploading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setIsPhotoUploading(false);
       });
   };

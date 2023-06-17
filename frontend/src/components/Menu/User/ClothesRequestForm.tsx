@@ -50,6 +50,7 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
   const [error, setError] = useState('');
   const MAX_LENGTH = 250;
 
+  console.log(fileError);
   const syncForm = (clothId: string) => {
     Client.syncCloth(clothId)
       .then((res) => {
@@ -75,7 +76,7 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
   const createCloth = () => {
     if (file === null) return;
     Client.createCloth(startDate, description, file, user.id, size)
-      .then((res) => {
+      .then(() => {
         navigate(`/menu/${slugify(user.firstName, user.lastName)}/profile`);
 
         setIsLoading(false);
@@ -92,7 +93,7 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
   const updateCloth = () => {
     setIsLoading(true);
     Client.updateCloth(startDate, description, file, user.id, size, clothId)
-      .then((response) => {
+      .then(() => {
         navigate(`/menu/${slugify(user.firstName, user.lastName)}/clothes`);
         setIsLoading(false);
       })
@@ -102,7 +103,7 @@ const ClothesRequestsForm = ({ type, buttonText }: IClothesRequestsFormProps) =>
       });
   };
 
-  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClick = () => {
     if (file === null && type === 'create') {
       setError('Please upload an image of a piece of clothes you want made');
       return;

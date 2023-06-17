@@ -11,6 +11,7 @@ import { Client } from '../util/client';
 const ResetPasswordRoute = () => {
   const navigate = useNavigate();
   const [params, setSearchParams] = useSearchParams();
+  console.log(setSearchParams);
   const [resetPasswordForm, setResetPasswordForm] = useState(resetPasswordState);
   const [error, setError] = useState('');
 

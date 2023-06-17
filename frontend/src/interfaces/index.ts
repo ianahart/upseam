@@ -283,6 +283,7 @@ export interface IMinimalSpecialities {
 }
 
 export interface IUserContext {
+  tokens: ITokens;
   user: IUser;
   stowTokens: (tokens: ITokens) => void;
   updateUser: (user: IUser) => void;

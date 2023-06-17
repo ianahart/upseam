@@ -10,7 +10,6 @@ import { simpleUserProfileState } from '../state/initialState';
 import { UserContext } from '../context/user';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
-import { useEffectOnce } from '../hooks/useEffectOnce';
 
 let stompClient: any = null;
 const MessagesRoute = () => {
@@ -31,7 +30,7 @@ const MessagesRoute = () => {
   const shouldRun = useRef(true);
 
   const connect = () => {
-    let Sock = new SockJS('http://localhost:8080/ws');
+    let Sock = new SockJS('https://upseam-7bbd70a20145.herokuapp.com//wss');
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -44,13 +43,6 @@ const MessagesRoute = () => {
         JSON.stringify({ message, receiverUserId, senderUserId })
       );
     }
-    //  Client.sendChatMessage(message, receiverUserId, senderUserId)
-    //    .then((res) => {
-    //      setChatMessages((prevState) => [res.data.chatMessage, ...prevState]);
-    //    })
-    //    .catch((err) => {
-    //      throw new Error(err.response.data.message);
-    //    });
   };
 
   const onConnected = () => {

@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';

@@ -1,7 +1,6 @@
 import { Flex, Box } from '@chakra-ui/react';
 import { BsChevronRight } from 'react-icons/bs';
 import NavLink from '../Navbar/NavLink';
-import { useState } from 'react';
 
 interface INestedRouteProps {
   to: string;

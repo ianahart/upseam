@@ -76,7 +76,7 @@ const FullCloth = () => {
 
   const selectBid = (clothId: number, _bidId: number) => {
     Client.selectBid(clothId, _bidId)
-      .then((res) => {
+      .then(() => {
         setCloth({ ...cloth, closed: true, closedId: _bidId });
       })
       .catch((err) => {
@@ -91,7 +91,7 @@ const FullCloth = () => {
     }
     setIsLoading(true);
     Client.createBid(user.id, cloth.id, bid)
-      .then((res) => {
+      .then(() => {
         setIsNewBid(true);
         setIsLoading(false);
         onClose();

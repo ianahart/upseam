@@ -15,7 +15,7 @@ import {
 } from '../interfaces';
 
 export const http = axios.create({
-  baseURL: 'http://localhost:5173/api/v1',
+  baseURL: 'https://upseam.netlify.app/api/v1',
 });
 
 export const Client = {

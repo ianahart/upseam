@@ -6,6 +6,7 @@ export const useEffectOnce = (effect: () => void | (() => void)) => {
   const effectCalled = useRef(false);
   const rendered = useRef(false);
   const [val, setVal] = useState<number>(0);
+  console.log(val);
 
   if (effectCalled.current) {
     rendered.current = true;

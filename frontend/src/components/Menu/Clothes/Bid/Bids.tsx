@@ -10,7 +10,6 @@ import {
   Tr,
   Th,
   Tbody,
-  Td,
 } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
 import Header from '../../Header';
@@ -46,6 +45,7 @@ const Bids = ({
   clothClosed,
   closedId,
 }: IBidsProps) => {
+  console.log(clothUserId);
   const PAGE_SIZE = 4;
   const [isLoading, setIsLoading] = useState(false);
   const [pagination, setPagination] = useState<IBidsPagination>(bidsPaginationState);
@@ -57,7 +57,7 @@ const Bids = ({
       content: [...prevState.content.filter((item) => item.id !== id)],
     }));
     Client.deleteBid(id)
-      .then((res) => {
+      .then(() => {
         getBids('next', false);
       })
       .catch((err) => {

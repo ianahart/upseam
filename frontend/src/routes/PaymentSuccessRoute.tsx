@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Flex } from '@chakra-ui/react';
+import { Box, Heading, Flex } from '@chakra-ui/react';
 import { AiOutlineCheckCircle, AiOutlineHome } from 'react-icons/ai';
 import { Link as RouterLink } from 'react-router-dom';
 

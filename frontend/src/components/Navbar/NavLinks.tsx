@@ -1,7 +1,7 @@
 import { AiOutlineHome } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { BsMap, BsPencil } from 'react-icons/bs';
-import { CiLogin, CiSettings } from 'react-icons/ci';
+import { CiLogin } from 'react-icons/ci';
 import NavLink from './NavLink';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';

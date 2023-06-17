@@ -53,7 +53,7 @@ const FormInput = ({
     updateField(name, '', 'error');
   };
 
-  const togglePasswordVisibility = (e: React.MouseEvent<HTMLDivElement>) => {
+  const togglePasswordVisibility = () => {
     const value = type === 'password' ? 'text' : 'password';
     updateField('password', value, 'type');
     updateField('confirmPassword', value, 'type');

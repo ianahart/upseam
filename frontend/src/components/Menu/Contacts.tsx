@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Requests from '../Contacts/Requests';
 import UserSearch from '../Contacts/UserSearch';
 import Users from '../Contacts/Users';

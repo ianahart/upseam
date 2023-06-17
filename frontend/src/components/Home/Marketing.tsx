@@ -1,5 +1,5 @@
-import { Box, Flex, Image, Text, chakra, shouldForwardProp } from '@chakra-ui/react';
-import { isValidMotionProp, motion } from 'framer-motion';
+import { Flex, Image, Text } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 interface IMarketingProps {
   img: string;

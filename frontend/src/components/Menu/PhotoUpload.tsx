@@ -22,12 +22,13 @@ const PhotoUpload = ({
   const [isDragging, setIsDragging] = useState(false);
   const [fileError, setFileError] = useState('');
 
-  const handleOnDragEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  console.log(fileError);
+  const handleOnDragEnter = () => {
     if (!isDragging) {
       setIsDragging(true);
     }
   };
-  const handleOnDragLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleOnDragLeave = () => {
     if (isDragging) {
       setIsDragging(false);
     }

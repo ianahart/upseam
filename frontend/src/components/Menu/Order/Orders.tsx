@@ -6,7 +6,6 @@ import Header from '../Header';
 import { Link as RouterLink } from 'react-router-dom';
 import { Client } from '../../../util/client';
 import * as dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { slugify } from '../../../util';
 
 const Orders = () => {
@@ -59,7 +58,7 @@ const Orders = () => {
 
   const completeOrder = (orderId: number, isCompleted: boolean, bid: number) => {
     Client.updateOrder(orderId, isCompleted)
-      .then((res) => {
+      .then(() => {
         updateOrder(orderId, isCompleted);
       })
       .catch((err) => {
@@ -73,7 +72,7 @@ const Orders = () => {
 
   const createInvoice = (orderId: number, seamsterId: number, bid: number) => {
     Client.createInvoice(orderId, seamsterId, bid)
-      .then((res) => {})
+      .then(() => {})
       .catch((err) => {
         throw new Error(err.response.data.message);
       });

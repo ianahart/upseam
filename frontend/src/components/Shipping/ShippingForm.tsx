@@ -12,12 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { shippingFormState } from '../../state/initialState';
-import {
-  IPreviousAddress,
-  IShippingForm,
-  IShippingProfile,
-  IUserContext,
-} from '../../interfaces';
+import { IPreviousAddress, IShippingForm, IUserContext } from '../../interfaces';
 import FormInput from '../Form/FormInput';
 import { countries, states, shippingState } from '../../state/initialState';
 import { UserContext } from '../../context/user';
@@ -121,7 +116,7 @@ const ShippingForm = () => {
   const checkForErrors = () => {
     let errors = false;
     const exclude = ['state'];
-    for (const [key, field] of Object.entries(form)) {
+    for (const [_, field] of Object.entries(form)) {
       const { error, value, name } = field;
       if (error.length > 0) {
         errors = true;
@@ -149,7 +144,7 @@ const ShippingForm = () => {
       shippingAndHandling.name,
       shippingAndHandling.value
     )
-      .then((res) => {
+      .then(() => {
         toast({
           title: 'Shipping created.',
           description: "We've created/updated your shipping preferences",
@@ -163,17 +158,14 @@ const ShippingForm = () => {
       });
   };
 
-  const handleOnChangePreviousAddress = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    previousAddress: IPreviousAddress
-  ) => {
+  const handleOnChangePreviousAddress = (previousAddress: IPreviousAddress) => {
     handleOnChange(previousAddress.shippingType);
     syncForm(previousAddress);
   };
 
   const removePreviousAddress = (shippingId: number) => {
     Client.removeShipping(shippingId)
-      .then((res) => {
+      .then(() => {
         const filtered = previousAddresses.filter(
           (shipping) => shipping.id !== shippingId
         );
@@ -215,7 +207,7 @@ const ShippingForm = () => {
                     <Radio
                       my="0.5rem"
                       value={(index + 1).toString()}
-                      onChange={(e) => handleOnChangePreviousAddress(e, address)}
+                      onChange={() => handleOnChangePreviousAddress(address)}
                     >
                       <Text fontStyle="italic" color="text.primary">
                         {address.firstName} {address.lastName}, {address.address},{' '}

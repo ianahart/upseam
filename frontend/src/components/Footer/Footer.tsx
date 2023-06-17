@@ -1,14 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  Container,
-  Divider,
-  IconButton,
-  Input,
-  Stack,
-  Text,
-  Link,
-} from '@chakra-ui/react';
+import { Button, Container, Divider, Input, Stack, Text, Link } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Client } from '../../util/client';
 const Footer = () => {
@@ -17,7 +7,7 @@ const Footer = () => {
 
   const subscribe = () => {
     Client.subscribeToUpseam(email)
-      .then((res) => {
+      .then(() => {
         setEmail('');
       })
       .catch((err) => {

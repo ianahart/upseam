@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { http } from '../util/client';
 import { retreiveTokens } from '../util';
 import { UserContext } from '../context/user';
-import { ITokens, IUserContext } from '../interfaces';
+import { IUserContext } from '../interfaces';
 
 interface IProps {
   children: JSX.Element;
@@ -29,6 +29,7 @@ const WithAxios: React.FC<IProps> = ({ children }): JSX.Element => {
   const navigate = useNavigate();
   const [isLoaded, setLoaded] = useState(false);
   const { stowTokens, logout } = useContext(UserContext) as IUserContext;
+  console.log(logout);
   useMemo(() => {
     const reqInterceptorId = http.interceptors.request.use(
       (config) => {

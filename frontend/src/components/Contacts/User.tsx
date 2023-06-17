@@ -16,7 +16,7 @@ const User = ({ contact, handleRemoveFriend }: IUserProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
 
-  const goToProfile = (e: React.MouseEvent<HTMLParagraphElement>) => {
+  const goToProfile = () => {
     navigate(`/${slugify(contact.firstName, contact.lastName)}/profile`, {
       state: { profileId: contact.profileId },
     });

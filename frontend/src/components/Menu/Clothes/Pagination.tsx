@@ -8,6 +8,7 @@ interface IPaginationProps {
 }
 
 const Pagination = ({ fetchClothes, totalPages, page, fetchType }: IPaginationProps) => {
+  console.log(fetchType);
   const handleOnPrevClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     fetchClothes(true, page, 'prev');

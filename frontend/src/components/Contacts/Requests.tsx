@@ -1,9 +1,8 @@
-import { Box, Button, Flex, Heading, Image, Text, filter } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { Client } from '../../util/client';
 import { UserContext } from '../../context/user';
 import { IFriendRequest, IUserContext } from '../../interfaces';
-import InitialIcon from '../Shared/InitialIcon';
 import { abbreviate } from '../../util';
 
 const Requests = () => {

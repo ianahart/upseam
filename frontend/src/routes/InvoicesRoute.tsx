@@ -13,7 +13,6 @@ import {
   Thead,
   Tbody,
   Th,
-  Td,
   Tr,
 } from '@chakra-ui/react';
 import Header from '../components/Menu/Header';
@@ -82,6 +81,7 @@ const InvoicesRoute = () => {
   };
 
   const handleOnPayment = (invoiceId: number, receiverUserId: number) => {
+    console.log(receiverUserId);
     updateStatus(invoiceId);
   };
 

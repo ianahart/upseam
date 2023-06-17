@@ -65,7 +65,7 @@ const Bid = ({
   const sendFriendRequest = () => {
     if (_bid.userId === user.id) return;
     Client.createFriendRequest(_bid.userId, user.id)
-      .then((res) => {
+      .then(() => {
         onClose();
       })
       .catch((err) => {

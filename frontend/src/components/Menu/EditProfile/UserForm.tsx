@@ -1,4 +1,4 @@
-import { Box, Flex, Button, Text, Spacer } from '@chakra-ui/react';
+import { Flex, Button } from '@chakra-ui/react';
 import { IEditUserForm } from '../../../interfaces';
 import FormInput from '../../Form/FormInput';
 

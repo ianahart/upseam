@@ -18,6 +18,8 @@ target/
 .springBeans
 .sts4-cache
 
+java_pid46025.hprof
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

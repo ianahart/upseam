@@ -3,20 +3,16 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverHeader,
-  PopoverBody,
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
   Button,
   ButtonGroup,
-  PopoverAnchor,
-  Text,
-  Box,
-  Flex,
   useDisclosure,
+  Text,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { slugify } from '../../util';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
@@ -63,7 +59,7 @@ const UserPopOver = ({
 
   const sendFriendRequest = () => {
     Client.createFriendRequest(userId, user.id)
-      .then((res) => {
+      .then(() => {
         onClose();
       })
       .catch((err) => {

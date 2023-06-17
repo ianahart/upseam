@@ -33,7 +33,6 @@ const RegisterRoute = () => {
         <Form
           title="Create your account"
           helperText="Create an account to view and bid on clothes."
-          isChecked={isChecked}
         />
       </Flex>
     </Box>

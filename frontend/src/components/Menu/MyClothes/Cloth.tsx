@@ -28,6 +28,7 @@ interface IClothProps {
 }
 
 const Cloth = ({ cloth, isEditable }: IClothProps) => {
+  console.log(isEditable);
   const { user } = useContext(UserContext) as IUserContext;
   return (
     <Card maxW="sm">

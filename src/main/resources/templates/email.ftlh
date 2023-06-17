@@ -9,9 +9,9 @@
 <body>
 <div style="margin-top: 10px">Greetings, ${user.firstName}</div>
 <br/>
-<div>  
+<div>
 <p>This link will expire in 24 hours. After that, you'll need to submit a new request in order to reset your password. If you don't want to reset it, simply disregard this email.</p>
-<a href="http://localhost:5173/reset-password/?uid=${user.id}&token=${token}">Click here</a>
+<a href="https://upseam.netlify.app/reset-password/?uid=${user.id}&token=${token}">Click here</a>
 </div>
 </body>
 </html>
