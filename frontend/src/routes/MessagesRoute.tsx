@@ -30,7 +30,7 @@ const MessagesRoute = () => {
   const shouldRun = useRef(true);
 
   const connect = () => {
-    let Sock = new SockJS('https://upseam-7bbd70a20145.herokuapp.com//wss');
+    let Sock = new SockJS('https://upseam-7bbd70a20145.herokuapp.com/wss');
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
