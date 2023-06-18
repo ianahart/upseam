@@ -35,7 +35,8 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "ws/**", "wss/", "/api/v1/subscribers/**")
+                .requestMatchers("/api/v1/auth/**", "ws/**", "wss/", "/api/v1/subscribers/**",
+                        "https://upseam-7bbd70a20145.herokuapp.com/", "https://upseam.netlify.app/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
