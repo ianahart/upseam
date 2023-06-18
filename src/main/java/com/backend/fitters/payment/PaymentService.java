@@ -44,25 +44,6 @@ public class PaymentService {
         params.put("email", request.getEmail());
         try {
             customer = Customer.create(params);
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println(customer);
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
             this.paymentRepository.save(
                     new Payment(
                             request.getAmount(),
@@ -72,7 +53,6 @@ public class PaymentService {
                             userService.getUserById(request.getBillerUserId())));
 
         } catch (StripeException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         System.out.println(customer);
