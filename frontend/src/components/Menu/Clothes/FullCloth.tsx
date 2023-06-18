@@ -26,7 +26,8 @@ import { BiRuler } from 'react-icons/bi';
 import Header from '../Header';
 import FormHeader from '../EditProfile/FormHeader';
 import { IoTicketOutline } from 'react-icons/io5';
-import * as dayjs from 'dayjs';
+//@ts-ignore
+import { default as dayjs } from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { UserContext } from '../../../context/user';
 import Bids from './Bid/Bids';

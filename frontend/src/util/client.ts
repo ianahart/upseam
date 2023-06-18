@@ -1,4 +1,5 @@
 import axios from 'axios';
+//@ts-ignore
 import * as dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);

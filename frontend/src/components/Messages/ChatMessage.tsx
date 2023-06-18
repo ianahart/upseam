@@ -2,6 +2,7 @@ import { Box, Flex, Avatar, Image, Text } from '@chakra-ui/react';
 import { IChatMessage, IUserContext } from '../../interfaces';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
+// @ts-ignore
 import * as dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(localizedFormat);
