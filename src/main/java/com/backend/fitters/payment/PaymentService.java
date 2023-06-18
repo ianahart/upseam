@@ -44,6 +44,25 @@ public class PaymentService {
         params.put("email", request.getEmail());
         try {
             customer = Customer.create(params);
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println(customer);
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
             this.paymentRepository.save(
                     new Payment(
                             request.getAmount(),
