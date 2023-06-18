@@ -71,7 +71,7 @@ const CheckoutForm = ({ invoice, handleOnPayment }: ICheckoutFormProps) => {
       elements,
       clientSecret: response.data.clientSecret,
       confirmParams: {
-        return_url: 'http://localhost:5173/payment-success',
+        return_url: 'https://upseam.netlify.app/payment-success',
       },
     });
 
