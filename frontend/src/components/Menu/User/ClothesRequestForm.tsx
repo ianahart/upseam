@@ -18,7 +18,7 @@ import FormLayout from '../EditProfile/FormLayout';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 //@ts-ignore
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import { Client } from '../../../util/client';

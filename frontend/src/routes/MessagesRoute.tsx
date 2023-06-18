@@ -52,7 +52,6 @@ const MessagesRoute = () => {
   const onPrivateMessage = (payload: any) => {
     const chatMessage = JSON.parse(payload.body);
     setChatMessages((prevState) => [chatMessage, ...prevState]);
-    console.log(payload);
   };
 
   const onError = () => {};

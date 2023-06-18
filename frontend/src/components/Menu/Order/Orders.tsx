@@ -6,7 +6,7 @@ import Header from '../Header';
 import { Link as RouterLink } from 'react-router-dom';
 import { Client } from '../../../util/client';
 // @ts-ignore
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { slugify } from '../../../util';
 
 const Orders = () => {

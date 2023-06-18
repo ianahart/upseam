@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { IBid, IUserContext } from '../../../../interfaces';
 //@ts-ignore
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InitialIcon from '../../../Shared/InitialIcon';
 import { useContext, useRef, useState } from 'react';

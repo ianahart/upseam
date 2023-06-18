@@ -27,7 +27,7 @@ import Header from '../Header';
 import FormHeader from '../EditProfile/FormHeader';
 import { IoTicketOutline } from 'react-icons/io5';
 //@ts-ignore
-import { default as dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { UserContext } from '../../../context/user';
 import Bids from './Bid/Bids';
