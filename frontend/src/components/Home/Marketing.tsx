@@ -5,11 +5,18 @@ interface IMarketingProps {
   img: string;
   marketingInformation: string;
   isContentReverse: boolean;
+  id: string;
 }
 
-const Marketing = ({ img, marketingInformation, isContentReverse }: IMarketingProps) => {
+const Marketing = ({
+  img,
+  marketingInformation,
+  isContentReverse,
+  id,
+}: IMarketingProps) => {
   return (
     <Flex
+      id={id}
       p="0.5rem"
       my="10rem"
       direction={

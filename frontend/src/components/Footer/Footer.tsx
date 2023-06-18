@@ -1,5 +1,6 @@
 import { Button, Container, Divider, Input, Stack, Text, Link } from '@chakra-ui/react';
 import { useState } from 'react';
+import { HashLink } from 'react-router-hash-link';
 import { Client } from '../../util/client';
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -51,9 +52,16 @@ const Footer = () => {
                 Product
               </Text>
               <Stack spacing="3" shouldWrapChildren>
-                <Button variant="link">How it works</Button>
-                <Button variant="link">Pricing</Button>
-                <Button variant="link">Use Cases</Button>
+                <Button fontWeight="bold" variant="link">
+                  <HashLink style={{ fontWeight: 'bold' }} smooth to="/#bids">
+                    How it works
+                  </HashLink>
+                </Button>
+                <Button fontWeight="bold" variant="link">
+                  <HashLink style={{ fontWeight: 'bold' }} smooth to="/#contacts">
+                    Use Cases
+                  </HashLink>
+                </Button>
               </Stack>
             </Stack>
             <Stack spacing="4" minW="36" flex="1">

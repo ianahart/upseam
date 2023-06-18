@@ -15,18 +15,21 @@ const HomeRoute = () => {
       minH="100vh"
     >
       <Marketing
+        id="contacts"
         isContentReverse={false}
         marketingInformation="Connect with other users to talk about clothing requests and bids"
         img={contactsImg}
       />
 
       <Marketing
+        id="bids"
         isContentReverse={true}
         marketingInformation="As a seamster make bids on clothing requests by users."
         img={bidsImg}
       />
 
       <Marketing
+        id="messages"
         isContentReverse={false}
         marketingInformation="Become friends and get to know each other more personally for future work together."
         img={messagesImg}
