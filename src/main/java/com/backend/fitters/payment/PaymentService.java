@@ -72,6 +72,7 @@ public class PaymentService {
                             userService.getUserById(request.getBillerUserId())));
 
         } catch (StripeException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         System.out.println(customer);
