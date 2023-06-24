@@ -7,11 +7,38 @@ export interface IShippingForm {
   state: { name: string; value: string; error: string; type: string };
 }
 
+export interface IComment {
+  commentId: number;
+  text: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  createdAt: Date;
+  userId: number;
+}
+
+export interface IPagination {
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  direction: string;
+}
+
 export interface IPaymentObj {
   amount: number;
   userId: number;
   email: string;
   billerUserId: number;
+}
+
+export interface IReview {
+  avatarUrl: string;
+  createdAt: Date;
+  firstName: string;
+  lastName: string;
+  rating: number;
+  reviewId: number;
+  text: string;
 }
 
 export interface IInvoice {
@@ -23,6 +50,7 @@ export interface IInvoice {
   lastName: string;
   paid: boolean;
   userId: number;
+  clothId: number;
 }
 
 export interface IClothes {

@@ -8,7 +8,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 import { GiClothes } from 'react-icons/gi';
-import { MdOutlineLocalShipping } from 'react-icons/md';
+import { MdOutlineLocalShipping, MdOutlineRateReview } from 'react-icons/md';
 import { AiOutlineShoppingCart, AiOutlineInbox } from 'react-icons/ai';
 import { TbFileInvoice } from 'react-icons/tb';
 
@@ -101,6 +101,17 @@ const NestedRoutes = () => {
           icon={<AiOutlineMail />}
         />
       </Box>
+
+      {user.role === 'SEAMSTER' && (
+        <Box onClick={() => setActiveRoute('reviews')}>
+          <NestedRoute
+            activeRoute={activeRoute}
+            to="reviews"
+            routeName="Reviews"
+            icon={<MdOutlineRateReview />}
+          />
+        </Box>
+      )}
 
       {user.role === 'USER' && (
         <Box onClick={() => setActiveRoute('invoices')}>

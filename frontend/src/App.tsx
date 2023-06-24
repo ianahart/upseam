@@ -2,14 +2,18 @@ import './App.css';
 import { useCallback } from 'react';
 import { retreiveTokens } from './util';
 import { Client } from './util/client';
+import { Box } from '@chakra-ui/react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Navigate,
+  Routes,
   Route,
+  BrowserRouter as Router,
   RouterProvider,
 } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
+import Footer from './components/Footer/Footer';
 import HomeRoute from './routes/HomeRoute';
 import RegisterRoute from './routes/RegisterRoute';
 import LoginRoute from './routes/LoginRoute';
@@ -39,183 +43,9 @@ import Orders from './components/Menu/Order/Orders';
 import Shipping from './components/Shipping/Shipping';
 import InvoicesRoute from './routes/InvoicesRoute';
 import PaymentSuccessRoute from './routes/PaymentSuccessRoute';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<HomeRoute />} />
-      <Route
-        path="register"
-        element={
-          <RequireGuest>
-            <RegisterRoute />
-          </RequireGuest>
-        }
-      />
-      <Route
-        path=":username/profile"
-        element={
-          <RequireAuth>
-            <PublicProfile />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="payment-success"
-        element={
-          <RequireAuth>
-            <PaymentSuccessRoute />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="forgot-password"
-        element={
-          <RequireGuest>
-            <ForgotPasswordRoute />
-          </RequireGuest>
-        }
-      />
-      <Route
-        path="reset-password"
-        element={
-          <RequireGuest>
-            <ResetPasswordRoute />
-          </RequireGuest>
-        }
-      />
-
-      <Route
-        path="login"
-        element={
-          <RequireGuest>
-            <LoginRoute />
-          </RequireGuest>
-        }
-      />
-      <Route
-        path="heartbeat"
-        element={
-          <RequireAuth>
-            <HeartBeatRoute />
-          </RequireAuth>
-        }
-      />
-
-      <Route
-        path="menu/:username"
-        element={
-          <RequireAuth>
-            <MenuRoute />
-          </RequireAuth>
-        }
-      >
-        <Route
-          path="edit-profile"
-          element={
-            <RequireAuth>
-              <EditProfile />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="invoices"
-          element={
-            <RequireUser>
-              <InvoicesRoute />
-            </RequireUser>
-          }
-        />
-        <Route
-          path="contacts"
-          element={
-            <RequireAuth>
-              <Contacts />
-            </RequireAuth>
-          }
-        />
-
-        <Route
-          path="messages"
-          element={
-            <RequireAuth>
-              <MessagesRoute />
-            </RequireAuth>
-          }
-        />
-
-        <Route
-          path="shipping"
-          element={
-            <RequireUser>
-              <Shipping />
-            </RequireUser>
-          }
-        />
-
-        <Route
-          path="orders"
-          element={
-            <RequireAuth>
-              <Orders />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="profile"
-          element={
-            <RequireAuth>
-              <MyProfile />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="requests"
-          element={
-            <RequireUser>
-              <ClothesRequests />
-            </RequireUser>
-          }
-        />
-        <Route
-          path="my-clothes"
-          element={
-            <RequireUser>
-              <MyClothes />
-            </RequireUser>
-          }
-        />
-        <Route
-          path="clothes/edit/:clothId"
-          element={
-            <RequireUser>
-              <EditCloth />
-            </RequireUser>
-          }
-        />
-        <Route
-          path="clothes/:clothId"
-          element={
-            <RequireAuth>
-              <FullCloth />
-            </RequireAuth>
-          }
-        />
-
-        <Route
-          path="clothes"
-          element={
-            <RequireAuth>
-              <AllClothes />
-            </RequireAuth>
-          }
-        />
-      </Route>
-      <Route path="/404" element={<NotFoundRoute />} />
-      <Route path="*" element={<Navigate to="/404" replace />} />
-    </Route>
-  )
-);
+import Reviews from './components/Review/Reviews';
+import Navbar from './components/Navbar/Navbar';
+import WithAxios from './hooks/withAxios';
 
 function App() {
   const { updateUser, stowTokens } = useContext(UserContext) as IUserContext;
@@ -234,7 +64,200 @@ function App() {
     storeUser();
   });
 
-  return <RouterProvider router={router} />;
+  return (
+    <Box as="main" className="App">
+      <Router>
+        <Navbar />
+        <Box minH="100vh">
+          <WithAxios>
+            <Routes>
+              <Route index element={<HomeRoute />} />
+              <Route
+                path="register"
+                element={
+                  <RequireGuest>
+                    <RegisterRoute />
+                  </RequireGuest>
+                }
+              />
+              <Route
+                path=":username/profile"
+                element={
+                  <RequireAuth>
+                    <PublicProfile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="payment-success"
+                element={
+                  <RequireAuth>
+                    <PaymentSuccessRoute />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="forgot-password"
+                element={
+                  <RequireGuest>
+                    <ForgotPasswordRoute />
+                  </RequireGuest>
+                }
+              />
+              <Route
+                path="reset-password"
+                element={
+                  <RequireGuest>
+                    <ResetPasswordRoute />
+                  </RequireGuest>
+                }
+              />
+
+              <Route
+                path="login"
+                element={
+                  <RequireGuest>
+                    <LoginRoute />
+                  </RequireGuest>
+                }
+              />
+              <Route
+                path="heartbeat"
+                element={
+                  <RequireAuth>
+                    <HeartBeatRoute />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="menu/:username"
+                element={
+                  <RequireAuth>
+                    <MenuRoute />
+                  </RequireAuth>
+                }
+              >
+                <Route
+                  path="edit-profile"
+                  element={
+                    <RequireAuth>
+                      <EditProfile />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="invoices"
+                  element={
+                    <RequireUser>
+                      <InvoicesRoute />
+                    </RequireUser>
+                  }
+                />
+
+                <Route
+                  path="reviews"
+                  element={
+                    <RequireAuth>
+                      <Reviews />
+                    </RequireAuth>
+                  }
+                />
+
+                <Route
+                  path="contacts"
+                  element={
+                    <RequireAuth>
+                      <Contacts />
+                    </RequireAuth>
+                  }
+                />
+
+                <Route
+                  path="messages"
+                  element={
+                    <RequireAuth>
+                      <MessagesRoute />
+                    </RequireAuth>
+                  }
+                />
+
+                <Route
+                  path="shipping"
+                  element={
+                    <RequireUser>
+                      <Shipping />
+                    </RequireUser>
+                  }
+                />
+
+                <Route
+                  path="orders"
+                  element={
+                    <RequireAuth>
+                      <Orders />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="profile"
+                  element={
+                    <RequireAuth>
+                      <MyProfile />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="requests"
+                  element={
+                    <RequireUser>
+                      <ClothesRequests />
+                    </RequireUser>
+                  }
+                />
+                <Route
+                  path="my-clothes"
+                  element={
+                    <RequireUser>
+                      <MyClothes />
+                    </RequireUser>
+                  }
+                />
+                <Route
+                  path="clothes/edit/:clothId"
+                  element={
+                    <RequireUser>
+                      <EditCloth />
+                    </RequireUser>
+                  }
+                />
+                <Route
+                  path="clothes/:clothId"
+                  element={
+                    <RequireAuth>
+                      <FullCloth />
+                    </RequireAuth>
+                  }
+                />
+
+                <Route
+                  path="clothes"
+                  element={
+                    <RequireAuth>
+                      <AllClothes />
+                    </RequireAuth>
+                  }
+                />
+              </Route>
+              <Route path="/404" element={<NotFoundRoute />} />
+              <Route path="*" element={<Navigate to="/404" replace />} />
+            </Routes>
+          </WithAxios>
+          <Footer />
+        </Box>
+      </Router>
+    </Box>
+  );
 }
 
 export default App;

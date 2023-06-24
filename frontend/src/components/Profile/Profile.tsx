@@ -7,12 +7,15 @@ import FormHeader from '../Menu/EditProfile/FormHeader';
 import { IProfilePage, IUserContext } from '../../interfaces';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
+import { AiFillStar } from 'react-icons/ai';
 
 interface IProfileProps {
   profile: IProfilePage;
+  rating: number;
+  isSeamster: boolean;
 }
 
-const Profile = ({ profile }: IProfileProps) => {
+const Profile = ({ profile, rating, isSeamster }: IProfileProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   return (
     <Box>
@@ -40,6 +43,16 @@ const Profile = ({ profile }: IProfileProps) => {
                   {profile.state}, {profile.country}
                 </Text>
               )}
+              <Flex>
+                {isSeamster &&
+                  [...Array(rating)].map((_, index) => {
+                    return (
+                      <Box key={index}>
+                        <AiFillStar color={index <= rating ? 'orange' : 'black'} />
+                      </Box>
+                    );
+                  })}
+              </Flex>
             </Box>
           </Flex>
         </>

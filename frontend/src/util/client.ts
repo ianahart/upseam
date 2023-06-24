@@ -8,6 +8,7 @@ import {
   IEditProfileForm,
   IEditUserForm,
   ILoginForm,
+  IPagination,
   IPaymentObj,
   IRegisterForm,
   IResetPasswordForm,
@@ -16,10 +17,59 @@ import {
 } from '../interfaces';
 
 export const http = axios.create({
-  baseURL: 'https://upseam.netlify.app/api/v1',
+ baseURL: 'https://upseam.netlify.app/api/v1',
+
 });
 
 export const Client = {
+  removeComment: (id: number) => {
+    return http.delete(`/comments/${id}`);
+  },
+
+  getComments: (
+    clothId: number,
+    pagination: IPagination,
+    page: number,
+    direction: string
+  ) => {
+    const { pageSize, totalPages } = pagination;
+    return http.get(
+      `/comments?clothId=${clothId}&page=${page}&pageSize=${pageSize}&totalPages=${totalPages}&direction=${direction}`
+    );
+  },
+
+  createComment: (userId: number, clothId: number, text: string) => {
+    return http.post('/comments', {
+      userId,
+      text,
+      clothId,
+    });
+  },
+
+  getUserReviewRating: (userId: number) => {
+    return http.get(`/reviews/user?userId=${userId}`);
+  },
+  getReviews: (userId: number, page: number, pageSize: number, direction: string) => {
+    return http.get(
+      `reviews?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+  createReview: (
+    clothId: number,
+    revieweeUserId: number,
+    reviewerUserId: number,
+    rating: number,
+    text: string
+  ) => {
+    return http.post('/reviews', {
+      clothId,
+      revieweeUserId,
+      reviewerUserId,
+      rating,
+      text,
+    });
+  },
+
   createPayment: (obj: IPaymentObj) => {
     return http.post('/payments', {
       amount: obj.amount,

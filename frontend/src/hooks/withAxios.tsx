@@ -29,7 +29,6 @@ const WithAxios: React.FC<IProps> = ({ children }): JSX.Element => {
   const navigate = useNavigate();
   const [isLoaded, setLoaded] = useState(false);
   const { stowTokens, logout } = useContext(UserContext) as IUserContext;
-  console.log(logout);
   useMemo(() => {
     const reqInterceptorId = http.interceptors.request.use(
       (config) => {
@@ -45,55 +44,66 @@ const WithAxios: React.FC<IProps> = ({ children }): JSX.Element => {
       function (response) {
         return response;
       },
-      function (error) {
+      async function (error) {
+        console.log('ERROR', error);
         const originalRequest = error.config;
+        originalRequest.headers = JSON.parse(
+          JSON.stringify(originalRequest.headers || {})
+        );
+        const refreshToken = retreiveTokens().refreshToken;
 
-        if (error.response.status === 403 && !originalRequest._retry) {
+        const handleError = (error: any) => {
+          processQueue(error);
+          logout();
+          return Promise.reject(error);
+        };
+
+        if (
+          refreshToken &&
+          error.response?.status === 403 &&
+          originalRequest?._retry !== true
+        ) {
           if (isRefreshing) {
             return new Promise(function (resolve, reject) {
               failedQueue.push({ resolve, reject });
             })
-              .then((token: any) => {
-                originalRequest.headers['Authorization'] = 'Bearer ' + token;
+              .then(() => {
                 return http(originalRequest);
               })
               .catch((err) => {
                 return Promise.reject(err);
               });
           }
-
-          originalRequest._retry = true;
           isRefreshing = true;
+          originalRequest._retry = true;
+          return http
+            .post('/auth/refresh', {
+              refreshToken: refreshToken,
+            })
+            .then((res) => {
+              const token: string = res.data.token;
+              const tokens = retreiveTokens();
+              tokens.token = token;
+              localStorage.setItem('tokens', JSON.stringify(tokens));
 
-          const storage = retreiveTokens();
-          return new Promise(function (resolve, reject) {
-            http
-              .post('/auth/refresh', { refreshToken: storage.refreshToken })
-              .then((response) => {
-                http.defaults.headers.common['Authorization'] =
-                  'Bearer ' + response.data.token;
-                originalRequest.headers['Authorization'] =
-                  'Bearer ' + response.data.token;
+              //@ts-ignore
+              stowTokens({ refreshToken: tokens.refreshToken, token: token });
 
-                const token: string = response.data.token;
-                const tokens = retreiveTokens();
-                tokens.token = token;
-                localStorage.setItem('tokens', JSON.stringify(tokens));
+              processQueue(null);
 
-                //@ts-ignore
-                stowTokens({ refreshToken: tokens.refreshToken, token: token });
+              return http(originalRequest);
+            }, handleError)
+            .finally(() => {
+              isRefreshing = false;
+            });
+        }
 
-                processQueue(null, response.data.token);
-                resolve(http(originalRequest));
-              })
-              .catch((err) => {
-                processQueue(err, null);
-                reject(err);
-              })
-              .finally(() => {
-                isRefreshing = false;
-              });
-          });
+        // Refresh token missing or expired => logout user...
+        if (
+          error.response?.status === 403 &&
+          error.response?.data?.message === 'TokenExpiredError'
+        ) {
+          return handleError(error);
         }
 
         return Promise.reject(error);
@@ -108,6 +118,7 @@ const WithAxios: React.FC<IProps> = ({ children }): JSX.Element => {
     if (isLoaded) {
       console.log('Are you running? You shouldnt be... WithAxios.tsx');
       navigate('/login');
+      logout();
       setLoaded(false);
     }
   }, [navigate, isLoaded]);

@@ -26,7 +26,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     @Query(value = """
              SELECT new com.backend.fitters.invoice.dto.InvoiceDto(i.id AS invoiceId,
              p.avatarUrl AS avatarUrl, u.firstName, u.lastName, i.bid, c.clothUrl,
-             i.paid, u.id as userId
+             i.paid, u.id as userId, c.id as clothId
               )
              FROM Invoice i
              INNER JOIN i.owner o

@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.backend.fitters.bid.Bid;
+import com.backend.fitters.comment.Comment;
 import com.backend.fitters.order.Order;
+import com.backend.fitters.review.Review;
 import com.backend.fitters.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -64,6 +66,12 @@ public class Cloth {
     @OneToMany(mappedBy = "cloth")
     private List<Order> orders;
 
+    @OneToMany(mappedBy = "cloth")
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "cloth")
+    private List<Comment> comments;
+
     public Cloth() {
 
     }
@@ -114,6 +122,14 @@ public class Cloth {
 
     public Long getClosedId() {
         return closedId;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public List<Order> getOrders() {
@@ -168,6 +184,10 @@ public class Cloth {
         this.orders = orders;
     }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -212,6 +232,10 @@ public class Cloth {
         this.closedId = closedId;
     }
 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -229,6 +253,8 @@ public class Cloth {
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         result = prime * result + ((bids == null) ? 0 : bids.hashCode());
         result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+        result = prime * result + ((reviews == null) ? 0 : reviews.hashCode());
+        result = prime * result + ((comments == null) ? 0 : comments.hashCode());
         return result;
     }
 
@@ -305,6 +331,16 @@ public class Cloth {
             if (other.orders != null)
                 return false;
         } else if (!orders.equals(other.orders))
+            return false;
+        if (reviews == null) {
+            if (other.reviews != null)
+                return false;
+        } else if (!reviews.equals(other.reviews))
+            return false;
+        if (comments == null) {
+            if (other.comments != null)
+                return false;
+        } else if (!comments.equals(other.comments))
             return false;
         return true;
     }

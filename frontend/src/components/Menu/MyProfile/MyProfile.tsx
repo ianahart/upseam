@@ -9,12 +9,26 @@ import Profile from '../../Profile/Profile';
 const MyProfile = () => {
   const { user: contextUser } = useContext(UserContext) as IUserContext;
   const [profile, setProfile] = useState<IProfilePage>(profilePageState);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     if (contextUser.profileId !== 0) {
       fetchProfile();
+      if (contextUser.role === 'SEAMSTER') {
+        fetchRating();
+      }
     }
-  }, [contextUser.profileId]);
+  }, [contextUser.profileId, contextUser.role]);
+
+  const fetchRating = () => {
+    Client.getUserReviewRating(contextUser.id)
+      .then((res) => {
+        setRating(res.data.rating);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
 
   const fetchProfile = () => {
     Client.getProfile(contextUser.profileId)
@@ -35,7 +49,11 @@ const MyProfile = () => {
 
   return (
     <Box>
-      <Profile profile={profile} />
+      <Profile
+        profile={profile}
+        rating={rating}
+        isSeamster={contextUser.role === 'SEAMSTER'}
+      />
     </Box>
   );
 };

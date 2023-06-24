@@ -5,10 +5,12 @@ import java.util.Objects;
 import com.backend.fitters.token.Token;
 import com.backend.fitters.profile.Profile;
 import com.backend.fitters.refreshtoken.RefreshToken;
+import com.backend.fitters.review.Review;
 import com.backend.fitters.shipping.Shipping;
 import com.backend.fitters.passwordreset.PasswordReset;
 import com.backend.fitters.payment.Payment;
 import com.backend.fitters.bid.Bid;
+import com.backend.fitters.comment.Comment;
 import com.backend.fitters.chat.ChatMessage;
 import com.backend.fitters.cloth.Cloth;
 import com.backend.fitters.friend.Friend;
@@ -82,6 +84,9 @@ public class User implements UserDetails {
     private List<Payment> billerPayments;
 
     @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
     private List<Cloth> clothes;
 
     @OneToMany(mappedBy = "user")
@@ -110,6 +115,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "receiver")
     private List<ChatMessage> receivers;
+
+    @OneToMany(mappedBy = "reviewee")
+    private List<Review> revieweeReviewers;
+
+    @OneToMany(mappedBy = "reviewer")
+    private List<Review> reviewerReviewers;
 
     @OneToMany(mappedBy = "friend")
     private List<Friend> friends;
@@ -151,6 +162,10 @@ public class User implements UserDetails {
         return id;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
     public List<Shipping> getShippings() {
         return shippings;
     }
@@ -165,6 +180,14 @@ public class User implements UserDetails {
 
     public List<Invoice> getInvoices() {
         return invoices;
+    }
+
+    public List<Review> getRevieweeReviewers() {
+        return revieweeReviewers;
+    }
+
+    public List<Review> getReviewerReviewers() {
+        return reviewerReviewers;
     }
 
     public Profile getProfile() {
@@ -242,7 +265,19 @@ public class User implements UserDetails {
     }
 
     public void setClothes(List<Cloth> clothes) {
+        this.clothes = clothes;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setRevieweeReviewers(List<Review> revieweeReviewers) {
+        this.revieweeReviewers = revieweeReviewers;
+    }
+
+    public void setReviewerReviewers(List<Review> reviewerReviewers) {
+        this.reviewerReviewers = reviewerReviewers;
     }
 
     public void setBillerPayments(List<Payment> billerPayments) {
@@ -375,6 +410,7 @@ public class User implements UserDetails {
         result = prime * result + ((passwordResets == null) ? 0 : passwordResets.hashCode());
         result = prime * result + ((customerPayments == null) ? 0 : customerPayments.hashCode());
         result = prime * result + ((billerPayments == null) ? 0 : billerPayments.hashCode());
+        result = prime * result + ((comments == null) ? 0 : comments.hashCode());
         result = prime * result + ((clothes == null) ? 0 : clothes.hashCode());
         result = prime * result + ((bids == null) ? 0 : bids.hashCode());
         result = prime * result + ((shippings == null) ? 0 : shippings.hashCode());
@@ -385,6 +421,8 @@ public class User implements UserDetails {
         result = prime * result + ((friendRequesters == null) ? 0 : friendRequesters.hashCode());
         result = prime * result + ((senders == null) ? 0 : senders.hashCode());
         result = prime * result + ((receivers == null) ? 0 : receivers.hashCode());
+        result = prime * result + ((revieweeReviewers == null) ? 0 : revieweeReviewers.hashCode());
+        result = prime * result + ((reviewerReviewers == null) ? 0 : reviewerReviewers.hashCode());
         result = prime * result + ((friends == null) ? 0 : friends.hashCode());
         result = prime * result + ((users == null) ? 0 : users.hashCode());
         result = prime * result + ((role == null) ? 0 : role.hashCode());
@@ -465,6 +503,11 @@ public class User implements UserDetails {
                 return false;
         } else if (!billerPayments.equals(other.billerPayments))
             return false;
+        if (comments == null) {
+            if (other.comments != null)
+                return false;
+        } else if (!comments.equals(other.comments))
+            return false;
         if (clothes == null) {
             if (other.clothes != null)
                 return false;
@@ -514,6 +557,16 @@ public class User implements UserDetails {
             if (other.receivers != null)
                 return false;
         } else if (!receivers.equals(other.receivers))
+            return false;
+        if (revieweeReviewers == null) {
+            if (other.revieweeReviewers != null)
+                return false;
+        } else if (!revieweeReviewers.equals(other.revieweeReviewers))
+            return false;
+        if (reviewerReviewers == null) {
+            if (other.reviewerReviewers != null)
+                return false;
+        } else if (!reviewerReviewers.equals(other.reviewerReviewers))
             return false;
         if (friends == null) {
             if (other.friends != null)

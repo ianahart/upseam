@@ -11,6 +11,7 @@ public class InvoiceDto {
     private String clothUrl;
     private Boolean paid;
     private Long userId;
+    private Long clothId;
 
     public InvoiceDto() {
 
@@ -24,7 +25,8 @@ public class InvoiceDto {
             BigDecimal bid,
             String clothUrl,
             Boolean paid,
-            Long userId) {
+            Long userId,
+            Long clothId) {
         this.invoiceId = invoiceId;
         this.avatarUrl = avatarUrl;
         this.firstName = firstName;
@@ -33,10 +35,15 @@ public class InvoiceDto {
         this.clothUrl = clothUrl;
         this.paid = paid;
         this.userId = userId;
+        this.clothId = clothId;
     }
 
     public BigDecimal getBid() {
         return bid;
+    }
+
+    public Long getClothId() {
+        return clothId;
     }
 
     public Boolean getPaid() {
@@ -69,6 +76,10 @@ public class InvoiceDto {
 
     public void setInvoiceId(Long invoiceId) {
         this.invoiceId = invoiceId;
+    }
+
+    public void setClothId(Long clothId) {
+        this.clothId = clothId;
     }
 
     public void setBid(BigDecimal bid) {

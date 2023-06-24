@@ -14,7 +14,9 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  ButtonGroup,
 } from '@chakra-ui/react';
+import { MdOutlineRateReview } from 'react-icons/md';
 import { IInvoice, IUserContext } from '../../interfaces';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useContext, useRef, useState } from 'react';
@@ -27,6 +29,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { Client } from '../../util/client';
 import { UserContext } from '../../context/user';
+import CreateReview from '../Review/CreateReview';
 
 interface IInvoiceProps {
   invoice: IInvoice;
@@ -104,7 +107,17 @@ const options = {
 
 const Invoice = ({ invoice, handleOnPayment }: IInvoiceProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isReviewOpen,
+    onOpen: onReviewOpen,
+    onClose: onReviewClose,
+  } = useDisclosure();
   const finalRef = useRef(null);
+  const finalTwoRef = useRef(null);
+
+  const closeReview = () => {
+    onReviewClose();
+  };
 
   return (
     <Tr>
@@ -132,12 +145,37 @@ const Invoice = ({ invoice, handleOnPayment }: IInvoiceProps) => {
       </Td>
       <Td>
         {invoice.paid ? (
-          <Button colorScheme="blue">
-            <Box mr="0.5rem">
-              <AiOutlineCheckCircle />
-            </Box>
-            Paid
-          </Button>
+          <>
+            <ButtonGroup>
+              <Button colorScheme="blue">
+                <Box mr="0.5rem">
+                  <AiOutlineCheckCircle />
+                </Box>
+                Paid
+              </Button>
+              <Button onClick={onReviewOpen}>
+                <Box mr="0.5rem">
+                  <MdOutlineRateReview />
+                </Box>
+                Review
+              </Button>
+              <Modal
+                finalFocusRef={finalTwoRef}
+                isOpen={isReviewOpen}
+                onClose={onReviewClose}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Review purchase</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <CreateReview closeReview={closeReview} invoice={invoice} />
+                  </ModalBody>
+                  <ModalFooter></ModalFooter>
+                </ModalContent>
+              </Modal>
+            </ButtonGroup>
+          </>
         ) : (
           <>
             <Button onClick={onOpen}>Pay Now</Button>

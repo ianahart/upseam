@@ -18,9 +18,9 @@ import {
 import { useParams } from 'react-router-dom';
 import { useEffectOnce } from '../../../hooks/useEffectOnce';
 import { Client } from '../../../util/client';
-import { IFullCloth, IUserContext } from '../../../interfaces';
+import { IComment, IFullCloth, IUserContext } from '../../../interfaces';
 import { fullClothState } from '../../../state/initialState';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AiOutlineInfoCircle, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 import { BiRuler } from 'react-icons/bi';
 import Header from '../Header';
@@ -31,6 +31,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { UserContext } from '../../../context/user';
 import Bids from './Bid/Bids';
+import Comments from '../../Comments/Comments';
 dayjs.extend(relativeTime);
 
 const FullCloth = () => {
@@ -41,6 +42,14 @@ const FullCloth = () => {
   const [isNewBid, setIsNewBid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [contentShowing, setContentShowing] = useState('comments');
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [pagination, setPagination] = useState({
+    page: 0,
+    pageSize: 3,
+    direction: 'next',
+    totalPages: 0,
+  });
 
   const params = useParams();
 
@@ -49,6 +58,37 @@ const FullCloth = () => {
       getCloth(params.clothId);
     }
   });
+
+  useEffect(() => {
+    if (cloth.id !== 0) {
+      getComments('next', false);
+    }
+  }, [cloth.id]);
+
+  const getComments = (direction: string, paginate: boolean) => {
+    const pageNum = paginate ? pagination.page : -1;
+
+    Client.getComments(cloth.id, pagination, pageNum, direction)
+      .then((res) => {
+        const { comments, direction, page, pageSize, totalPages } = res.data.data;
+        setComments(comments);
+        setPagination({ ...pagination, direction, page, pageSize, totalPages });
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
+  const handleCreateComment = (userId: number, text: string) => {
+    Client.createComment(userId, cloth.id, text)
+      .then(() => {
+        getComments('next', false);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        throw new Error(err.response.data.message);
+      });
+  };
 
   const handleSelectBid = (
     clothId: number,
@@ -113,6 +153,18 @@ const FullCloth = () => {
       })
       .catch((err) => {
         setIsLoading(false);
+        throw new Error(err.response.data.message);
+      });
+  };
+
+  const handleRemoveComment = (id: number) => {
+    const filtered = comments.filter((comment) => comment.commentId !== id);
+    setComments(filtered);
+    Client.removeComment(id)
+      .then(() => {
+        getComments('next', false);
+      })
+      .catch((err) => {
         throw new Error(err.response.data.message);
       });
   };
@@ -273,16 +325,54 @@ const FullCloth = () => {
           </Box>
         </Box>
       )}
-      <Bids
-        closedId={cloth.closedId}
-        handleSelectBid={handleSelectBid}
-        ownerUserId={cloth.userId}
-        setIsNewBid={setIsNewBid}
-        isNewBid={isNewBid}
-        clothUserId={cloth.userId}
-        clothId={cloth.id}
-        clothClosed={cloth.closed}
-      />
+
+      <Box display="flex" justifyContent="space-evenly" my="2rem">
+        <Box onClick={() => setContentShowing('comments')}>
+          <Text
+            cursor="pointer"
+            fontWeight={contentShowing === 'comments' ? 'bold' : 'normal'}
+            fontSize="1.5rem"
+            color="text.primary"
+          >
+            Comments
+          </Text>
+          {contentShowing === 'comments' && (
+            <Box borderRadius={8} bg="blue.500" height="20px"></Box>
+          )}
+        </Box>
+        <Box cursor="pointer" onClick={() => setContentShowing('bids')}>
+          <Text
+            fontWeight={contentShowing === 'bids' ? 'bold' : 'normal'}
+            fontSize="1.5rem"
+            color="text.primary"
+          >
+            Bids
+          </Text>
+          {contentShowing === 'bids' && (
+            <Box borderRadius={8} bg="blue.500" height="20px"></Box>
+          )}
+        </Box>
+      </Box>
+      {contentShowing === 'bids' ? (
+        <Bids
+          closedId={cloth.closedId}
+          handleSelectBid={handleSelectBid}
+          ownerUserId={cloth.userId}
+          setIsNewBid={setIsNewBid}
+          isNewBid={isNewBid}
+          clothUserId={cloth.userId}
+          clothId={cloth.id}
+          clothClosed={cloth.closed}
+        />
+      ) : (
+        <Comments
+          handleRemoveComment={handleRemoveComment}
+          fetchData={getComments}
+          handleCreateComment={handleCreateComment}
+          comments={comments}
+          pagination={pagination}
+        />
+      )}
     </Box>
   );
 };
