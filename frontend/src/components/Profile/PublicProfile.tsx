@@ -35,7 +35,7 @@ const PublicProfile = () => {
 
   return (
     <Box>
-      <Profile profile={profile} />
+      <Profile isSeamster={false} rating={0} profile={profile} />
     </Box>
   );
 };

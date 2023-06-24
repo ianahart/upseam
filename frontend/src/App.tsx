@@ -3,16 +3,7 @@ import { useCallback } from 'react';
 import { retreiveTokens } from './util';
 import { Client } from './util/client';
 import { Box } from '@chakra-ui/react';
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Navigate,
-  Routes,
-  Route,
-  BrowserRouter as Router,
-  RouterProvider,
-} from 'react-router-dom';
-import RootLayout from './layouts/RootLayout';
+import { Navigate, Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Footer from './components/Footer/Footer';
 import HomeRoute from './routes/HomeRoute';
 import RegisterRoute from './routes/RegisterRoute';
