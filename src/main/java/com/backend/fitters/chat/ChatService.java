@@ -2,12 +2,17 @@ package com.backend.fitters.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.backend.fitters.chat.dto.ChatMessageDto;
 import com.backend.fitters.chat.dto.GetUserWithMessageDto;
 import com.backend.fitters.chat.dto.GetUsersWithMessagesDto;
 import com.backend.fitters.chat.dto.GetUsersWithMessagesPaginationDto;
 import com.backend.fitters.chat.request.SendChatMessageRequest;
 import com.backend.fitters.advice.BadRequestException;
+import com.backend.fitters.user.User;
 import com.backend.fitters.user.UserService;
 import com.backend.fitters.util.MyUtils;
 
@@ -53,6 +58,7 @@ public class ChatService {
         if (currentUserId == null || currentUserId == 0) {
             throw new BadRequestException("No current userid available");
         }
+
         int currentPage = MyUtils.paginate(page, "next");
         Pageable paging = PageRequest.of(currentPage, 5, Sort.by("id"));
         Page<GetUsersWithMessagesDto> result = this.chatRepository.getUsersWithMessages(currentUserId, paging);

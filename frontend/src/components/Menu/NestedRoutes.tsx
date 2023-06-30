@@ -16,6 +16,13 @@ const NestedRoutes = () => {
   const { user } = useContext(UserContext) as IUserContext;
   const [activeRoute, setActiveRoute] = useState('profile');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [error, setError] = useState('');
+
+  const deleteAccount = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setError('');
+    e.stopPropagation();
+    setError('Delete Account is currently unavailable for use.');
+  };
 
   const handleSettingsOpen = () => {
     setSettingsOpen((prevState) => !prevState);
@@ -154,6 +161,7 @@ const NestedRoutes = () => {
 
       <Box my="1rem">
         <Button
+          onClick={deleteAccount}
           _hover={{ background: 'transparent' }}
           border="none"
           color="red.500"
@@ -162,6 +170,11 @@ const NestedRoutes = () => {
         >
           Delete Account
         </Button>
+        {error.length > 0 && (
+          <Text color="red.500" fontSize="0.85rem">
+            {error}
+          </Text>
+        )}
       </Box>
     </Flex>
   );

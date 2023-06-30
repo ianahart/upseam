@@ -58,6 +58,7 @@ const UserPopOver = ({
   };
 
   const sendFriendRequest = () => {
+    if (userId === user.id) return;
     Client.createFriendRequest(userId, user.id)
       .then(() => {
         onClose();
@@ -99,7 +100,7 @@ const UserPopOver = ({
           pb={4}
         >
           <ButtonGroup size="sm">
-            {!areFriends && (
+            {!areFriends && userId !== user.id && (
               <Button onClick={sendFriendRequest} color="black.primary">
                 <AiOutlineUser /> Add Friend
               </Button>

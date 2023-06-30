@@ -16,7 +16,7 @@ public interface FriendShipRepository extends JpaRepository<FriendShip, Long> {
             SELECT fs.id, fs.created_at, fs.updated_at, pending,
              accepted, declined, requestee_id, requester_id  FROM friendship fs
             INNER JOIN _user u ON fs.requester_id = u.id
-            INNER JOIN _user f on fs.requestee_id = f.id
+            INNER JOIN _user f ON fs.requestee_id = f.id
             WHERE u.id = :userId AND f.id = :friendId
             LIMIT 1
             """, nativeQuery = true)

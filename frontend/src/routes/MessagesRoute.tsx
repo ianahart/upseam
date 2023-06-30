@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import Sidebar from '../components/Messages/Sidebar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Conversation from '../components/Messages/Conversation';
 import ExtraInfo from '../components/Messages/ExtraInfo';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -10,9 +10,11 @@ import { simpleUserProfileState } from '../state/initialState';
 import { UserContext } from '../context/user';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
+import { slugify } from '../util';
 
 let stompClient: any = null;
 const MessagesRoute = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext) as IUserContext;
   const location = useLocation();
   const [receiverUserId, setReceiverUserId] = useState(0);
@@ -76,9 +78,16 @@ const MessagesRoute = () => {
     }
   }, [usersWithMessages, filterTerm]);
 
-  const handleOnChangeUser = (receiverUserId: number) => {
+  const handleOnChangeUser = (
+    receiverUserId: number,
+    firstName?: string,
+    lastName?: string
+  ) => {
     if (stompClient) {
       stompClient.disconnect();
+    }
+    if (firstName !== undefined && lastName !== undefined) {
+      navigate(`/menu/${slugify(firstName, lastName)}/messages`);
     }
     getMessages(receiverUserId, user.id);
     setReceiverUserId(receiverUserId);

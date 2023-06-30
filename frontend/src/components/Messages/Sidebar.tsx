@@ -18,7 +18,11 @@ interface ISidebarProps {
   showLoadMoreUsers: boolean;
   getUsersWithMessages: (currentUserId: number, paginate: boolean) => void;
   usersWithMessages: IUserWithMessage[];
-  handleOnChangeUser: (receiverUserId: number) => void;
+  handleOnChangeUser: (
+    receiverUserId: number,
+    firstName: string,
+    lastName: string
+  ) => void;
   handleSetFilterTerm: (e: React.ChangeEvent<HTMLInputElement>) => void;
   filterTerm: string;
   isLoading: boolean;
@@ -93,7 +97,9 @@ const Sidebar = ({
           return (
             <Flex
               key={user.id}
-              onClick={() => handleOnChangeUser(user.receiverUserId)}
+              onClick={() =>
+                handleOnChangeUser(user.receiverUserId, user.firstName, user.lastName)
+              }
               cursor="pointer"
               justify="flex-start"
               p="1rem 0.25rem"

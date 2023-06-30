@@ -13,6 +13,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/wss").setAllowedOrigins("https://upseam.netlify.app/").withSockJS();
+
     }
 
     @Override

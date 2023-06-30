@@ -5,6 +5,8 @@ import com.backend.fitters.user.UserService;
 import java.util.List;
 
 import com.backend.fitters.user.dto.GetFriendsDto;
+import com.backend.fitters.chat.ChatMessage;
+import com.backend.fitters.chat.ChatRepository;
 import com.backend.fitters.friend.dto.CheckIfFriendDto;
 import com.backend.fitters.friend.dto.FindFriendDto;
 import com.backend.fitters.friend.dto.FriendsPaginationDto;
@@ -21,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FriendService {
@@ -28,13 +31,16 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final FriendShipRepository friendShipRepository;
     private final UserService userService;
+    private final ChatRepository chatRepository;
 
     @Autowired
     public FriendService(FriendRepository friendRepository, UserService userService,
-            FriendShipRepository friendShipRepository) {
+            FriendShipRepository friendShipRepository,
+            ChatRepository chatRepository) {
         this.friendRepository = friendRepository;
         this.userService = userService;
         this.friendShipRepository = friendShipRepository;
+        this.chatRepository = chatRepository;
     }
 
     public boolean checkIfFriends(CheckFriendsRequest request) {
@@ -42,9 +48,18 @@ public class FriendService {
 
     }
 
+    @Transactional
     public void removeFriend(RemoveFriendRequest request) {
         FindFriendDto userOne = this.friendRepository.findFriend(request.getUserId(), request.getFriendId());
         FindFriendDto userTwo = this.friendRepository.findFriend(request.getFriendId(), request.getUserId());
+
+        List<Long> ids = this.chatRepository.getMessagesToDelete(request.getUserId(),
+                request.getFriendId()).stream().map(v -> v.getChatId()).toList();
+
+        if (ids.size() > 0) {
+            this.chatRepository.deleteChatMessagesWithIds(ids);
+        }
+
         if (userOne != null) {
             this.friendRepository.deleteById(userOne.getFriendObjectId());
         }
@@ -65,7 +80,7 @@ public class FriendService {
 
         if (fsTwo != null) {
 
-            this.friendRepository.deleteById(fsTwo.getId());
+            this.friendShipRepository.deleteById(fsTwo.getId());
         }
 
     }

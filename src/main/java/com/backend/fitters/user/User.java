@@ -110,10 +110,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "requester")
     private List<FriendShip> friendRequesters;
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     private List<ChatMessage> senders;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<ChatMessage> receivers;
 
     @OneToMany(mappedBy = "reviewee")

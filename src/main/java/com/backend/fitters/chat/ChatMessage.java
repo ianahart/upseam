@@ -36,7 +36,7 @@ public class ChatMessage {
     private User sender;
 
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne()
     private User receiver;
 
     public ChatMessage() {
